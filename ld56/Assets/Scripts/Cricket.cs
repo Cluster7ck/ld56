@@ -1,6 +1,5 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.Serialization;
 
 public enum State
 {
@@ -24,10 +23,9 @@ public class Cricket : MonoBehaviour
   [SerializeField] private float collisionCheckExtents;
   [SerializeField] private LayerMask collisionMask;
   [SerializeField] private float bounceStrength;
-  [SerializeField] private float acceptedUpAngle;
 
   private Camera camera;
-  private CircleCollider2D col;
+  private BoxCollider2D boxCollider;
   private State state = State.Idle;
 
   private bool dragging;
@@ -55,7 +53,7 @@ public class Cricket : MonoBehaviour
   void Start()
   {
     camera = Camera.main;
-    col = GetComponent<CircleCollider2D>();
+    boxCollider = GetComponent<BoxCollider2D>();
     startPos = transform.position;
 
     for (int i = 0; i < debugSpheres.Length; i++)
@@ -80,9 +78,8 @@ public class Cricket : MonoBehaviour
   {
     if (Input.GetKeyDown(KeyCode.Space))
     {
-      state = State.Idle;
+      state = State.BulletTime;
       transform.position = startPos;
-      jumpTime = 0;
     }
 
     if (Input.GetKeyDown(KeyCode.A))
@@ -159,7 +156,7 @@ public class Cricket : MonoBehaviour
       else
       {
         // collision
-        var nextState = DoCollision(transform.position, pos);
+        var nextState = DoCollision2(transform.position, pos);
 
         if (nextState.HasValue)
         {
@@ -187,7 +184,7 @@ public class Cricket : MonoBehaviour
       jumpTime += Time.fixedDeltaTime;
       var pos = PredictProjectilePosAtT(jumpTime, initialFallVelocity, initialFallPos, gravity * fallGravityMul);
 
-      var nextState = DoCollision(transform.position, pos);
+      var nextState = DoCollision2(transform.position, pos);
       if (nextState.HasValue)
       {
         state = nextState.Value;
@@ -206,7 +203,7 @@ public class Cricket : MonoBehaviour
 
       var pos = PredictProjectilePosAtT(jumpTime, initialVelocity, initialJumpPos, gravity * fallGravityMul);
       // collision
-      var nextState = DoCollision(transform.position, pos);
+      var nextState = DoCollision2(transform.position, pos);
 
       if (nextState.HasValue)
       {
@@ -238,28 +235,28 @@ public class Cricket : MonoBehaviour
     }
   }
 
-  private State? DoCollision(Vector3 previousPos, Vector3 nextPos)
+  private State? DoCollision2(Vector3 previousPos, Vector3 nextPos)
   {
-    var radius = col.radius;
+    var extents = boxCollider.size / 2;
     var cameraLeft = camera.ScreenToWorldPoint(new Vector3(0, 1, 0));
     var cameraLeft2 = camera.ScreenToWorldPoint(new Vector3(0, 0, 0));
     Debug.DrawLine(cameraLeft, cameraLeft2, Color.cyan);
     var position = transform.position;
     var dir = nextPos - previousPos;
     
-    //if (nextPos.x < previousPos.x && (nextPos.x-radius) < cameraLeft.x)
-    //{
-    //  Debug.Log("What");
-    //  var leftDir = Vector3.left * Mathf.Abs((cameraLeft.x + radius) - previousPos.x);
-    //  var newLeftDir = Vector3.Project(leftDir, dir);
-    //  Debug.DrawLine(previousPos, previousPos+Vector3.up, Color.blue, 30f);
-    //  Debug.DrawLine(previousPos, previousPos+leftDir, Color.green, 30f);
-    //  Debug.DrawLine(previousPos, previousPos+newLeftDir, Color.red, 30f);
-    //  transform.position += newLeftDir;
-    //  return State.Falling;
-    //}
+    if (nextPos.x < previousPos.x && (nextPos.x-extents.x) < cameraLeft.x)
+    {
+      Debug.Log("What");
+      var leftDir = Vector3.left * Mathf.Abs((cameraLeft.x + extents.x) - previousPos.x);
+      var newLeftDir = Vector3.Project(leftDir, dir);
+      Debug.DrawLine(previousPos, previousPos+Vector3.up, Color.blue, 30f);
+      Debug.DrawLine(previousPos, previousPos+leftDir, Color.green, 30f);
+      Debug.DrawLine(previousPos, previousPos+newLeftDir, Color.red, 30f);
+      transform.position += newLeftDir;
+      return State.Falling;
+    }
     
-    var hit = Physics2D.CircleCast(position, radius, dir, dir.magnitude, collisionMask);
+    var hit = Physics2D.BoxCast(position, boxCollider.size, 0, dir, dir.magnitude, collisionMask);
 
     if (hit.collider != null)
     {
@@ -270,15 +267,15 @@ public class Cricket : MonoBehaviour
 
       var dist = hit.distance;
       var normDir = dir.normalized;
-      transform.position += normDir * Mathf.Clamp(dist - 0.01f, 0.01f, dist);
+      transform.position += normDir * Mathf.Clamp(dist - 0.005f, 0.005f, dist);
 
-      var dot = Vector3.Dot(hit.normal, Vector3.up) - 1.0f;
-      Debug.Log($"{hit.transform.gameObject.name}: {hit.distance}, {hit.normal}, {dot}");
-      if (Mathf.Abs(dot) < acceptedUpAngle)
+      var dot = Vector3.Dot(hit.normal, Vector3.up);
+      Debug.Log($"{hit.transform.gameObject.name}: hd:{hit.distance}, hn:{hit.normal}, dot:{dot}, dir:{dir}");
+      if (dot != 0)
       {
         if (hit.transform.gameObject.layer == LayerMask.NameToLayer("Shroom"))
         {
-          //Debug.Log("Bounce");
+          Debug.Log("Bounce");
           return State.Bounce;
         }
         // collide with ground
