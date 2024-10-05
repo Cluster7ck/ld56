@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 8298798951059343753}
   - component: {fileID: 3986453291830224839}
   - component: {fileID: 3827800020662625438}
+  - component: {fileID: 8648295001335344657}
   m_Layer: 7
   m_Name: Player
   m_TagString: Untagged
@@ -104,11 +105,13 @@ MonoBehaviour:
   velocityMul: 3
   riseGravityMul: 8
   fallGravityMul: 8
-  collisionCheckExtents: 1
   collisionMask:
     serializedVersion: 2
     m_Bits: 2624
   bounceStrength: 23
+  bounceMinForwardVelocity: 5
+  hitStopLength: 0.1
+  bulletTimeLength: 1
 --- !u!50 &3986453291830224839
 Rigidbody2D:
   serializedVersion: 4
@@ -181,6 +184,70 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1.1481657, y: 0.8358774}
   m_EdgeRadius: 0
+--- !u!114 &8648295001335344657
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6072423614325277692}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bcbde135a994c4ae2a43d93e1d353515, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bulletTimeScale: 0.2
+  bulletTimeCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: -3.030303
+      outSlope: -3.030303
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.33
+      value: 0
+      inSlope: -0.122967735
+      outSlope: -0.122967735
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 1
+    - serializedVersion: 3
+      time: 0.49402773
+      value: -0.0050529167
+      inSlope: -0.0005677948
+      outSlope: -0.0005677948
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.6643335
+      value: 0
+      inSlope: 0.17472605
+      outSlope: 0.17472605
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 1
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 2.9791477
+      outSlope: 2.9791477
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1001 &7660903188872291100
 PrefabInstance:
   m_ObjectHideFlags: 0
