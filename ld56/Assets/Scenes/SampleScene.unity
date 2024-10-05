@@ -959,7 +959,7 @@ MonoBehaviour:
   collisionCheckExtents: 1
   collisionMask:
     serializedVersion: 2
-    m_Bits: 320
+    m_Bits: 576
 --- !u!212 &990688467
 SpriteRenderer:
   m_ObjectHideFlags: 0
