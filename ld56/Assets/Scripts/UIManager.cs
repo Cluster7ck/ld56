@@ -18,7 +18,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject pauseScreen;
     [SerializeField] private GameObject endScreen;
 
-    [SerializeField] private CameraSceneParameters cameraGameParameters = new CameraSceneParameters(12f, 7f, 5f);
+    [SerializeField] private CameraSceneParameters cameraGameParameters = new CameraSceneParameters(12f, 7f, 7f);
     [SerializeField] private CameraSceneParameters cameraStartParameters = new CameraSceneParameters(2f, 1.2f, 0.5f);
 
     [SerializeField] private float cameraZoomTime = 2f;
