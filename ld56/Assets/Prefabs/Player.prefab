@@ -107,7 +107,7 @@ MonoBehaviour:
   fallGravityMul: 8
   collisionMask:
     serializedVersion: 2
-    m_Bits: 2624
+    m_Bits: 6720
   bounceStrength: 23
   bounceMinForwardVelocity: 5
   hitStopLength: 0.1
@@ -256,6 +256,38 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3463626292017673245}
     m_Modifications:
+    - target: {fileID: 944801755624867956, guid: 7fabfabfa9733eb49823ca65a4dff9f6, type: 3}
+      propertyPath: m_SortingOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1078686102215729480, guid: 7fabfabfa9733eb49823ca65a4dff9f6, type: 3}
+      propertyPath: m_SortingOrder
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2816416957226765225, guid: 7fabfabfa9733eb49823ca65a4dff9f6, type: 3}
+      propertyPath: m_SortingOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2862972033722403052, guid: 7fabfabfa9733eb49823ca65a4dff9f6, type: 3}
+      propertyPath: m_SortingOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4098851247745674501, guid: 7fabfabfa9733eb49823ca65a4dff9f6, type: 3}
+      propertyPath: m_SortingOrder
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4632302777919332873, guid: 7fabfabfa9733eb49823ca65a4dff9f6, type: 3}
+      propertyPath: m_SortingOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5434530254411451237, guid: 7fabfabfa9733eb49823ca65a4dff9f6, type: 3}
+      propertyPath: m_SortingOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5852325698194392475, guid: 7fabfabfa9733eb49823ca65a4dff9f6, type: 3}
+      propertyPath: m_SortingOrder
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6443262294474720321, guid: 7fabfabfa9733eb49823ca65a4dff9f6, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.89564705
@@ -295,6 +327,10 @@ PrefabInstance:
     - target: {fileID: 6443262294474720321, guid: 7fabfabfa9733eb49823ca65a4dff9f6, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 9.171
+      objectReference: {fileID: 0}
+    - target: {fileID: 6853590214379153640, guid: 7fabfabfa9733eb49823ca65a4dff9f6, type: 3}
+      propertyPath: m_SortingOrder
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 7783949414456514449, guid: 7fabfabfa9733eb49823ca65a4dff9f6, type: 3}
       propertyPath: m_Name
