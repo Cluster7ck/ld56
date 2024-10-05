@@ -344,6 +344,10 @@ PrefabInstance:
       propertyPath: m_SortingOrder
       value: 4
       objectReference: {fileID: 0}
+    - target: {fileID: 7526132444559231041, guid: 7fabfabfa9733eb49823ca65a4dff9f6, type: 3}
+      propertyPath: m_SpriteSortPoint
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7783949414456514449, guid: 7fabfabfa9733eb49823ca65a4dff9f6, type: 3}
       propertyPath: m_Name
       value: Spider
