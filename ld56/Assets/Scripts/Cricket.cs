@@ -20,7 +20,6 @@ public class Cricket : MonoBehaviour
   [SerializeField] private float velocityMul = 1;
   [SerializeField] private float riseGravityMul = 1;
   [SerializeField] private float fallGravityMul = 1;
-  [SerializeField] private float collisionCheckExtents;
   [SerializeField] private LayerMask collisionMask;
   [SerializeField] private float bounceStrength;
 
@@ -292,6 +291,11 @@ public class Cricket : MonoBehaviour
     return null;
   }
 
+  public void SetState(State newState)
+  {
+    state = newState;
+    jumpTime = 0;
+  }
 
   private Vector3 PredictVelocityAtT(float time, Vector3 initialVel, Vector3 gravity)
   {
