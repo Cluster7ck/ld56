@@ -37,6 +37,7 @@ public class Cricket : MonoBehaviour
 
   [SerializeField] private GameObject arcIndicatorPrefab;
   [SerializeField] private Vector2 arcIndicatorSize;
+  [SerializeField] private ParticleSystem jumpParticleSystem;
 
   private Camera camera;
   private Animator animator;
@@ -175,6 +176,10 @@ public class Cricket : MonoBehaviour
       var mag = Mathf.Min(potentialVelocity.magnitude, maxVelocityMagnitude);
       potentialVelocity = potentialVelocityNorm * mag;
       var potentialJumpPos = transform.position;
+
+      var fo = jumpParticleSystem.forceOverLifetime;
+      fo.xMultiplier =  -potentialVelocity.x;
+      fo.yMultiplier =  -potentialVelocity.y;
 
       float dt = 0.03f;
       float t = dt;

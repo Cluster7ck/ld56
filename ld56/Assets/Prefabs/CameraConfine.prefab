@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6277675346483258945}
   - component: {fileID: 386069016047779970}
-  - component: {fileID: 7308529800804401138}
+  - component: {fileID: 4100615867047212002}
   m_Layer: 8
   m_Name: CameraConfine
   m_TagString: Untagged
@@ -79,12 +79,12 @@ PolygonCollider2D:
     m_Paths:
     - - {x: 208.76633, y: 52.344894}
       - {x: 194.14615, y: 56.726715}
-      - {x: -65.28452, y: 50.99886}
-      - {x: -63.606503, y: -86.65232}
+      - {x: -23.877228, y: 49.595222}
+      - {x: -23.953747, y: -14.364998}
       - {x: 245.61406, y: -87.31523}
       - {x: 208.6719, y: 39.283344}
   m_UseDelaunayMesh: 0
---- !u!114 &7308529800804401138
+--- !u!114 &4100615867047212002
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

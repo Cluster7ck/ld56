@@ -4,7 +4,7 @@ public class CameraSceneParameters
 {
     public CameraSceneParameters(float pOrthographicSize, float pXcameraOffset, float pYcameraOffset) {
         orthographicSize = pOrthographicSize;
-        cameraOffset = new Vector2(pXcameraOffset, pXcameraOffset);
+        cameraOffset = new Vector2(pXcameraOffset, pYcameraOffset);
     }
 
     public float orthographicSize;
@@ -19,7 +19,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject endScreen;
 
     [SerializeField] private CameraSceneParameters cameraGameParameters = new CameraSceneParameters(12f, 7f, 5f);
-    [SerializeField] private CameraSceneParameters cameraStartParameters = new CameraSceneParameters(2f, 1.2f, 0.3f);
+    [SerializeField] private CameraSceneParameters cameraStartParameters = new CameraSceneParameters(2f, 1.2f, 0.5f);
 
     [SerializeField] private float cameraZoomTime = 2f;
 
@@ -58,7 +58,7 @@ public class UIManager : MonoBehaviour
     }
 
     private void ZoomToPosition(GameObject virtualCamera, Vector2 offset, float orthographicSize) {
-        DOTween.To(() => (Vector2)virtualCamera.GetComponentInChildren<CinemachineCameraOffset>().m_Offset, x => virtualCamera.GetComponentInChildren<CinemachineCameraOffset>().m_Offset = x, offset, cameraZoomTime);
+        DOTween.To(() => (Vector2)virtualCamera.GetComponentInChildren<CinemachineCameraOffset>().m_Offset, xy => virtualCamera.GetComponentInChildren<CinemachineCameraOffset>().m_Offset = xy, offset, cameraZoomTime);
         DOTween.To(() => virtualCamera.GetComponent<Cinemachine.CinemachineVirtualCamera>().m_Lens.OrthographicSize, x => virtualCamera.GetComponent<Cinemachine.CinemachineVirtualCamera>().m_Lens.OrthographicSize = x, orthographicSize, cameraZoomTime);
     }
 
