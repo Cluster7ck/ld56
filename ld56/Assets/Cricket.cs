@@ -12,6 +12,7 @@ public enum State
   JumpingUp,
   JumpingDown,
   Falling,
+  BulletTime,
   DoubleJumping,
   Dieing
 }
@@ -23,7 +24,7 @@ public class Cricket : MonoBehaviour
   [SerializeField] private float riseGravityMul = 1;
   [SerializeField] private float fallGravityMul = 1;
   [SerializeField] private float collisionCheckExtents;
-  [SerializeField] private AnimationCurve jumpCurve;
+  [SerializeField] private LayerMask collisionMask;
 
   private Camera camera;
   private BoxCollider2D boxCollider;
@@ -57,15 +58,16 @@ public class Cricket : MonoBehaviour
     boxCollider = GetComponent<BoxCollider2D>();
     startPos = transform.position;
 
-    for (int i = 0; i < 12; i++)
+    for (int i = 0; i < debugSpheres.Length; i++)
     {
       var go = GameObject.CreatePrimitive(PrimitiveType.Sphere);
       go.name = $"{i}";
       go.transform.localScale = Vector3.one * 0.1f;
       debugSpheres[i] = go;
+      debugSpheres[i].SetActive(false);
     }
     
-    for (int i = 0; i < 12; i++)
+    for (int i = 0; i < arcIndicators.Length; i++)
     {
       var go = GameObject.CreatePrimitive(PrimitiveType.Sphere);
       go.name = $"arcIndicator{i}";
@@ -79,7 +81,7 @@ public class Cricket : MonoBehaviour
   {
     if (Input.GetKeyDown(KeyCode.Space))
     {
-      state = State.Idle;
+      state = State.BulletTime;
       transform.position = startPos;
     }
 
@@ -115,6 +117,19 @@ public class Cricket : MonoBehaviour
       
       var dragCurrentPosWorld = camera.ScreenToWorldPoint(dragCurrentPosScreen);
       var dragDelta = (dragStartPosWorld - dragCurrentPosWorld);
+
+      var dotRight = Vector3.Dot(dragDelta, Vector3.right); // should be positive > 0
+      var dotDown = Vector3.Dot(dragDelta, Vector3.down); // should be negative < 0
+
+      if (dotRight < 0)
+      {
+        dragDelta = Vector3.Project(dragDelta, Vector3.up);
+      }
+
+      if (dotDown > 0)
+      {
+        dragDelta = Vector3.Project(dragDelta, Vector3.right);
+      }
 
       initialVelocity = dragDelta * velocityMul;
       initialJumpPos = transform.position;
@@ -243,11 +258,12 @@ public class Cricket : MonoBehaviour
       for (var i = 0; i < checks.Length; i++)
       {
         var origin = checks[i];
-        var res = Physics2D.Raycast(origin, Vector2.up, upDistance * collisionCheckExtents);
+        var res = Physics2D.Raycast(origin, Vector2.up, upDistance * collisionCheckExtents, collisionMask);
         if (res.collider != null)
         {
-          Debug.Log($"UpCollision {res.collider.gameObject.name}");
+          //Debug.Log($"UpCollision {res.collider.gameObject.name}");
           debugSpheres[i + 3].GetComponent<MeshRenderer>().material.color = Color.red;
+          HandleHit(res);
           return State.Falling;
         }
       }
@@ -269,11 +285,12 @@ public class Cricket : MonoBehaviour
       for (var i = 0; i < checks.Length; i++)
       {
         var origin = checks[i];
-        var res = Physics2D.Raycast(origin, Vector2.right, Mathf.Abs(rightDistance * collisionCheckExtents * 2));
+        var res = Physics2D.Raycast(origin, Vector2.right, Mathf.Abs(rightDistance * collisionCheckExtents * 2), collisionMask);
         if (res.collider != null)
         {
-          Debug.Log($"RightCollision {res.collider.gameObject.name} {i} {origin}");
+          //Debug.Log($"RightCollision {res.collider.gameObject.name} {i} {origin}");
           debugSpheres[i + 6].GetComponent<MeshRenderer>().material.color = Color.red;
+          HandleHit(res);
           return State.Falling;
         }
       }
@@ -295,11 +312,12 @@ public class Cricket : MonoBehaviour
       for (var i = 0; i < checks.Length; i++)
       {
         var origin = checks[i];
-        var res = Physics2D.Raycast(origin, Vector2.left, Mathf.Abs(leftDistance * collisionCheckExtents * 2));
+        var res = Physics2D.Raycast(origin, Vector2.left, Mathf.Abs(leftDistance * collisionCheckExtents * 2), collisionMask);
         if (res.collider != null)
         {
-          Debug.Log($"LeftCollision {res.collider.gameObject.name}");
+          //Debug.Log($"LeftCollision {res.collider.gameObject.name}");
           debugSpheres[i + 9].GetComponent<MeshRenderer>().material.color = Color.red;
+          HandleHit(res);
           return State.Falling;
         }
       }
@@ -321,11 +339,12 @@ public class Cricket : MonoBehaviour
       for (var i = 0; i < checks.Length; i++)
       {
         var origin = checks[i];
-        var res = Physics2D.Raycast(origin, Vector2.down, downDistance * collisionCheckExtents);
+        var res = Physics2D.Raycast(origin, Vector2.down, downDistance * collisionCheckExtents, collisionMask);
         if (res.collider != null)
         {
-          Debug.Log($"DownCollision {res.collider.gameObject.name}");
+          //Debug.Log($"DownCollision {res.collider.gameObject.name}");
           debugSpheres[i].GetComponent<MeshRenderer>().material.color = Color.red;
+          HandleHit(res);
           return State.Idle;
         }
       }
@@ -334,9 +353,12 @@ public class Cricket : MonoBehaviour
     return null;
   }
 
-  private Vector3[] Projectile(Vector3 pos, Vector3 angle, float force)
+  private void HandleHit(RaycastHit2D hit)
   {
-    return new[] { Vector3.one };
+    if (hit.transform.gameObject.layer == LayerMask.NameToLayer("Bad"))
+    {
+      Debug.Log("Bad hit");
+    }
   }
 
   private Vector3 PredictVelocityAtT(float time, Vector3 initialVel, Vector3 gravity)
