@@ -76,7 +76,6 @@ public class Cricket : MonoBehaviour
     }
   }
 
-  // Update is called once per frame
   void Update()
   {
     if (Input.GetKeyDown(KeyCode.Space))
@@ -152,10 +151,14 @@ public class Cricket : MonoBehaviour
         state = State.JumpingUp;
       }
     }
-    else if (state == State.JumpingUp)
+  }
+  
+  void FixedUpdate()
+  {
+    if (state == State.JumpingUp)
     {
       // Predicted position
-      jumpTime += Time.deltaTime;
+      jumpTime += Time.fixedDeltaTime;
 
       var pos = PredictProjectilePosAtT(jumpTime, initialVelocity, initialJumpPos, gravity * riseGravityMul);
       //if (transform.position.y > pos.y)
@@ -193,7 +196,7 @@ public class Cricket : MonoBehaviour
     }
     else if (state == State.Falling)
     {
-      jumpTime += Time.deltaTime;
+      jumpTime += Time.fixedDeltaTime;
       var pos = PredictProjectilePosAtT(jumpTime, initialFallVelocity, initialFallPos, gravity * fallGravityMul);
 
       var nextState = DoCollision(transform.position, pos);
@@ -211,7 +214,7 @@ public class Cricket : MonoBehaviour
     if (state == State.JumpingDown)
     {
       // Predicted position
-      jumpTime += Time.deltaTime;
+      jumpTime += Time.fixedDeltaTime;
 
       var pos = PredictProjectilePosAtT(jumpTime, initialVelocity, initialJumpPos, gravity * fallGravityMul);
       // collision
@@ -370,7 +373,7 @@ public class Cricket : MonoBehaviour
     // Move as far as we can
     var dir = next - current;
     var norm = dir.normalized;
-    transform.position += norm * hit.distance * 0.99f;
+    transform.position += norm * hit.distance * 0.90f;
   }
 
   private Vector3 PredictVelocityAtT(float time, Vector3 initialVel, Vector3 gravity)
