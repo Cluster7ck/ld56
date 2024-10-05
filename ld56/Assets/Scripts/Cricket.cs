@@ -7,12 +7,13 @@ using UnityEngine.Serialization;
 public enum State
 {
   NoInput,
-  Idle,
+  WaitInput,
   PrepareJump,
   JumpingUp,
   JumpingDown,
   Falling,
-  BulletTime,
+  BulletTimeWaitInput,
+  BulletTimePrepareJump,
   Bounce,
   DoubleJumping,
   Dieing
@@ -35,7 +36,7 @@ public class Cricket : MonoBehaviour
 
   private Camera camera;
   private BoxCollider2D boxCollider;
-  private State state = State.Idle;
+  private State state = State.WaitInput;
 
   private bool dragging;
   private Vector3 dragStartPosScreen;
@@ -96,13 +97,13 @@ public class Cricket : MonoBehaviour
   {
     if (Input.GetKeyDown(KeyCode.Space))
     {
-      state = State.BulletTime;
+      state = State.BulletTimeWaitInput;
       transform.position = startPos;
     }
 
     if (Input.GetKeyDown(KeyCode.A))
     {
-      state = State.Idle;
+      state = State.WaitInput;
       foreach (var sp in debugSpheres)
       {
         sp.GetComponent<MeshRenderer>().material.color = Color.gray;
@@ -111,7 +112,7 @@ public class Cricket : MonoBehaviour
 
     if (state == State.NoInput)
     {
-      jumpTime += Time.fixedDeltaTime * Time.timeScale;
+      jumpTime += Time.deltaTime;
       var pos = PredictProjectilePosAtT(jumpTime, initialFallVelocity, initialFallPos, gravity * fallGravityMul);
 
       var nextState = DoCollision(transform.position, pos);
@@ -121,7 +122,7 @@ public class Cricket : MonoBehaviour
       }
     }
 
-    if (state == State.Idle)
+    if (state == State.WaitInput)
     {
       if (Mouse.current.leftButton.wasPressedThisFrame)
       {
@@ -180,12 +181,14 @@ public class Cricket : MonoBehaviour
       {
         initialVelocity = PredictVelocityAtT(jumpTime, initialVelocity, gravity * riseGravityMul);
         initialJumpPos = transform.position;
+        Debug.Log("JumpingDown");
         state = State.JumpingDown;
         jumpTime = 0;
       }
       else
       {
         // collision
+        Debug.Log("JumpingUp");
         var nextState = DoCollision(transform.position, pos);
 
         if (jumpTime > 0.1f && nextState.HasValue)
@@ -194,7 +197,7 @@ public class Cricket : MonoBehaviour
           {
             TransitionToFalling();
           }
-          else if (nextState.Value == State.Idle)
+          else if (nextState.Value == State.WaitInput)
           {
             state = nextState.Value;
           }
@@ -219,7 +222,11 @@ public class Cricket : MonoBehaviour
         jumpTime = 0;
         if (nextState.Value == State.Bounce)
         {
-          TransitionToBounce();
+          TransitionToBounce(initialFallVelocity);
+        }
+        else if (nextState.Value == State.BulletTimeWaitInput)
+        {
+          TransitionToBulletTime(initialFallVelocity);
         }
       }
       else
@@ -243,17 +250,17 @@ public class Cricket : MonoBehaviour
         {
           TransitionToFalling();
         }
-        else if (nextState.Value == State.Idle)
+        else if (nextState.Value == State.WaitInput)
         {
           state = nextState.Value;
         }
         else if (nextState.Value == State.Bounce)
         {
-          TransitionToBounce();
+          TransitionToBounce(initialVelocity);
         }
-        else if (nextState.Value == State.BulletTime)
+        else if (nextState.Value == State.BulletTimeWaitInput)
         {
-          TransitionToBulletTime();
+          TransitionToBulletTime(initialVelocity);
         }
 
         jumpTime = 0;
@@ -263,7 +270,7 @@ public class Cricket : MonoBehaviour
         transform.position = pos;
       }
     }
-    else if (state == State.BulletTime)
+    else if (state == State.BulletTimeWaitInput)
     {
     }
   }
@@ -276,40 +283,50 @@ public class Cricket : MonoBehaviour
     state = State.Falling;
   }
 
-  private void TransitionToBounce()
+  private void TransitionToBounce(Vector3 initialVelocity)
   {
     jumpTime = 0;
+    float clampedX = 0;
+    Debug.Log("TransitionToBounce");
+    Debug.Log(initialVelocity.x);
     if (initialVelocity.x < 0)
     {
-      Debug.Log("LowClamp");
-      initialVelocity.x = Mathf.Clamp(initialVelocity.x, float.NegativeInfinity, -bounceMinForwardVelocity);
+      Debug.Log("Low");
+      clampedX = Mathf.Clamp(initialVelocity.x, float.NegativeInfinity, -bounceMinForwardVelocity);
     }
     else
     {
-      Debug.Log("HighClamp");
-      initialVelocity.x = Mathf.Clamp(initialVelocity.x, bounceMinForwardVelocity, float.PositiveInfinity);
+      Debug.Log("High");
+      clampedX = Mathf.Clamp(initialVelocity.x, bounceMinForwardVelocity, float.PositiveInfinity);
     }
 
-    initialVelocity = new Vector3(initialVelocity.x, bounceStrength, 0);
+    Debug.Log(clampedX);
+    this.initialVelocity = new Vector3(clampedX, bounceStrength, 0);
     initialJumpPos = transform.position;
     state = State.JumpingUp;
 
     hitStop.Stop(hitStopLength);
   }
 
-  private void TransitionToBulletTime()
+  private void TransitionToBulletTime(Vector3 initialVelocity)
   {
     jumpTime = 0;
+    float clampedX = 0;
+    Debug.Log("TransitionToBulletTime");
+    Debug.Log(initialVelocity.x);
     if (initialVelocity.x < 0)
     {
-      initialVelocity.x = Mathf.Clamp(initialVelocity.x, float.NegativeInfinity, -bounceMinForwardVelocity);
+      Debug.Log("Low");
+      clampedX = Mathf.Clamp(initialVelocity.x, float.NegativeInfinity, -bounceMinForwardVelocity);
     }
     else
     {
-      initialVelocity.x = Mathf.Clamp(initialVelocity.x, bounceMinForwardVelocity, float.PositiveInfinity);
+      Debug.Log("High");
+      clampedX = Mathf.Clamp(initialVelocity.x, bounceMinForwardVelocity, float.PositiveInfinity);
     }
+    Debug.Log(clampedX);
 
-    initialVelocity = new Vector3(initialVelocity.x, bounceStrength, 0);
+    this.initialVelocity = new Vector3(clampedX, bounceStrength, 0);
     initialJumpPos = transform.position;
     state = State.JumpingUp;
     timeSinceBulletTime = 0;
@@ -377,12 +394,12 @@ public class Cricket : MonoBehaviour
         if (hit.transform.gameObject.layer == LayerMask.NameToLayer("BulletShroom"))
         {
           Debug.Log("BulletTime");
-          return State.BulletTime;
+          return State.BulletTimeWaitInput;
         }
 
         // collide with ground
         Debug.Log("Idle");
-        return State.Idle;
+        return State.WaitInput;
       }
       else
       {

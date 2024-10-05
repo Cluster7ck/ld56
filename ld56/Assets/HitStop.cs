@@ -40,8 +40,10 @@ public class HitStop : MonoBehaviour
 
   IEnumerator DoBulletTime(float duration)
   {
-    yield return Tween.GlobalTimeScale(bulletTimeScale, duration/2, Ease.OutQuart).ToYieldInstruction();
-    yield return Tween.GlobalTimeScale(1, duration/2, Ease.InQuart).ToYieldInstruction();
+    Time.timeScale = bulletTimeScale;
+    yield return new WaitForSecondsRealtime(duration);
+    //yield return Tween.GlobalTimeScale(bulletTimeScale, duration/2, Ease.OutQuart).ToYieldInstruction();
+    //yield return Tween.GlobalTimeScale(1, duration/2, Ease.InQuart).ToYieldInstruction();
     Time.timeScale = 1;
     waiting = false;
   }
