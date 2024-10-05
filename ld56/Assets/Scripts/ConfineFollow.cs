@@ -11,7 +11,7 @@ public class ConfineFollow : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        maxX = transform.position.x;
+        maxX = toTrack.transform.position.x;
     }
 
     // Update is called once per frame
