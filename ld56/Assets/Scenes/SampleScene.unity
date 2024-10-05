@@ -1278,7 +1278,7 @@ Camera:
   far clip plane: 1000
   field of view: 34
   orthographic: 1
-  orthographic size: 6.89
+  orthographic size: 8.38
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -1303,7 +1303,7 @@ Transform:
   m_GameObject: {fileID: 519420028}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.4966245, y: 1.5268898, z: -10}
+  m_LocalPosition: {x: -0.3307209, y: 3.0770698, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2415,7 +2415,7 @@ MonoBehaviour:
   m_Follow: {fileID: 990688468}
   m_Lens:
     FieldOfView: 34
-    OrthographicSize: 6.89
+    OrthographicSize: 8.38
     NearClipPlane: 0.3
     FarClipPlane: 1000
     Dutch: 0
@@ -2748,7 +2748,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6277675346483258945, guid: 298c8734c2185f7498f29e5194e03730, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 9
+      value: 9.06
       objectReference: {fileID: 0}
     - target: {fileID: 6277675346483258945, guid: 298c8734c2185f7498f29e5194e03730, type: 3}
       propertyPath: m_LocalPosition.z
@@ -3358,8 +3358,24 @@ PrefabInstance:
       value: Cricket
       objectReference: {fileID: 0}
     - target: {fileID: 8298798951059343753, guid: 786130dfb3c1a45c580858130886ff3a, type: 3}
+      propertyPath: arcIndicatorPrefab
+      value: 
+      objectReference: {fileID: 8941374493487935712, guid: a3a5de743d0d54840b7e7c0eb4aa53d8, type: 3}
+    - target: {fileID: 8298798951059343753, guid: 786130dfb3c1a45c580858130886ff3a, type: 3}
+      propertyPath: arcIndicatorSize.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8298798951059343753, guid: 786130dfb3c1a45c580858130886ff3a, type: 3}
+      propertyPath: arcIndicatorSize.y
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8298798951059343753, guid: 786130dfb3c1a45c580858130886ff3a, type: 3}
       propertyPath: collisionMask.m_Bits
       value: 6720
+      objectReference: {fileID: 0}
+    - target: {fileID: 8298798951059343753, guid: 786130dfb3c1a45c580858130886ff3a, type: 3}
+      propertyPath: maxVelocityMagnitude
+      value: 45
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
