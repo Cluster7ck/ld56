@@ -39,6 +39,7 @@ public class Cricket : MonoBehaviour
   [SerializeField] private Vector2 arcIndicatorSize;
 
   private Camera camera;
+  private Animator animator;
   private BoxCollider2D boxCollider;
   private State state = State.WaitInput;
 
@@ -78,6 +79,7 @@ public class Cricket : MonoBehaviour
     camera = Camera.main;
     boxCollider = GetComponent<BoxCollider2D>();
     startPos = transform.position;
+    animator = GetComponent<Animator>();
 
     for (int i = 0; i < debugSpheres.Length; i++)
     {
@@ -130,10 +132,13 @@ public class Cricket : MonoBehaviour
     if (state == State.WaitInput)
     {
       if (Mouse.current.leftButton.wasPressedThisFrame)
+        animator.SetBool("isFlying", false);
+        animator.SetBool("isAiming", false);
       {
         state = State.PrepareJump;
         dragStartPosScreen = Mouse.current.position.value;
         dragStartPosWorld = camera.ScreenToWorldPoint(dragStartPosScreen);
+
         for (int i = 0; i < arcIndicators.Length; i++)
         {
           arcIndicators[i].gameObject.SetActive(true);
@@ -160,6 +165,7 @@ public class Cricket : MonoBehaviour
       if (Mouse.current.leftButton.isPressed)
       {
         dragCurrentPosScreen = Mouse.current.position.value;
+        animator.SetBool("isAiming", true);
       }
       var dragCurrentPosWorld = camera.ScreenToWorldPoint(dragCurrentPosScreen);
       var dragDelta = (dragStartPosWorld - dragCurrentPosWorld);
@@ -191,6 +197,8 @@ public class Cricket : MonoBehaviour
         for (int i = 0; i < arcIndicators.Length; i++)
         {
           arcIndicators[i].gameObject.SetActive(false);
+          animator.SetBool("isAiming", false);
+          animator.SetBool("isFlying", true);
         }
 
         initialVelocity = potentialVelocity;
@@ -235,6 +243,7 @@ public class Cricket : MonoBehaviour
           if (nextState.Value == State.Falling)
           {
             TransitionToFalling();
+
           }
           else if (nextState.Value == State.WaitInput)
           {
@@ -473,6 +482,7 @@ public class Cricket : MonoBehaviour
         // collide with ground
         //Debug.Log("Idle");
         return State.WaitInput;
+
       }
       else
       {
