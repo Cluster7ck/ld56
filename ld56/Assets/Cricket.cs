@@ -46,6 +46,8 @@ public class Cricket : MonoBehaviour
   private Vector3 startPos;
 
   private GameObject[] debugSpheres = new GameObject[12];
+  
+  private GameObject[] arcIndicators = new GameObject[7];
 
 
   // Start is called before the first frame update
@@ -61,6 +63,14 @@ public class Cricket : MonoBehaviour
       go.name = $"{i}";
       go.transform.localScale = Vector3.one * 0.1f;
       debugSpheres[i] = go;
+    }
+    
+    for (int i = 0; i < 12; i++)
+    {
+      var go = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+      go.name = $"arcIndicator{i}";
+      go.transform.localScale = Vector3.one * 0.1f;
+      arcIndicators[i] = go;
     }
   }
 
@@ -89,45 +99,41 @@ public class Cricket : MonoBehaviour
         state = State.PrepareJump;
         dragStartPosScreen = Mouse.current.position.value;
         dragStartPosWorld = camera.ScreenToWorldPoint(dragStartPosScreen);
+        for (int i = 0; i < arcIndicators.Length; i++)
+        {
+          arcIndicators[i].gameObject.SetActive(true);
+        }
       }
     }
 
     if (state == State.PrepareJump)
     {
-      if (Mouse.current.leftButton.wasReleasedThisFrame)
-      {
-        state = State.JumpingUp;
-        var dragCurrentPosWorld = camera.ScreenToWorldPoint(dragCurrentPosScreen);
-        var dragDelta = (dragStartPosWorld - dragCurrentPosWorld);
-
-        initialVelocity = dragDelta * velocityMul;
-        initialJumpPos = transform.position;
-
-        /*
-        var dt = 0.0f;
-        var dir = 1;
-        var prevPos = initialJumpPos;
-        while (true)
-        {
-          var pos = PredictProjectileUpwardsAtT(dt, initialVelocity, initialJumpPos, gravity);
-          if (dir == -1 && pos.y <= initialJumpPos.y)
-          {
-            break;
-          }
-
-          if (prevPos.y > pos.y)
-          {
-            dir = -1;
-          }
-
-          prevPos = pos;
-          dt += 1000 / 60.0f;
-        }
-        */
-      }
-      else if (Mouse.current.leftButton.isPressed)
+      if (Mouse.current.leftButton.isPressed)
       {
         dragCurrentPosScreen = Mouse.current.position.value;
+      }
+      
+      var dragCurrentPosWorld = camera.ScreenToWorldPoint(dragCurrentPosScreen);
+      var dragDelta = (dragStartPosWorld - dragCurrentPosWorld);
+
+      initialVelocity = dragDelta * velocityMul;
+      initialJumpPos = transform.position;
+
+      float dt = 0.03f;
+      float t = dt;
+      for (int i = 0; i < arcIndicators.Length; i++)
+      {
+        arcIndicators[i].transform.position = PredictProjectilePosAtT(t, initialVelocity, initialJumpPos, gravity * riseGravityMul);
+        t += dt;
+      }
+      
+      if (Mouse.current.leftButton.wasReleasedThisFrame)
+      {
+        for (int i = 0; i < arcIndicators.Length; i++)
+        {
+          arcIndicators[i].gameObject.SetActive(false);
+        }
+        state = State.JumpingUp;
       }
     }
     else if (state == State.JumpingUp)
@@ -135,7 +141,7 @@ public class Cricket : MonoBehaviour
       // Predicted position
       jumpTime += Time.deltaTime;
 
-      var pos = PredictProjectileUpwardsAtT(jumpTime, initialVelocity, initialJumpPos, gravity * riseGravityMul);
+      var pos = PredictProjectilePosAtT(jumpTime, initialVelocity, initialJumpPos, gravity * riseGravityMul);
       if (transform.position.y > pos.y)
       {
         initialVelocity = PredictVelocityAtT(jumpTime, initialVelocity, gravity * riseGravityMul);
@@ -172,7 +178,7 @@ public class Cricket : MonoBehaviour
     else if (state == State.Falling)
     {
       jumpTime += Time.deltaTime;
-      var pos = PredictProjectileUpwardsAtT(jumpTime, initialFallVelocity, initialFallPos, gravity * fallGravityMul);
+      var pos = PredictProjectilePosAtT(jumpTime, initialFallVelocity, initialFallPos, gravity * fallGravityMul);
 
       var nextState = DoCollision(transform.position, pos);
       if (nextState.HasValue)
@@ -191,7 +197,7 @@ public class Cricket : MonoBehaviour
       // Predicted position
       jumpTime += Time.deltaTime;
 
-      var pos = PredictProjectileUpwardsAtT(jumpTime, initialVelocity, initialJumpPos, gravity * fallGravityMul);
+      var pos = PredictProjectilePosAtT(jumpTime, initialVelocity, initialJumpPos, gravity * fallGravityMul);
       // collision
       var nextState = DoCollision(transform.position, pos);
 
@@ -338,7 +344,7 @@ public class Cricket : MonoBehaviour
     return gravity * time + initialVel;
   }
 
-  private Vector3 PredictProjectileUpwardsAtT(float time, Vector3 initialVel, Vector3 initialPos, Vector3 gravity)
+  private Vector3 PredictProjectilePosAtT(float time, Vector3 initialVel, Vector3 initialPos, Vector3 gravity)
   {
     return gravity * (0.5f * time * time) + initialVel * time + initialPos;
   }
