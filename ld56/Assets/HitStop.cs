@@ -24,7 +24,6 @@ public class HitStop : MonoBehaviour
 
   public void BulletTime(float duration)
   {
-    Debug.Log("BulletTime");
     if (waiting) return;
     waiting = true;
     StartCoroutine(DoBulletTime(duration));

@@ -43,6 +43,9 @@ public class Cricket : MonoBehaviour
   private Vector3 dragStartPosWorld;
   private Vector3 dragCurrentPosScreen;
 
+  private Vector3 potentialVelocity;
+  private Vector3 potentialJumpPos;
+  
   private Vector3 initialVelocity;
   private Vector3 initialJumpPos;
 
@@ -136,24 +139,44 @@ public class Cricket : MonoBehaviour
       }
     }
 
-    if (state == State.PrepareJump)
+    if (state == State.BulletTimeWaitInput)
+    {
+      if (Mouse.current.leftButton.wasPressedThisFrame)
+      {
+        Debug.Log("BulletTimeWaitInput::PressedThisFrame");
+        state = State.BulletTimePrepareJump;
+        dragStartPosScreen = Mouse.current.position.value;
+        dragStartPosWorld = camera.ScreenToWorldPoint(dragStartPosScreen);
+        for (int i = 0; i < arcIndicators.Length; i++)
+        {
+          arcIndicators[i].gameObject.SetActive(true);
+        }
+      }
+    }
+
+    if (state == State.PrepareJump || state == State.BulletTimePrepareJump)
     {
       if (Mouse.current.leftButton.isPressed)
       {
+        if (state == State.BulletTimePrepareJump)
+        {
+          Debug.Log("BulletTimePrepareJump::isPressed");
+        }
+
         dragCurrentPosScreen = Mouse.current.position.value;
       }
 
       var dragCurrentPosWorld = camera.ScreenToWorldPoint(dragCurrentPosScreen);
       var dragDelta = (dragStartPosWorld - dragCurrentPosWorld);
 
-      initialVelocity = dragDelta * velocityMul;
-      initialJumpPos = transform.position;
+      potentialVelocity = dragDelta * velocityMul;
+      potentialJumpPos = transform.position;
 
       float dt = 0.03f;
       float t = dt;
       for (int i = 0; i < arcIndicators.Length; i++)
       {
-        arcIndicators[i].transform.position = PredictProjectilePosAtT(t, initialVelocity, initialJumpPos, gravity * riseGravityMul);
+        arcIndicators[i].transform.position = PredictProjectilePosAtT(t, potentialVelocity, potentialJumpPos, gravity * riseGravityMul);
         t += dt;
       }
 
@@ -164,6 +187,8 @@ public class Cricket : MonoBehaviour
           arcIndicators[i].gameObject.SetActive(false);
         }
 
+        initialVelocity = potentialVelocity;
+        initialJumpPos = potentialJumpPos;
         state = State.JumpingUp;
       }
     }
@@ -268,9 +293,53 @@ public class Cricket : MonoBehaviour
         transform.position = pos;
       }
     }
-    else if (state == State.BulletTimeWaitInput)
+    else if (state == State.BulletTimeWaitInput || state == State.BulletTimePrepareJump)
     {
+      Debug.Log("BUUUUUUULLLEETTT");
+      JumpingUp();
     }
+  }
+
+  private void JumpingUp()
+  {
+    // Predicted position
+    jumpTime += Time.fixedDeltaTime * Time.timeScale;
+
+    var pos = PredictProjectilePosAtT(jumpTime, initialVelocity, initialJumpPos, gravity * riseGravityMul);
+    if (transform.position.y > pos.y)
+    {
+      TransitionToJumpingDown();
+    }
+    else
+    {
+      // collision
+      var nextState = DoCollision(transform.position, pos);
+
+      if (jumpTime > 0.1f && nextState.HasValue)
+      {
+        if (nextState.Value == State.Falling)
+        {
+          TransitionToFalling();
+        }
+        else if (nextState.Value == State.WaitInput)
+        {
+          state = nextState.Value;
+          jumpTime = 0;
+        }
+      }
+      else
+      {
+        transform.position = pos;
+      }
+    }
+  }
+
+  private void TransitionToJumpingDown()
+  {
+    initialVelocity = PredictVelocityAtT(jumpTime, initialVelocity, gravity * riseGravityMul);
+    initialJumpPos = transform.position;
+    state = State.JumpingDown;
+    jumpTime = 0;
   }
 
   private void TransitionToFalling()
@@ -279,6 +348,7 @@ public class Cricket : MonoBehaviour
     initialFallPos = transform.position;
     initialFallVelocity = Vector3.down * 0.05f;
     state = State.Falling;
+    jumpTime = 0;
   }
 
   private void TransitionToBounce(Vector3 initialVelocity)
@@ -303,6 +373,7 @@ public class Cricket : MonoBehaviour
 
   private void TransitionToBulletTime(Vector3 initialVelocity)
   {
+    Debug.Log("TransitionToBulletTime");
     jumpTime = 0;
     float clampedX = 0;
     if (initialVelocity.x < 0)
@@ -316,7 +387,7 @@ public class Cricket : MonoBehaviour
 
     this.initialVelocity = new Vector3(clampedX, bounceStrength, 0);
     initialJumpPos = transform.position;
-    state = State.JumpingUp;
+    state = State.BulletTimeWaitInput;
     timeSinceBulletTime = 0;
 
     hitStop.BulletTime(bulletTimeLength);
