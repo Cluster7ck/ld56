@@ -30,7 +30,7 @@ public class Cricket : MonoBehaviour
   [SerializeField] private float bounceMinForwardVelocity;
 
   [SerializeField] private float hitStopLength;
-  
+
   [SerializeField] private float bulletTimeLength;
 
   private Camera camera;
@@ -47,6 +47,8 @@ public class Cricket : MonoBehaviour
 
   private Vector3 initialFallPos;
   private Vector3 initialFallVelocity;
+  private GameObject lastFallCollision;
+  private int sameCollisionFall;
 
   private float jumpTime;
 
@@ -186,13 +188,11 @@ public class Cricket : MonoBehaviour
         // collision
         var nextState = DoCollision2(transform.position, pos);
 
-        if (nextState.HasValue)
+        if (jumpTime > 0.1f && nextState.HasValue)
         {
           if (nextState.Value == State.Falling)
           {
-            initialFallPos = transform.position;
-            initialFallVelocity = Vector3.down * 0.05f;
-            state = nextState.Value;
+            TransitionToFalling();
           }
           else if (nextState.Value == State.Idle)
           {
@@ -217,6 +217,10 @@ public class Cricket : MonoBehaviour
       {
         state = nextState.Value;
         jumpTime = 0;
+        if (nextState.Value == State.Bounce)
+        {
+          TransitionToBounce();
+        }
       }
       else
       {
@@ -237,9 +241,7 @@ public class Cricket : MonoBehaviour
       {
         if (nextState.Value == State.Falling)
         {
-          initialFallPos = transform.position;
-          initialFallVelocity = Vector3.down * 0.05f;
-          state = nextState.Value;
+          TransitionToFalling();
         }
         else if (nextState.Value == State.Idle)
         {
@@ -247,42 +249,11 @@ public class Cricket : MonoBehaviour
         }
         else if (nextState.Value == State.Bounce)
         {
-          jumpTime = 0;
-          if (initialVelocity.x < 0)
-          {
-            initialVelocity.x = Mathf.Clamp(initialVelocity.x, float.NegativeInfinity, -bounceMinForwardVelocity);
-          }
-          else
-          {
-            initialVelocity.x = Mathf.Clamp(initialVelocity.x, bounceMinForwardVelocity, float.PositiveInfinity);
-          }
-
-          initialVelocity = new Vector3(initialVelocity.x, bounceStrength, 0);
-          initialJumpPos = transform.position;
-          state = State.JumpingUp;
-
-          hitStop.Stop(hitStopLength);
+          TransitionToBounce();
         }
         else if (nextState.Value == State.BulletTime)
         {
-          jumpTime = 0;
-          if (initialVelocity.x < 0)
-          {
-            initialVelocity.x = Mathf.Clamp(initialVelocity.x, float.NegativeInfinity, -bounceMinForwardVelocity);
-          }
-          else
-          {
-            initialVelocity.x = Mathf.Clamp(initialVelocity.x, bounceMinForwardVelocity, float.PositiveInfinity);
-          }
-
-          initialVelocity = new Vector3(initialVelocity.x, bounceStrength, 0);
-          initialJumpPos = transform.position;
-          state = State.JumpingUp;
-          timeSinceBulletTime = 0;
-
-          hitStop.BulletTime(bulletTimeLength);
-          //state = nextState.Value;
-          //StartCoroutine()
+          TransitionToBulletTime();
         }
 
         jumpTime = 0;
@@ -294,8 +265,56 @@ public class Cricket : MonoBehaviour
     }
     else if (state == State.BulletTime)
     {
-      
     }
+  }
+
+  private void TransitionToFalling()
+  {
+    lastFallCollision = null;
+    initialFallPos = transform.position;
+    initialFallVelocity = Vector3.down * 0.05f;
+    state = State.Falling;
+  }
+
+  private void TransitionToBounce()
+  {
+    jumpTime = 0;
+    if (initialVelocity.x < 0)
+    {
+      Debug.Log("LowClamp");
+      initialVelocity.x = Mathf.Clamp(initialVelocity.x, float.NegativeInfinity, -bounceMinForwardVelocity);
+    }
+    else
+    {
+      Debug.Log("HighClamp");
+      initialVelocity.x = Mathf.Clamp(initialVelocity.x, bounceMinForwardVelocity, float.PositiveInfinity);
+    }
+
+    initialVelocity = new Vector3(initialVelocity.x, bounceStrength, 0);
+    initialJumpPos = transform.position;
+    state = State.JumpingUp;
+
+    hitStop.Stop(hitStopLength);
+  }
+
+  private void TransitionToBulletTime()
+  {
+    jumpTime = 0;
+    if (initialVelocity.x < 0)
+    {
+      initialVelocity.x = Mathf.Clamp(initialVelocity.x, float.NegativeInfinity, -bounceMinForwardVelocity);
+    }
+    else
+    {
+      initialVelocity.x = Mathf.Clamp(initialVelocity.x, bounceMinForwardVelocity, float.PositiveInfinity);
+    }
+
+    initialVelocity = new Vector3(initialVelocity.x, bounceStrength, 0);
+    initialJumpPos = transform.position;
+    state = State.JumpingUp;
+    timeSinceBulletTime = 0;
+
+    hitStop.BulletTime(bulletTimeLength);
   }
 
   private State? DoCollision2(Vector3 previousPos, Vector3 nextPos)
@@ -318,6 +337,14 @@ public class Cricket : MonoBehaviour
 
     if (hit.collider != null)
     {
+      if (hit.transform.gameObject == lastFallCollision)
+      {
+        sameCollisionFall++;
+      }
+      else
+      {
+        sameCollisionFall = 0;
+      }
       if (hit.transform.gameObject.layer == LayerMask.NameToLayer("Bad"))
       {
         Debug.Log("Bad hit");
@@ -325,12 +352,13 @@ public class Cricket : MonoBehaviour
 
       var dist = hit.distance;
       var normDir = dir.normalized;
-      transform.position += normDir * Mathf.Clamp(dist - 0.005f, 0.005f, dist);
+      transform.position += normDir * Mathf.Clamp(dist - 0.01f, 0.01f, dist);
 
       var dot = Vector3.Dot(hit.normal, Vector3.up);
       //Debug.Log($"{hit.transform.gameObject.name}: hd:{hit.distance}, hn:{hit.normal}, dot:{dot}, dir:{dir}");
       if (previousPos.y < nextPos.y)
       {
+        lastFallCollision = hit.transform.gameObject;
         return State.Falling;
       }
 
@@ -338,17 +366,24 @@ public class Cricket : MonoBehaviour
       {
         if (hit.transform.gameObject.layer == LayerMask.NameToLayer("Shroom"))
         {
-          //Debug.Log("Bounce");
+          Debug.Log("Bounce");
           return State.Bounce;
         }
 
+        if (hit.transform.gameObject.layer == LayerMask.NameToLayer("BulletShroom"))
+        {
+          Debug.Log("BulletTime");
+          return State.BulletTime;
+        }
+
         // collide with ground
-        //Debug.Log("Idle");
+        Debug.Log("Idle");
         return State.Idle;
       }
       else
       {
-        //Debug.Log("Falling");
+        lastFallCollision = hit.transform.gameObject;
+        Debug.Log("Falling");
         return State.Falling;
       }
     }
