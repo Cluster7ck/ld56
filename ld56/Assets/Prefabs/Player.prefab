@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 3986453291830224839}
   - component: {fileID: 3827800020662625438}
   - component: {fileID: 8648295001335344657}
+  - component: {fileID: 5025574224170450016}
   m_Layer: 7
   m_Name: Player
   m_TagString: Untagged
@@ -103,6 +104,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gravity: {x: 0, y: -9.81, z: 0}
   velocityMul: 3
+  maxVelocityMagnitude: 45
   riseGravityMul: 8
   fallGravityMul: 8
   collisionMask:
@@ -112,6 +114,8 @@ MonoBehaviour:
   bounceMinForwardVelocity: 5
   hitStopLength: 0.1
   bulletTimeLength: 1
+  arcIndicatorPrefab: {fileID: 0}
+  arcIndicatorSize: {x: 0, y: 0}
 --- !u!50 &3986453291830224839
 Rigidbody2D:
   serializedVersion: 4
@@ -248,6 +252,27 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!95 &5025574224170450016
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6072423614325277692}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 717f3602af7d3f24caf70c197379402d, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1001 &7660903188872291100
 PrefabInstance:
   m_ObjectHideFlags: 0
