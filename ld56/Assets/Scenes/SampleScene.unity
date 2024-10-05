@@ -2002,6 +2002,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Cricket
       objectReference: {fileID: 0}
+    - target: {fileID: 8298798951059343753, guid: 786130dfb3c1a45c580858130886ff3a, type: 3}
+      propertyPath: acceptedUpAngle
+      value: 0.1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

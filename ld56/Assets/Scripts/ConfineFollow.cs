@@ -7,24 +7,21 @@ public class ConfineFollow : MonoBehaviour
     [SerializeField] private GameObject toTrack;
     private float maxX;
     private float prevPosX;
+    private float minY;
     
     // Start is called before the first frame update
     void Start()
     {
         maxX = toTrack.transform.position.x;
+        minY = transform.position.y;
     }
 
     // Update is called once per frame
     void Update()
     {
-        var trackX = toTrack.transform.position.x;
-        if (trackX > maxX)
-        {
-            this.transform.position += Vector3.right * (trackX - maxX);
-            maxX = trackX;
-        }
-        if(transform.position.x < prevPosX) transform.position = new Vector3(prevPosX, transform.position.y, transform.position.z);
-        
-        prevPosX = transform.position.x;
+        var trackPos = toTrack.transform.position;
+        var t = transform;
+        t.position += (trackPos - t.position);
+        transform.position = new Vector3(t.position.x, Mathf.Min(t.position.y, minY), transform.position.z);
     }
 }

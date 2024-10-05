@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Serialization;
 
 public enum State
 {
@@ -23,6 +24,7 @@ public class Cricket : MonoBehaviour
   [SerializeField] private float collisionCheckExtents;
   [SerializeField] private LayerMask collisionMask;
   [SerializeField] private float bounceStrength;
+  [SerializeField] private float acceptedUpAngle;
 
   private Camera camera;
   private CircleCollider2D col;
@@ -245,17 +247,17 @@ public class Cricket : MonoBehaviour
     var position = transform.position;
     var dir = nextPos - previousPos;
     
-    if (nextPos.x < previousPos.x && (nextPos.x-radius) < cameraLeft.x)
-    {
-      Debug.Log("What");
-      var leftDir = Vector3.left * Mathf.Abs((cameraLeft.x + radius) - previousPos.x);
-      var newLeftDir = Vector3.Project(leftDir, dir);
-      Debug.DrawLine(previousPos, previousPos+Vector3.up, Color.blue, 30f);
-      Debug.DrawLine(previousPos, previousPos+leftDir, Color.green, 30f);
-      Debug.DrawLine(previousPos, previousPos+newLeftDir, Color.red, 30f);
-      transform.position += newLeftDir;
-      return State.Falling;
-    }
+    //if (nextPos.x < previousPos.x && (nextPos.x-radius) < cameraLeft.x)
+    //{
+    //  Debug.Log("What");
+    //  var leftDir = Vector3.left * Mathf.Abs((cameraLeft.x + radius) - previousPos.x);
+    //  var newLeftDir = Vector3.Project(leftDir, dir);
+    //  Debug.DrawLine(previousPos, previousPos+Vector3.up, Color.blue, 30f);
+    //  Debug.DrawLine(previousPos, previousPos+leftDir, Color.green, 30f);
+    //  Debug.DrawLine(previousPos, previousPos+newLeftDir, Color.red, 30f);
+    //  transform.position += newLeftDir;
+    //  return State.Falling;
+    //}
     
     var hit = Physics2D.CircleCast(position, radius, dir, dir.magnitude, collisionMask);
 
@@ -271,12 +273,12 @@ public class Cricket : MonoBehaviour
       transform.position += normDir * Mathf.Clamp(dist - 0.01f, 0.01f, dist);
 
       var dot = Vector3.Dot(hit.normal, Vector3.up) - 1.0f;
-      //Debug.Log($"{hit.transform.gameObject.name}: {hit.distance}, {hit.normal}, {dot}");
-      if (Mathf.Abs(dot) < Mathf.Epsilon)
+      Debug.Log($"{hit.transform.gameObject.name}: {hit.distance}, {hit.normal}, {dot}");
+      if (Mathf.Abs(dot) < acceptedUpAngle)
       {
         if (hit.transform.gameObject.layer == LayerMask.NameToLayer("Shroom"))
         {
-          Debug.Log("Bounce");
+          //Debug.Log("Bounce");
           return State.Bounce;
         }
         // collide with ground
