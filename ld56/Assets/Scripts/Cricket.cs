@@ -23,6 +23,7 @@ public class Cricket : MonoBehaviour
   [SerializeField] private float fallGravityMul = 1;
   [SerializeField] private LayerMask collisionMask;
   [SerializeField] private float bounceStrength;
+  [SerializeField] private float bounceMinForwardVelocity;
 
   private Camera camera;
   private BoxCollider2D boxCollider;
@@ -232,6 +233,14 @@ public class Cricket : MonoBehaviour
         else if(nextState.Value == State.Bounce)
         {
           jumpTime = 0;
+          if (initialVelocity.x < 0)
+          {
+            initialVelocity.x = Mathf.Clamp(initialVelocity.x, float.NegativeInfinity, -bounceMinForwardVelocity);
+          }
+          else
+          {
+            initialVelocity.x = Mathf.Clamp(initialVelocity.x, bounceMinForwardVelocity, float.PositiveInfinity);
+          }
           initialVelocity = new Vector3(initialVelocity.x, bounceStrength, 0);
           initialJumpPos = transform.position;
           state = State.JumpingUp;
@@ -288,6 +297,10 @@ public class Cricket : MonoBehaviour
 
       var dot = Vector3.Dot(hit.normal, Vector3.up);
       Debug.Log($"{hit.transform.gameObject.name}: hd:{hit.distance}, hn:{hit.normal}, dot:{dot}, dir:{dir}");
+      if (previousPos.y < nextPos.y)
+      {
+        return State.Falling;
+      }
       if (dot != 0)
       {
         if (hit.transform.gameObject.layer == LayerMask.NameToLayer("Shroom"))

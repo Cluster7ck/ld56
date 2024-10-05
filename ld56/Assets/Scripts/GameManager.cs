@@ -36,7 +36,7 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         // Initialer Zustand
-        ChangeState(GameState.Start);
+        ChangeState(currentState);
     }
 
     public void ChangeState(GameState newState)
