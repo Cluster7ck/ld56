@@ -37,6 +37,8 @@ public class Cricket : MonoBehaviour
 
   [SerializeField] private GameObject arcIndicatorPrefab;
   [SerializeField] private Vector2 arcIndicatorSize;
+  [SerializeField] private ParticleSystem jumpParticleSystem;
+  [SerializeField] private Animator animator;
 
   private Camera camera;
   private BoxCollider2D boxCollider;
@@ -129,11 +131,15 @@ public class Cricket : MonoBehaviour
 
     if (state == State.WaitInput)
     {
+      animator.SetBool("isFlying", false);
+      animator.SetBool("isAiming", false);
       if (Mouse.current.leftButton.wasPressedThisFrame)
       {
+        animator.SetBool("isAiming", true);
         state = State.PrepareJump;
         dragStartPosScreen = Mouse.current.position.value;
         dragStartPosWorld = camera.ScreenToWorldPoint(dragStartPosScreen);
+
         for (int i = 0; i < arcIndicators.Length; i++)
         {
           arcIndicators[i].gameObject.SetActive(true);
@@ -157,10 +163,7 @@ public class Cricket : MonoBehaviour
 
     if (state == State.PrepareJump || state == State.BulletTimePrepareJump)
     {
-      if (Mouse.current.leftButton.isPressed)
-      {
-        dragCurrentPosScreen = Mouse.current.position.value;
-      }
+      dragCurrentPosScreen = Mouse.current.position.value;
       var dragCurrentPosWorld = camera.ScreenToWorldPoint(dragCurrentPosScreen);
       var dragDelta = (dragStartPosWorld - dragCurrentPosWorld);
 
@@ -169,6 +172,10 @@ public class Cricket : MonoBehaviour
       var mag = Mathf.Min(potentialVelocity.magnitude, maxVelocityMagnitude);
       potentialVelocity = potentialVelocityNorm * mag;
       var potentialJumpPos = transform.position;
+
+      var fo = jumpParticleSystem.forceOverLifetime;
+      fo.xMultiplier =  -potentialVelocity.x;
+      fo.yMultiplier =  -potentialVelocity.y;
 
       float dt = 0.03f;
       float t = dt;
@@ -193,6 +200,9 @@ public class Cricket : MonoBehaviour
           arcIndicators[i].gameObject.SetActive(false);
         }
 
+        animator.SetBool("isAiming", false);
+        animator.SetBool("isFlying", true);
+          
         initialVelocity = potentialVelocity;
         initialJumpPos = potentialJumpPos;
         Debug.Log($"MagVel: {initialVelocity.magnitude}");
@@ -235,6 +245,7 @@ public class Cricket : MonoBehaviour
           if (nextState.Value == State.Falling)
           {
             TransitionToFalling();
+
           }
           else if (nextState.Value == State.WaitInput)
           {
@@ -473,6 +484,7 @@ public class Cricket : MonoBehaviour
         // collide with ground
         //Debug.Log("Idle");
         return State.WaitInput;
+
       }
       else
       {
