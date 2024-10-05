@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2443209109089557152}
   - component: {fileID: 2689219343768755348}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: 1 (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -94,7 +94,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7357055457725965567}
   - component: {fileID: 5062810041034725189}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Left
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -156,7 +156,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 4
   m_Sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
   m_Color: {r: 0, g: 0, b: 0, a: 1}
   m_FlipX: 0
@@ -178,7 +178,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4418394060645940461}
   - component: {fileID: 3951272119711554262}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Left (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -240,7 +240,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 4
   m_Sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
   m_Color: {r: 0, g: 0, b: 0, a: 1}
   m_FlipX: 0
@@ -262,7 +262,7 @@ GameObject:
   m_Component:
   - component: {fileID: 9053819410118484527}
   - component: {fileID: 2812993726815183057}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -346,7 +346,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6007940171556429752}
   - component: {fileID: 3382011269727736623}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: 1 (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -430,7 +430,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8340943749199745581}
   - component: {fileID: 5449276238738609422}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: 1 (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -513,7 +513,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8019390651595396908}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Left
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -549,7 +549,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8459340962846407892}
   - component: {fileID: 7615574585455376558}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: GameObject
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -599,7 +599,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3746935592920357866}
   - component: {fileID: 2395467635793423352}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: GameObject (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -649,7 +649,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4788150919597126483}
   - component: {fileID: 599161608873312963}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: GameObject (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -698,7 +698,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4156641398053584861}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Arms
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -736,7 +736,7 @@ GameObject:
   - component: {fileID: 5510808330231627095}
   - component: {fileID: 2758356467340112139}
   - component: {fileID: 2974073975480633983}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: creepySpider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -835,7 +835,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8964116b9e61bc4a9631408ef48f8de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  radius: 3
+  radius: 2
   moveSpeed: 2
   interval: 2
 --- !u!231 &2758356467340112139
@@ -900,7 +900,7 @@ LineRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: -5
+  m_SortingOrder: 1
   m_Positions:
   - {x: 0, y: 0, z: 0}
   - {x: 0, y: 0, z: 1}
@@ -973,7 +973,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6569119966188012160}
   - component: {fileID: 1959245383386914184}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: 1 (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1057,7 +1057,7 @@ GameObject:
   m_Component:
   - component: {fileID: 656978418610594206}
   - component: {fileID: 1931822368895057389}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: 1 (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1141,7 +1141,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8848124257612171229}
   - component: {fileID: 3577484831247930882}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: 1 (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1225,7 +1225,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7103176607727329634}
   - component: {fileID: 4193714758471443421}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1287,7 +1287,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 3
   m_Sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -1309,7 +1309,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1467455811535011834}
   - component: {fileID: 5700388938967950781}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: GameObject (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1358,7 +1358,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 877860695257961796}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Left (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1394,7 +1394,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1127584980117522172}
   - component: {fileID: 5969091365638285368}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: GameObject (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1444,7 +1444,7 @@ GameObject:
   m_Component:
   - component: {fileID: 859767092915088124}
   - component: {fileID: 4037366059184357425}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: GameObject
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1493,7 +1493,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6154413683921768920}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Eyes
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1527,7 +1527,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6712088689358696843}
   - component: {fileID: 7259818616113739468}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: GameObject (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1577,7 +1577,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8026000429679085712}
   - component: {fileID: 3990510785574362175}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: GameObject (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1627,7 +1627,7 @@ GameObject:
   m_Component:
   - component: {fileID: 640841104703916113}
   - component: {fileID: 8835153858771329481}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
