@@ -3,6 +3,7 @@ using UnityEngine.InputSystem;
 
 public enum State
 {
+  NoInput,
   Idle,
   PrepareJump,
   JumpingUp,
@@ -87,6 +88,18 @@ public class Cricket : MonoBehaviour
       foreach (var sp in debugSpheres)
       {
         sp.GetComponent<MeshRenderer>().material.color = Color.gray;
+      }
+    }
+
+    if (state == State.NoInput)
+    {
+      jumpTime += Time.fixedDeltaTime;
+      var pos = PredictProjectilePosAtT(jumpTime, initialFallVelocity, initialFallPos, gravity * fallGravityMul);
+
+      var nextState = DoCollision2(transform.position, pos);
+      if (!nextState.HasValue)
+      {
+        transform.position = pos;
       }
     }
 
@@ -232,6 +245,11 @@ public class Cricket : MonoBehaviour
         transform.position = pos;
       }
     }
+  }
+
+  private void Falling()
+  {
+    
   }
 
   private State? DoCollision2(Vector3 previousPos, Vector3 nextPos)
