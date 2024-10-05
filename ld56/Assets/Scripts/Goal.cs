@@ -4,10 +4,11 @@ using UnityEngine;
 
 public class Goal : MonoBehaviour
 {
+    int characterLayer;
     // Start is called before the first frame update
     void Start()
     {
-        
+        characterLayer = LayerMask.NameToLayer("Character");
     }
 
     // Update is called once per frame
@@ -17,14 +18,8 @@ public class Goal : MonoBehaviour
     }
 
     private void OnTriggerEnter2D ( Collider2D collision ) {
-        Debug.Log("Collided with " + collision.name);
-        if (collision.gameObject.layer == LayerMask.NameToLayer("Character")) {
-            Debug.Log("Collided with Character yay");
+        if (collision.gameObject.layer == characterLayer) {
             GameManager.instance.ReachedGoal();
         }
-    }
-    private void OnTriggerStay2D(Collider2D other)
-    {
-        
     }
 }

@@ -68,7 +68,7 @@ public class GameManager : MonoBehaviour
                 
                 break;
             case GameState.Win:
-                
+                UIManager.instance.EndScreen.SetActive(true);
                 break;
         }
 
@@ -77,6 +77,9 @@ public class GameManager : MonoBehaviour
         }
         if(currentState != GameState.Paused) {
             //UIManager.instance.PauseScreen.SetActive(false);
+        }
+        if(currentState != GameState.Win) {
+            UIManager.instance.EndScreen.SetActive(false);
         }
     }
 
