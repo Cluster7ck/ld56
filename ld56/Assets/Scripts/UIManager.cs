@@ -1,5 +1,15 @@
 using UnityEngine;
+using DG.Tweening;
+public class CameraSceneParameters
+{
+    public CameraSceneParameters(float pOrthographicSize, float pXcameraOffset, float pYcameraOffset) {
+        orthographicSize = pOrthographicSize;
+        cameraOffset = new Vector2(pXcameraOffset, pXcameraOffset);
+    }
 
+    public float orthographicSize;
+    public Vector2 cameraOffset; //offset relative to player
+}
 public class UIManager : MonoBehaviour
 {
     public static UIManager instance;
@@ -7,6 +17,11 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject startScreen;
     [SerializeField] private GameObject pauseScreen;
     [SerializeField] private GameObject endScreen;
+
+    [SerializeField] private CameraSceneParameters cameraGameParameters = new CameraSceneParameters(12f, 7f, 5f);
+    [SerializeField] private CameraSceneParameters cameraStartParameters = new CameraSceneParameters(2f, 1.2f, 0.3f);
+
+    [SerializeField] private float cameraZoomTime = 2f;
 
     void Awake()
     {
@@ -18,6 +33,7 @@ public class UIManager : MonoBehaviour
         else
         {
             Destroy(gameObject);
+            
         }
     }
 
@@ -31,6 +47,19 @@ public class UIManager : MonoBehaviour
 
     public GameObject EndScreen {
         get { return endScreen; }
+    }
+
+    public void ZoomToPlay(GameObject virtualCamera) {
+        ZoomToPosition(virtualCamera, cameraGameParameters.cameraOffset, cameraGameParameters.orthographicSize);
+    }
+
+    public void ZoomToStart(GameObject virtualCamera) {
+        ZoomToPosition(virtualCamera, cameraStartParameters.cameraOffset, cameraStartParameters.orthographicSize);
+    }
+
+    private void ZoomToPosition(GameObject virtualCamera, Vector2 offset, float orthographicSize) {
+        DOTween.To(() => (Vector2)virtualCamera.GetComponentInChildren<CinemachineCameraOffset>().m_Offset, x => virtualCamera.GetComponentInChildren<CinemachineCameraOffset>().m_Offset = x, offset, cameraZoomTime);
+        DOTween.To(() => virtualCamera.GetComponent<Cinemachine.CinemachineVirtualCamera>().m_Lens.OrthographicSize, x => virtualCamera.GetComponent<Cinemachine.CinemachineVirtualCamera>().m_Lens.OrthographicSize = x, orthographicSize, cameraZoomTime);
     }
 
 }
