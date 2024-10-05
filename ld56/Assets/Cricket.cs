@@ -118,18 +118,19 @@ public class Cricket : MonoBehaviour
       var dragCurrentPosWorld = camera.ScreenToWorldPoint(dragCurrentPosScreen);
       var dragDelta = (dragStartPosWorld - dragCurrentPosWorld);
 
-      var dotRight = Vector3.Dot(dragDelta, Vector3.right); // should be positive > 0
-      var dotDown = Vector3.Dot(dragDelta, Vector3.down); // should be negative < 0
+      // Restrict jump dir
+      //var dotRight = Vector3.Dot(dragDelta, Vector3.right); // should be positive > 0
+      //var dotDown = Vector3.Dot(dragDelta, Vector3.down); // should be negative < 0
 
-      if (dotRight < 0)
-      {
-        dragDelta = Vector3.Project(dragDelta, Vector3.up);
-      }
+      //if (dotRight < 0)
+      //{
+      //  dragDelta = Vector3.Project(dragDelta, Vector3.up);
+      //}
 
-      if (dotDown > 0)
-      {
-        dragDelta = Vector3.Project(dragDelta, Vector3.right);
-      }
+      //if (dotDown > 0)
+      //{
+      //  dragDelta = Vector3.Project(dragDelta, Vector3.right);
+      //}
 
       initialVelocity = dragDelta * velocityMul;
       initialJumpPos = transform.position;
@@ -242,6 +243,7 @@ public class Cricket : MonoBehaviour
   private State? DoCollision(Vector3 previousPos, Vector3 nextPos)
   {
     var extents = boxCollider.size / 2;
+    var cameraLeft = camera.ScreenToWorldPoint(new Vector3(0, 1, 0));
 
     // up
     if (previousPos.y < nextPos.y)
@@ -306,6 +308,11 @@ public class Cricket : MonoBehaviour
       debugSpheres[9].transform.position = upLeft;
       debugSpheres[10].transform.position = middleLeft;
       debugSpheres[11].transform.position = downLeft;
+      
+      if (middleLeft.x < cameraLeft.x)
+      {
+        return State.Falling;
+      }
 
       var checks = new[] { upLeft, middleLeft, downLeft };
       State? nextState = null;
