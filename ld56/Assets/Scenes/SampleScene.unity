@@ -264,7 +264,7 @@ GameObject:
   - component: {fileID: 156210433}
   - component: {fileID: 156210432}
   - component: {fileID: 156210435}
-  m_Layer: 10
+  m_Layer: 11
   m_Name: Shroom
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -537,7 +537,7 @@ GameObject:
   - component: {fileID: 264828337}
   - component: {fileID: 264828336}
   - component: {fileID: 264828335}
-  m_Layer: 10
+  m_Layer: 11
   m_Name: Shroom (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -940,7 +940,7 @@ GameObject:
   - component: {fileID: 583755832}
   - component: {fileID: 583755831}
   - component: {fileID: 583755830}
-  m_Layer: 10
+  m_Layer: 11
   m_Name: Shroom (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1497,7 +1497,7 @@ MonoBehaviour:
   collisionCheckExtents: 1
   collisionMask:
     serializedVersion: 2
-    m_Bits: 1600
+    m_Bits: 2624
   bounceStrength: 23
 --- !u!212 &990688467
 SpriteRenderer:
