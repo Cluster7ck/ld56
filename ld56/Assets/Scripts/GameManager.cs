@@ -19,6 +19,7 @@ public class GameManager : MonoBehaviour
     public GameState currentState;
 
     [SerializeField] private Cricket player;
+    [SerializeField] private GameObject virtualCamera;
 
     void Awake()
     {
@@ -46,6 +47,7 @@ public class GameManager : MonoBehaviour
         switch (currentState)
         {
             case GameState.Start:
+                UIManager.instance.ZoomToStart(virtualCamera);
                 UIManager.instance.StartScreen.SetActive(true);
                 player.enabled = false;
                 break;
@@ -56,6 +58,7 @@ public class GameManager : MonoBehaviour
 
                 break;
             case GameState.Playing:
+                UIManager.instance.ZoomToPlay(virtualCamera);
                 Time.timeScale = 1f;
                 player.enabled = true;
                 break;

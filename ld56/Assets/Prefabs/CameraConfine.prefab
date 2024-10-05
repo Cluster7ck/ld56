@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6277675346483258945}
   - component: {fileID: 386069016047779970}
+  - component: {fileID: 7308529800804401138}
   m_Layer: 8
   m_Name: CameraConfine
   m_TagString: Untagged
@@ -78,8 +79,21 @@ PolygonCollider2D:
     m_Paths:
     - - {x: 208.76633, y: 52.344894}
       - {x: 194.14615, y: 56.726715}
-      - {x: -24.103107, y: 49.61028}
-      - {x: -24.09062, y: -14.380206}
-      - {x: 229.82314, y: -14.326085}
+      - {x: -65.28452, y: 50.99886}
+      - {x: -63.606503, y: -86.65232}
+      - {x: 245.61406, y: -87.31523}
       - {x: 208.6719, y: 39.283344}
   m_UseDelaunayMesh: 0
+--- !u!114 &7308529800804401138
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8542259218986975513}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 978c8c5c20dff4a28a5d96c37c300fd8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  toTrack: {fileID: 0}
