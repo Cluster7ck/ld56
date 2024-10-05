@@ -181,14 +181,12 @@ public class Cricket : MonoBehaviour
       {
         initialVelocity = PredictVelocityAtT(jumpTime, initialVelocity, gravity * riseGravityMul);
         initialJumpPos = transform.position;
-        Debug.Log("JumpingDown");
         state = State.JumpingDown;
         jumpTime = 0;
       }
       else
       {
         // collision
-        Debug.Log("JumpingUp");
         var nextState = DoCollision(transform.position, pos);
 
         if (jumpTime > 0.1f && nextState.HasValue)
@@ -287,20 +285,15 @@ public class Cricket : MonoBehaviour
   {
     jumpTime = 0;
     float clampedX = 0;
-    Debug.Log("TransitionToBounce");
-    Debug.Log(initialVelocity.x);
     if (initialVelocity.x < 0)
     {
-      Debug.Log("Low");
       clampedX = Mathf.Clamp(initialVelocity.x, float.NegativeInfinity, -bounceMinForwardVelocity);
     }
     else
     {
-      Debug.Log("High");
       clampedX = Mathf.Clamp(initialVelocity.x, bounceMinForwardVelocity, float.PositiveInfinity);
     }
 
-    Debug.Log(clampedX);
     this.initialVelocity = new Vector3(clampedX, bounceStrength, 0);
     initialJumpPos = transform.position;
     state = State.JumpingUp;
@@ -312,19 +305,14 @@ public class Cricket : MonoBehaviour
   {
     jumpTime = 0;
     float clampedX = 0;
-    Debug.Log("TransitionToBulletTime");
-    Debug.Log(initialVelocity.x);
     if (initialVelocity.x < 0)
     {
-      Debug.Log("Low");
       clampedX = Mathf.Clamp(initialVelocity.x, float.NegativeInfinity, -bounceMinForwardVelocity);
     }
     else
     {
-      Debug.Log("High");
       clampedX = Mathf.Clamp(initialVelocity.x, bounceMinForwardVelocity, float.PositiveInfinity);
     }
-    Debug.Log(clampedX);
 
     this.initialVelocity = new Vector3(clampedX, bounceStrength, 0);
     initialJumpPos = transform.position;
@@ -387,24 +375,24 @@ public class Cricket : MonoBehaviour
         sameCollisionFall = 0;
         if (hit.transform.gameObject.layer == LayerMask.NameToLayer("Shroom"))
         {
-          Debug.Log("Bounce");
+          //Debug.Log("Bounce");
           return State.Bounce;
         }
 
         if (hit.transform.gameObject.layer == LayerMask.NameToLayer("BulletShroom"))
         {
-          Debug.Log("BulletTime");
+          //Debug.Log("BulletTime");
           return State.BulletTimeWaitInput;
         }
 
         // collide with ground
-        Debug.Log("Idle");
+        //Debug.Log("Idle");
         return State.WaitInput;
       }
       else
       {
         lastFallCollision = hit.transform.gameObject;
-        Debug.Log("Falling");
+        //Debug.Log("Falling");
         return State.Falling;
       }
     }
