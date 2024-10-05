@@ -87,4 +87,8 @@ public class GameManager : MonoBehaviour
     public void StartGame() {
         ChangeState(GameState.Playing);
     }
+
+    public void ReachedGoal() {
+        ChangeState(GameState.Win);
+    }
 }

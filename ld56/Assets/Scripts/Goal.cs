@@ -17,6 +17,14 @@ public class Goal : MonoBehaviour
     }
 
     private void OnTriggerEnter2D ( Collider2D collision ) {
+        Debug.Log("Collided with " + collision.name);
+        if (collision.gameObject.layer == LayerMask.NameToLayer("Character")) {
+            Debug.Log("Collided with Character yay");
+            GameManager.instance.ReachedGoal();
+        }
+    }
+    private void OnTriggerStay2D(Collider2D other)
+    {
         
     }
 }
