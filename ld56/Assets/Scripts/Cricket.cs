@@ -1,7 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
-using Unity.VisualScripting.ReorderableList;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -13,6 +9,7 @@ public enum State
   JumpingDown,
   Falling,
   BulletTime,
+  Bounce,
   DoubleJumping,
   Dieing
 }
@@ -25,6 +22,7 @@ public class Cricket : MonoBehaviour
   [SerializeField] private float fallGravityMul = 1;
   [SerializeField] private float collisionCheckExtents;
   [SerializeField] private LayerMask collisionMask;
+  [SerializeField] private float bounceStrength;
 
   private Camera camera;
   private BoxCollider2D boxCollider;
@@ -47,7 +45,7 @@ public class Cricket : MonoBehaviour
   private Vector3 startPos;
 
   private GameObject[] debugSpheres = new GameObject[12];
-  
+
   private GameObject[] arcIndicators = new GameObject[7];
 
 
@@ -66,7 +64,7 @@ public class Cricket : MonoBehaviour
       debugSpheres[i] = go;
       debugSpheres[i].SetActive(false);
     }
-    
+
     for (int i = 0; i < arcIndicators.Length; i++)
     {
       var go = GameObject.CreatePrimitive(PrimitiveType.Sphere);
@@ -113,27 +111,14 @@ public class Cricket : MonoBehaviour
       {
         dragCurrentPosScreen = Mouse.current.position.value;
       }
-      
+
       var dragCurrentPosWorld = camera.ScreenToWorldPoint(dragCurrentPosScreen);
       var dragDelta = (dragStartPosWorld - dragCurrentPosWorld);
-
-      // Restrict jump dir
-      //var dotRight = Vector3.Dot(dragDelta, Vector3.right); // should be positive > 0
-      //var dotDown = Vector3.Dot(dragDelta, Vector3.down); // should be negative < 0
-
-      //if (dotRight < 0)
-      //{
-      //  dragDelta = Vector3.Project(dragDelta, Vector3.up);
-      //}
-
-      //if (dotDown > 0)
-      //{
-      //  dragDelta = Vector3.Project(dragDelta, Vector3.right);
-      //}
 
       initialVelocity = dragDelta * velocityMul;
       initialJumpPos = transform.position;
 
+      Debug.Log(initialVelocity);
       float dt = 0.03f;
       float t = dt;
       for (int i = 0; i < arcIndicators.Length; i++)
@@ -141,18 +126,19 @@ public class Cricket : MonoBehaviour
         arcIndicators[i].transform.position = PredictProjectilePosAtT(t, initialVelocity, initialJumpPos, gravity * riseGravityMul);
         t += dt;
       }
-      
+
       if (Mouse.current.leftButton.wasReleasedThisFrame)
       {
         for (int i = 0; i < arcIndicators.Length; i++)
         {
           arcIndicators[i].gameObject.SetActive(false);
         }
+
         state = State.JumpingUp;
       }
     }
   }
-  
+
   void FixedUpdate()
   {
     if (state == State.JumpingUp)
@@ -161,17 +147,17 @@ public class Cricket : MonoBehaviour
       jumpTime += Time.fixedDeltaTime;
 
       var pos = PredictProjectilePosAtT(jumpTime, initialVelocity, initialJumpPos, gravity * riseGravityMul);
-      //if (transform.position.y > pos.y)
-      //{
-      //  initialVelocity = PredictVelocityAtT(jumpTime, initialVelocity, gravity * riseGravityMul);
-      //  initialJumpPos = transform.position;
-      //  state = State.JumpingDown;
-      //  jumpTime = 0;
-      //}
-      //else
+      if (transform.position.y > pos.y)
+      {
+        initialVelocity = PredictVelocityAtT(jumpTime, initialVelocity, gravity * riseGravityMul);
+        initialJumpPos = transform.position;
+        state = State.JumpingDown;
+        jumpTime = 0;
+      }
+      else
       {
         // collision
-        var nextState = DoCollision(transform.position, pos);
+        var nextState = DoCollision2(transform.position, pos);
 
         if (nextState.HasValue)
         {
@@ -199,7 +185,7 @@ public class Cricket : MonoBehaviour
       jumpTime += Time.fixedDeltaTime;
       var pos = PredictProjectilePosAtT(jumpTime, initialFallVelocity, initialFallPos, gravity * fallGravityMul);
 
-      var nextState = DoCollision(transform.position, pos);
+      var nextState = DoCollision2(transform.position, pos);
       if (nextState.HasValue)
       {
         state = nextState.Value;
@@ -210,7 +196,7 @@ public class Cricket : MonoBehaviour
         transform.position = pos;
       }
     }
-    
+
     if (state == State.JumpingDown)
     {
       // Predicted position
@@ -218,8 +204,7 @@ public class Cricket : MonoBehaviour
 
       var pos = PredictProjectilePosAtT(jumpTime, initialVelocity, initialJumpPos, gravity * fallGravityMul);
       // collision
-      var nextState = DoCollision(transform.position, pos);
-
+      var nextState = DoCollision2(transform.position, pos);
 
       if (nextState.HasValue)
       {
@@ -233,6 +218,14 @@ public class Cricket : MonoBehaviour
         {
           state = nextState.Value;
         }
+        else if(nextState.Value == State.Bounce)
+        {
+          jumpTime = 0;
+          initialVelocity = new Vector3(initialVelocity.x, bounceStrength, 0);
+          initialJumpPos = transform.position;
+          state = State.JumpingUp;
+          //state = nextState.Value;
+        }
 
         jumpTime = 0;
       }
@@ -243,138 +236,60 @@ public class Cricket : MonoBehaviour
     }
   }
 
-  private State? DoCollision(Vector3 previousPos, Vector3 nextPos)
+  private State? DoCollision2(Vector3 previousPos, Vector3 nextPos)
   {
     var extents = boxCollider.size / 2;
     var cameraLeft = camera.ScreenToWorldPoint(new Vector3(0, 1, 0));
-
-    // up
-    if (previousPos.y < nextPos.y)
+    var cameraLeft2 = camera.ScreenToWorldPoint(new Vector3(0, 0, 0));
+    Debug.DrawLine(cameraLeft, cameraLeft2, Color.cyan);
+    var position = transform.position;
+    var dir = nextPos - previousPos;
+    
+    if (nextPos.x < previousPos.x && (nextPos.x-extents.x) < cameraLeft.x)
     {
-      var upDistance = nextPos.y - transform.position.y;
-      var leftUp = transform.position + (Vector3.up * extents.y) + (Vector3.left * extents.x);
-      var middleUp = transform.position + (Vector3.up * extents.y);
-      var rightUp = transform.position + (Vector3.up * extents.y) + (Vector3.right * extents.x);
-      debugSpheres[3].transform.position = leftUp;
-      debugSpheres[4].transform.position = middleUp;
-      debugSpheres[5].transform.position = rightUp;
-
-      var checks = new[] { leftUp, middleUp, rightUp };
-      for (var i = 0; i < checks.Length; i++)
-      {
-        var origin = checks[i];
-        var res = Physics2D.Raycast(origin, Vector2.up, upDistance * collisionCheckExtents, collisionMask);
-        if (res.collider != null)
-        {
-          //Debug.Log($"UpCollision {res.collider.gameObject.name}");
-          debugSpheres[i + 3].GetComponent<MeshRenderer>().material.color = Color.red;
-          HandleHit(res, transform.position, nextPos);
-          return State.Falling;
-        }
-      }
+      Debug.Log("What");
+      var leftDir = Vector3.left * Mathf.Abs((cameraLeft.x + extents.x) - previousPos.x);
+      var newLeftDir = Vector3.Project(leftDir, dir);
+      Debug.DrawLine(previousPos, previousPos+Vector3.up, Color.blue, 30f);
+      Debug.DrawLine(previousPos, previousPos+leftDir, Color.green, 30f);
+      Debug.DrawLine(previousPos, previousPos+newLeftDir, Color.red, 30f);
+      transform.position += newLeftDir;
+      return State.Falling;
     }
+    
+    var hit = Physics2D.BoxCast(position, boxCollider.size, 0, dir, dir.magnitude, collisionMask);
 
-    // right
-    if (previousPos.x < nextPos.x)
+    if (hit.collider != null)
     {
-      var rightDistance = nextPos.x - transform.position.x;
-      var upRight = transform.position + (Vector3.up * extents.y) + (Vector3.right * extents.x);
-      var middleRight = transform.position + (Vector3.right * extents.x);
-      var downRight = transform.position + (Vector3.down * extents.y) + (Vector3.right * extents.x);
-      debugSpheres[6].transform.position = upRight;
-      debugSpheres[7].transform.position = middleRight;
-      debugSpheres[8].transform.position = downRight;
-
-      var checks = new[] { upRight, middleRight, downRight };
-      State? nextState = null;
-      for (var i = 0; i < checks.Length; i++)
+      if (hit.transform.gameObject.layer == LayerMask.NameToLayer("Bad"))
       {
-        var origin = checks[i];
-        var res = Physics2D.Raycast(origin, Vector2.right, Mathf.Abs(rightDistance * collisionCheckExtents * 2), collisionMask);
-        if (res.collider != null)
-        {
-          //Debug.Log($"RightCollision {res.collider.gameObject.name} {i} {origin}");
-          debugSpheres[i + 6].GetComponent<MeshRenderer>().material.color = Color.red;
-          HandleHit(res, transform.position, nextPos);
-          return State.Falling;
-        }
+        Debug.Log("Bad hit");
       }
-    }
 
-    // left
-    if (previousPos.x > nextPos.x)
-    {
-      var leftDistance = transform.position.x - nextPos.x;
-      var upLeft = transform.position + (Vector3.up * extents.y) + (Vector3.left * extents.x);
-      var middleLeft = transform.position + (Vector3.left * extents.x);
-      var downLeft = transform.position + (Vector3.down * extents.y) + (Vector3.left * extents.x);
-      debugSpheres[9].transform.position = upLeft;
-      debugSpheres[10].transform.position = middleLeft;
-      debugSpheres[11].transform.position = downLeft;
-      
-      if (middleLeft.x < cameraLeft.x)
+      var dist = hit.distance;
+      var normDir = dir.normalized;
+      transform.position += normDir * Mathf.Clamp(dist - 0.005f, 0.005f, dist);
+
+      var dot = Vector3.Dot(hit.normal, Vector3.up) - 1.0f;
+      //Debug.Log($"{hit.transform.gameObject.name}: {hit.distance}, {hit.normal}, {dot}");
+      if (Mathf.Abs(dot) < Mathf.Epsilon)
+      {
+        if (hit.transform.gameObject.layer == LayerMask.NameToLayer("Shroom"))
+        {
+          return State.Bounce;
+        }
+        // collide with ground
+        return State.Idle;
+      }
+      else
       {
         return State.Falling;
-      }
-
-      var checks = new[] { upLeft, middleLeft, downLeft };
-      State? nextState = null;
-      for (var i = 0; i < checks.Length; i++)
-      {
-        var origin = checks[i];
-        var res = Physics2D.Raycast(origin, Vector2.left, Mathf.Abs(leftDistance * collisionCheckExtents * 2), collisionMask);
-        if (res.collider != null)
-        {
-          //Debug.Log($"LeftCollision {res.collider.gameObject.name}");
-          debugSpheres[i + 9].GetComponent<MeshRenderer>().material.color = Color.red;
-          HandleHit(res, transform.position, nextPos);
-          return State.Falling;
-        }
-      }
-    }
-
-    // down
-    if (previousPos.y > nextPos.y)
-    {
-      //Debug.Log("DownCheck");
-      var downDistance = transform.position.y - nextPos.y;
-      var leftDown = transform.position + (Vector3.down * extents.y) + (Vector3.left * extents.x);
-      var middleDown = transform.position + (Vector3.down * extents.y);
-      var rightDown = transform.position + (Vector3.down * extents.y) + (Vector3.right * extents.x);
-      debugSpheres[0].transform.position = leftDown;
-      debugSpheres[1].transform.position = middleDown;
-      debugSpheres[2].transform.position = rightDown;
-
-      var checks = new[] { leftDown, middleDown, rightDown };
-      for (var i = 0; i < checks.Length; i++)
-      {
-        var origin = checks[i];
-        var res = Physics2D.Raycast(origin, Vector2.down, downDistance * collisionCheckExtents, collisionMask);
-        if (res.collider != null)
-        {
-          //Debug.Log($"DownCollision {res.collider.gameObject.name}");
-          debugSpheres[i].GetComponent<MeshRenderer>().material.color = Color.red;
-          HandleHit(res, transform.position, nextPos);
-          return State.Idle;
-        }
       }
     }
 
     return null;
   }
 
-  private void HandleHit(RaycastHit2D hit, Vector3 current, Vector3 next)
-  {
-    if (hit.transform.gameObject.layer == LayerMask.NameToLayer("Bad"))
-    {
-      Debug.Log("Bad hit");
-    }
-
-    // Move as far as we can
-    var dir = next - current;
-    var norm = dir.normalized;
-    transform.position += norm * hit.distance * 0.90f;
-  }
 
   private Vector3 PredictVelocityAtT(float time, Vector3 initialVel, Vector3 gravity)
   {
