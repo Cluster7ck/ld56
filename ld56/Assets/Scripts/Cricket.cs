@@ -38,9 +38,9 @@ public class Cricket : MonoBehaviour
   [SerializeField] private GameObject arcIndicatorPrefab;
   [SerializeField] private Vector2 arcIndicatorSize;
   [SerializeField] private ParticleSystem jumpParticleSystem;
+  [SerializeField] private Animator animator;
 
   private Camera camera;
-  private Animator animator;
   private BoxCollider2D boxCollider;
   private State state = State.WaitInput;
 
@@ -80,7 +80,6 @@ public class Cricket : MonoBehaviour
     camera = Camera.main;
     boxCollider = GetComponent<BoxCollider2D>();
     startPos = transform.position;
-    animator = GetComponent<Animator>();
 
     for (int i = 0; i < debugSpheres.Length; i++)
     {
@@ -132,10 +131,11 @@ public class Cricket : MonoBehaviour
 
     if (state == State.WaitInput)
     {
+      animator.SetBool("isFlying", false);
+      animator.SetBool("isAiming", false);
       if (Mouse.current.leftButton.wasPressedThisFrame)
-        animator.SetBool("isFlying", false);
-        animator.SetBool("isAiming", false);
       {
+        animator.SetBool("isAiming", true);
         state = State.PrepareJump;
         dragStartPosScreen = Mouse.current.position.value;
         dragStartPosWorld = camera.ScreenToWorldPoint(dragStartPosScreen);
@@ -163,11 +163,7 @@ public class Cricket : MonoBehaviour
 
     if (state == State.PrepareJump || state == State.BulletTimePrepareJump)
     {
-      if (Mouse.current.leftButton.isPressed)
-      {
-        dragCurrentPosScreen = Mouse.current.position.value;
-        animator.SetBool("isAiming", true);
-      }
+      dragCurrentPosScreen = Mouse.current.position.value;
       var dragCurrentPosWorld = camera.ScreenToWorldPoint(dragCurrentPosScreen);
       var dragDelta = (dragStartPosWorld - dragCurrentPosWorld);
 
@@ -202,10 +198,11 @@ public class Cricket : MonoBehaviour
         for (int i = 0; i < arcIndicators.Length; i++)
         {
           arcIndicators[i].gameObject.SetActive(false);
-          animator.SetBool("isAiming", false);
-          animator.SetBool("isFlying", true);
         }
 
+        animator.SetBool("isAiming", false);
+        animator.SetBool("isFlying", true);
+          
         initialVelocity = potentialVelocity;
         initialJumpPos = potentialJumpPos;
         Debug.Log($"MagVel: {initialVelocity.magnitude}");
