@@ -25,7 +25,7 @@ public class Cricket : MonoBehaviour
   [SerializeField] private float bounceStrength;
 
   private Camera camera;
-  private BoxCollider2D boxCollider;
+  private CircleCollider2D col;
   private State state = State.Idle;
 
   private bool dragging;
@@ -53,7 +53,7 @@ public class Cricket : MonoBehaviour
   void Start()
   {
     camera = Camera.main;
-    boxCollider = GetComponent<BoxCollider2D>();
+    col = GetComponent<CircleCollider2D>();
     startPos = transform.position;
 
     for (int i = 0; i < debugSpheres.Length; i++)
@@ -78,8 +78,9 @@ public class Cricket : MonoBehaviour
   {
     if (Input.GetKeyDown(KeyCode.Space))
     {
-      state = State.BulletTime;
+      state = State.Idle;
       transform.position = startPos;
+      jumpTime = 0;
     }
 
     if (Input.GetKeyDown(KeyCode.A))
@@ -118,7 +119,6 @@ public class Cricket : MonoBehaviour
       initialVelocity = dragDelta * velocityMul;
       initialJumpPos = transform.position;
 
-      Debug.Log(initialVelocity);
       float dt = 0.03f;
       float t = dt;
       for (int i = 0; i < arcIndicators.Length; i++)
@@ -157,7 +157,7 @@ public class Cricket : MonoBehaviour
       else
       {
         // collision
-        var nextState = DoCollision2(transform.position, pos);
+        var nextState = DoCollision(transform.position, pos);
 
         if (nextState.HasValue)
         {
@@ -185,7 +185,7 @@ public class Cricket : MonoBehaviour
       jumpTime += Time.fixedDeltaTime;
       var pos = PredictProjectilePosAtT(jumpTime, initialFallVelocity, initialFallPos, gravity * fallGravityMul);
 
-      var nextState = DoCollision2(transform.position, pos);
+      var nextState = DoCollision(transform.position, pos);
       if (nextState.HasValue)
       {
         state = nextState.Value;
@@ -204,7 +204,7 @@ public class Cricket : MonoBehaviour
 
       var pos = PredictProjectilePosAtT(jumpTime, initialVelocity, initialJumpPos, gravity * fallGravityMul);
       // collision
-      var nextState = DoCollision2(transform.position, pos);
+      var nextState = DoCollision(transform.position, pos);
 
       if (nextState.HasValue)
       {
@@ -236,19 +236,19 @@ public class Cricket : MonoBehaviour
     }
   }
 
-  private State? DoCollision2(Vector3 previousPos, Vector3 nextPos)
+  private State? DoCollision(Vector3 previousPos, Vector3 nextPos)
   {
-    var extents = boxCollider.size / 2;
+    var radius = col.radius;
     var cameraLeft = camera.ScreenToWorldPoint(new Vector3(0, 1, 0));
     var cameraLeft2 = camera.ScreenToWorldPoint(new Vector3(0, 0, 0));
     Debug.DrawLine(cameraLeft, cameraLeft2, Color.cyan);
     var position = transform.position;
     var dir = nextPos - previousPos;
     
-    if (nextPos.x < previousPos.x && (nextPos.x-extents.x) < cameraLeft.x)
+    if (nextPos.x < previousPos.x && (nextPos.x-radius) < cameraLeft.x)
     {
       Debug.Log("What");
-      var leftDir = Vector3.left * Mathf.Abs((cameraLeft.x + extents.x) - previousPos.x);
+      var leftDir = Vector3.left * Mathf.Abs((cameraLeft.x + radius) - previousPos.x);
       var newLeftDir = Vector3.Project(leftDir, dir);
       Debug.DrawLine(previousPos, previousPos+Vector3.up, Color.blue, 30f);
       Debug.DrawLine(previousPos, previousPos+leftDir, Color.green, 30f);
@@ -257,7 +257,7 @@ public class Cricket : MonoBehaviour
       return State.Falling;
     }
     
-    var hit = Physics2D.BoxCast(position, boxCollider.size, 0, dir, dir.magnitude, collisionMask);
+    var hit = Physics2D.CircleCast(position, radius, dir, dir.magnitude, collisionMask);
 
     if (hit.collider != null)
     {
@@ -268,7 +268,7 @@ public class Cricket : MonoBehaviour
 
       var dist = hit.distance;
       var normDir = dir.normalized;
-      transform.position += normDir * Mathf.Clamp(dist - 0.005f, 0.005f, dist);
+      transform.position += normDir * Mathf.Clamp(dist - 0.01f, 0.01f, dist);
 
       var dot = Vector3.Dot(hit.normal, Vector3.up) - 1.0f;
       //Debug.Log($"{hit.transform.gameObject.name}: {hit.distance}, {hit.normal}, {dot}");
@@ -276,13 +276,16 @@ public class Cricket : MonoBehaviour
       {
         if (hit.transform.gameObject.layer == LayerMask.NameToLayer("Shroom"))
         {
+          Debug.Log("Bounce");
           return State.Bounce;
         }
         // collide with ground
+        Debug.Log("Idle");
         return State.Idle;
       }
       else
       {
+        Debug.Log("Falling");
         return State.Falling;
       }
     }
