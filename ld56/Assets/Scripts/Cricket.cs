@@ -114,7 +114,7 @@ public class Cricket : MonoBehaviour
       jumpTime += Time.fixedDeltaTime * Time.timeScale;
       var pos = PredictProjectilePosAtT(jumpTime, initialFallVelocity, initialFallPos, gravity * fallGravityMul);
 
-      var nextState = DoCollision2(transform.position, pos);
+      var nextState = DoCollision(transform.position, pos);
       if (!nextState.HasValue)
       {
         transform.position = pos;
@@ -186,7 +186,7 @@ public class Cricket : MonoBehaviour
       else
       {
         // collision
-        var nextState = DoCollision2(transform.position, pos);
+        var nextState = DoCollision(transform.position, pos);
 
         if (jumpTime > 0.1f && nextState.HasValue)
         {
@@ -212,7 +212,7 @@ public class Cricket : MonoBehaviour
       jumpTime += Time.fixedDeltaTime * Time.timeScale;
       var pos = PredictProjectilePosAtT(jumpTime, initialFallVelocity, initialFallPos, gravity * fallGravityMul);
 
-      var nextState = DoCollision2(transform.position, pos);
+      var nextState = DoCollision(transform.position, pos);
       if (nextState.HasValue)
       {
         state = nextState.Value;
@@ -235,7 +235,7 @@ public class Cricket : MonoBehaviour
 
       var pos = PredictProjectilePosAtT(jumpTime, initialVelocity, initialJumpPos, gravity * fallGravityMul);
       // collision
-      var nextState = DoCollision2(transform.position, pos);
+      var nextState = DoCollision(transform.position, pos);
 
       if (nextState.HasValue)
       {
@@ -317,27 +317,24 @@ public class Cricket : MonoBehaviour
     hitStop.BulletTime(bulletTimeLength);
   }
 
-  private State? DoCollision2(Vector3 previousPos, Vector3 nextPos)
+  private State? DoCollision(Vector3 previousPos, Vector3 nextPos)
   {
-    var extents = boxCollider.size / 2;
-    var cameraLeft = camera.ScreenToWorldPoint(new Vector3(0, 1, 0));
-    var cameraLeft2 = camera.ScreenToWorldPoint(new Vector3(0, 0, 0));
     var position = transform.position;
     var dir = nextPos - previousPos;
 
-    if (nextPos.x < previousPos.x && (nextPos.x - extents.x) < cameraLeft.x)
-    {
-      var leftDir = Vector3.left * Mathf.Abs((cameraLeft.x + extents.x) - previousPos.x);
-      var newLeftDir = Vector3.Project(leftDir, dir);
-      transform.position += newLeftDir;
-      return State.Falling;
-    }
+    //if (nextPos.x < previousPos.x && (nextPos.x - extents.x) < cameraLeft.x)
+    //{
+    //  var leftDir = Vector3.left * Mathf.Abs((cameraLeft.x + extents.x) - previousPos.x);
+    //  var newLeftDir = Vector3.Project(leftDir, dir);
+    //  transform.position += newLeftDir;
+    //  return State.Falling;
+    //}
 
     var hit = Physics2D.BoxCast(position, boxCollider.size, 0, dir, dir.magnitude, collisionMask);
 
     if (hit.collider != null)
     {
-      if (hit.transform.gameObject == lastFallCollision)
+      if (state == State.Falling && hit.transform.gameObject == lastFallCollision)
       {
         sameCollisionFall++;
       }
@@ -345,6 +342,12 @@ public class Cricket : MonoBehaviour
       {
         sameCollisionFall = 0;
       }
+
+      if (sameCollisionFall > 10)
+      {
+        transform.position += dir * -1 * 2;
+      }
+
       if (hit.transform.gameObject.layer == LayerMask.NameToLayer("Bad"))
       {
         Debug.Log("Bad hit");
@@ -364,6 +367,7 @@ public class Cricket : MonoBehaviour
 
       if (dot != 0)
       {
+        sameCollisionFall = 0;
         if (hit.transform.gameObject.layer == LayerMask.NameToLayer("Shroom"))
         {
           Debug.Log("Bounce");
