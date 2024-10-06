@@ -122,7 +122,7 @@ public class Cricket : MonoBehaviour
       jumpTime += Time.deltaTime;
       var pos = PredictProjectilePosAtT(jumpTime, initialFallVelocity, initialFallPos, gravity * fallGravityMul);
 
-      var nextState = DoCollision(transform.position, pos);
+      var (nextState, _) = DoCollision(transform.position, pos);
       if (!nextState.HasValue)
       {
         transform.position = pos;
@@ -238,7 +238,7 @@ public class Cricket : MonoBehaviour
       else
       {
         // collision
-        var nextState = DoCollision(transform.position, pos);
+        var (nextState, _) = DoCollision(transform.position, pos);
 
         if (jumpTime > 0.1f && nextState.HasValue)
         {
@@ -265,14 +265,14 @@ public class Cricket : MonoBehaviour
       jumpTime += Time.fixedDeltaTime * Time.timeScale;
       var pos = PredictProjectilePosAtT(jumpTime, initialFallVelocity, initialFallPos, gravity * fallGravityMul);
 
-      var nextState = DoCollision(transform.position, pos);
+      var (nextState, collision) = DoCollision(transform.position, pos);
       if (nextState.HasValue)
       {
         state = nextState.Value;
         jumpTime = 0;
         if (nextState.Value == State.Bounce)
         {
-          TransitionToBounce(initialFallVelocity);
+          TransitionToBounce(initialFallVelocity, collision);
         }
         else if (nextState.Value == State.BulletTimeWaitInput)
         {
@@ -292,7 +292,7 @@ public class Cricket : MonoBehaviour
 
       var pos = PredictProjectilePosAtT(jumpTime, initialVelocity, initialJumpPos, gravity * fallGravityMul);
       // collision
-      var nextState = DoCollision(transform.position, pos);
+      var (nextState, collision)  = DoCollision(transform.position, pos);
 
       if (nextState.HasValue)
       {
@@ -306,7 +306,7 @@ public class Cricket : MonoBehaviour
         }
         else if (nextState.Value == State.Bounce)
         {
-          TransitionToBounce(initialVelocity);
+          TransitionToBounce(initialVelocity, collision);
         }
         else if (nextState.Value == State.BulletTimeWaitInput)
         {
@@ -339,7 +339,7 @@ public class Cricket : MonoBehaviour
     else
     {
       // collision
-      var nextState = DoCollision(transform.position, pos);
+      var (nextState, _) = DoCollision(transform.position, pos);
 
       if (jumpTime > 0.1f && nextState.HasValue)
       {
@@ -377,8 +377,10 @@ public class Cricket : MonoBehaviour
     jumpTime = 0;
   }
 
-  private void TransitionToBounce(Vector3 initialVelocity)
+  private void TransitionToBounce(Vector3 initialVelocity, Transform bounceable)
   {
+    var bounceStrength = bounceable.GetComponent<Shroom>().BounceStrength;
+    
     jumpTime = 0;
     float clampedX = 0;
     if (initialVelocity.x < 0)
@@ -418,7 +420,7 @@ public class Cricket : MonoBehaviour
     hitStop.BulletTime(bulletTimeLength);
   }
 
-  private State? DoCollision(Vector3 previousPos, Vector3 nextPos)
+  private (State?, Transform? collision) DoCollision(Vector3 previousPos, Vector3 nextPos)
   {
     var position = transform.position;
     var dir = nextPos - previousPos;
@@ -463,44 +465,58 @@ public class Cricket : MonoBehaviour
       if (previousPos.y < nextPos.y)
       {
         lastFallCollision = hit.transform.gameObject;
-        return State.Falling;
+        return (State.Falling, hit.transform);
       }
 
+      var collisionStateTransition = hit.transform.GetComponent<CollisionStateTransition>();
       if (dot != 0)
       {
         sameCollisionFall = 0;
+        if (collisionStateTransition != null)
+        {
+          return (collisionStateTransition.TransitionToFromTop, hit.transform);
+        }
+        
         if (hit.transform.gameObject.layer == LayerMask.NameToLayer("Shroom"))
         {
           //Debug.Log("Bounce");
-          return State.Bounce;
+          return (State.Bounce, hit.transform);
         }
 
         if (hit.transform.gameObject.layer == LayerMask.NameToLayer("BulletShroom"))
         {
           //Debug.Log("BulletTime");
-          return State.BulletTimeWaitInput;
+          return (State.BulletTimeWaitInput, hit.transform);
         }
 
         // collide with ground
         //Debug.Log("Idle");
-        return State.WaitInput;
+        return (State.WaitInput, hit.transform);
 
       }
       else
       {
         lastFallCollision = hit.transform.gameObject;
+        if (collisionStateTransition != null)
+        {
+          return (collisionStateTransition.TransitionToFromSide, hit.transform);
+        }
         //Debug.Log("Falling");
-        return State.Falling;
+        return (State.Falling, hit.transform);
       }
     }
 
-    return null;
+    return (null, null);
   }
 
   public void SetState(State newState)
   {
     state = newState;
     jumpTime = 0;
+  }
+
+  public State jumpState {
+    get { return state; }
   }
 
   private Vector3 PredictVelocityAtT(float time, Vector3 initialVel, Vector3 gravity)

@@ -568,6 +568,7 @@ MonoBehaviour:
   currentState: 0
   player: {fileID: 0}
   virtualCamera: {fileID: 0}
+  playerChargingJump: 0
 --- !u!1 &2839843639213538734
 GameObject:
   m_ObjectHideFlags: 0
@@ -854,7 +855,11 @@ MonoBehaviour:
   startScreen: {fileID: 1307530243453712774}
   pauseScreen: {fileID: 0}
   endScreen: {fileID: 8145428253606266644}
-  cameraZoomTime: 2
+  gameCameraSize: 4
+  gameCameraOffset: {x: 3, y: 2}
+  jumpZoomTime: 5
+  jumpCameraSize: 4
+  jumpCameraOffset: {x: 3, y: 2}
 --- !u!1 &8145428253606266644
 GameObject:
   m_ObjectHideFlags: 0

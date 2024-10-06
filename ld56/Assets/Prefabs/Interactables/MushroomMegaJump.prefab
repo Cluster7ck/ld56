@@ -26,7 +26,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4480990345417482386, guid: edc16a19d1152fb468c2892bced29797, type: 3}
       propertyPath: m_Name
-      value: Mushroom4
+      value: MushroomMegaJump
       objectReference: {fileID: 0}
     - target: {fileID: 4585949066730407022, guid: edc16a19d1152fb468c2892bced29797, type: 3}
       propertyPath: m_Sprite
@@ -51,6 +51,10 @@ PrefabInstance:
     - target: {fileID: 6528496427628056257, guid: edc16a19d1152fb468c2892bced29797, type: 3}
       propertyPath: m_SortingOrder
       value: -2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7545932993684070238, guid: edc16a19d1152fb468c2892bced29797, type: 3}
+      propertyPath: BounceStrength
+      value: 44
       objectReference: {fileID: 0}
     - target: {fileID: 7838301416712795619, guid: edc16a19d1152fb468c2892bced29797, type: 3}
       propertyPath: m_LocalPosition.x
