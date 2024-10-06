@@ -21,8 +21,6 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Cricket player;
     [SerializeField] private GameObject virtualCamera;
 
-    [SerializeField] private bool playerChargingJump; // debug value, use actual player variable if possible
-
     void Awake()
     {
         if (instance == null)
