@@ -70,10 +70,15 @@ public class Cricket : MonoBehaviour
 
   private HitStop hitStop;
 
+
+  private Rigidbody2D rb;
+  private bool lookRight = true;
+
   private void Awake()
   {
     gameManager = FindObjectOfType<GameManager>();
     hitStop = GetComponent<HitStop>();
+    rb = GetComponent<Rigidbody2D>();
   }
 
   // Start is called before the first frame update
@@ -169,6 +174,12 @@ public class Cricket : MonoBehaviour
       }
     }
 
+    if (rb.velocity.x > 0.05f) {
+        lookRight = true;
+    } else if (rb.velocity.x < -0.05f) {
+        lookRight = false;
+    }
+
     if (state == State.PrepareJump || state == State.BulletTimePrepareJump)
     {
       dragCurrentPosScreen = Mouse.current.position.value;
@@ -226,7 +237,22 @@ public class Cricket : MonoBehaviour
 
         state = State.WaitInput;
       }
+      
+      if (potentialVelocity.x > 0.05f) {
+         lookRight = true;
+      } else if (potentialVelocity.x < -0.05f) {
+         lookRight = false;
+      }
     }
+
+   
+    
+    if(lookRight) {
+            transform.localScale = new Vector3(Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
+        } else {
+            transform.localScale = new Vector3(-Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
+        }
+    
   }
 
   void FixedUpdate()
