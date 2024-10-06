@@ -94,7 +94,7 @@ public class Cricket : MonoBehaviour
     {
       var go = Instantiate(arcIndicatorPrefab);
       go.name = $"arcIndicator{i}";
-      go.transform.localScale = Vector3.one * (i/(arcIndicators.Length * 1.0f)).Remap(0, 1, arcIndicatorSize.x, arcIndicatorSize.y);
+      go.transform.localScale = Vector3.one * (i / (arcIndicators.Length * 1.0f)).Remap(0, 1, arcIndicatorSize.x, arcIndicatorSize.y);
       arcIndicators[i] = go;
       go.SetActive(false);
     }
@@ -174,8 +174,8 @@ public class Cricket : MonoBehaviour
       var potentialJumpPos = transform.position;
 
       var fo = jumpParticleSystem.forceOverLifetime;
-      fo.xMultiplier =  -potentialVelocity.x;
-      fo.yMultiplier =  -potentialVelocity.y;
+      fo.xMultiplier = -potentialVelocity.x;
+      fo.yMultiplier = -potentialVelocity.y;
 
       float dt = 0.03f;
       float t = dt;
@@ -191,6 +191,7 @@ public class Cricket : MonoBehaviour
         arcIndicators[i].transform.up = arcIndicators[i + 1].transform.position - arcIndicators[i].transform.position;
         t += dt;
       }
+
       arcIndicators[^1].transform.up = lastTarget - arcIndicators[^1].transform.position;
 
       if (Mouse.current.leftButton.wasReleasedThisFrame)
@@ -202,10 +203,9 @@ public class Cricket : MonoBehaviour
 
         animator.SetBool("isAiming", false);
         animator.SetBool("isFlying", true);
-          
+
         initialVelocity = potentialVelocity;
         initialJumpPos = potentialJumpPos;
-        Debug.Log($"MagVel: {initialVelocity.magnitude}");
         state = State.JumpingUp;
       }
 
@@ -215,6 +215,7 @@ public class Cricket : MonoBehaviour
         {
           arcIndicators[i].gameObject.SetActive(false);
         }
+
         state = State.WaitInput;
       }
     }
@@ -245,7 +246,6 @@ public class Cricket : MonoBehaviour
           if (nextState.Value == State.Falling)
           {
             TransitionToFalling();
-
           }
           else if (nextState.Value == State.WaitInput)
           {
@@ -292,7 +292,7 @@ public class Cricket : MonoBehaviour
 
       var pos = PredictProjectilePosAtT(jumpTime, initialVelocity, initialJumpPos, gravity * fallGravityMul);
       // collision
-      var (nextState, collision)  = DoCollision(transform.position, pos);
+      var (nextState, collision) = DoCollision(transform.position, pos);
 
       if (nextState.HasValue)
       {
@@ -380,7 +380,7 @@ public class Cricket : MonoBehaviour
   private void TransitionToBounce(Vector3 initialVelocity, Transform bounceable)
   {
     var bounceStrength = bounceable.GetComponent<Shroom>().BounceStrength;
-    
+
     jumpTime = 0;
     float clampedX = 0;
     if (initialVelocity.x < 0)
@@ -437,6 +437,19 @@ public class Cricket : MonoBehaviour
 
     if (hit.collider != null)
     {
+      var interactable = hit.transform.GetComponent<Collidable>();
+      var collisionStateTransition = hit.transform.GetComponent<CollisionStateTransition>();
+      if (interactable)
+      {
+        interactable.Collide(this);
+      }
+
+      // When no transition requested just to the interaction and return
+      if (collisionStateTransition != null && !collisionStateTransition.doTransition)
+      {
+        return (collisionStateTransition.TransitionToFromTop, hit.transform);
+      }
+
       if (state == State.Falling && hit.transform.gameObject == lastFallCollision)
       {
         sameCollisionFall++;
@@ -468,7 +481,6 @@ public class Cricket : MonoBehaviour
         return (State.Falling, hit.transform);
       }
 
-      var collisionStateTransition = hit.transform.GetComponent<CollisionStateTransition>();
       if (dot != 0)
       {
         sameCollisionFall = 0;
@@ -476,7 +488,7 @@ public class Cricket : MonoBehaviour
         {
           return (collisionStateTransition.TransitionToFromTop, hit.transform);
         }
-        
+
         if (hit.transform.gameObject.layer == LayerMask.NameToLayer("Shroom"))
         {
           //Debug.Log("Bounce");
@@ -492,7 +504,6 @@ public class Cricket : MonoBehaviour
         // collide with ground
         //Debug.Log("Idle");
         return (State.WaitInput, hit.transform);
-
       }
       else
       {
@@ -501,6 +512,7 @@ public class Cricket : MonoBehaviour
         {
           return (collisionStateTransition.TransitionToFromSide, hit.transform);
         }
+
         //Debug.Log("Falling");
         return (State.Falling, hit.transform);
       }
@@ -515,7 +527,8 @@ public class Cricket : MonoBehaviour
     jumpTime = 0;
   }
 
-  public State jumpState {
+  public State jumpState
+  {
     get { return state; }
   }
 
