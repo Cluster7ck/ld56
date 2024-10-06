@@ -497,7 +497,7 @@ public class Cricket : MonoBehaviour
       if (state == State.Falling && hit.transform.gameObject == lastFallCollision)
       {
         sameCollisionFall++;
-        Debug.Log("sameCollisionFall " + sameCollisionFall);
+        //Debug.Log("sameCollisionFall " + sameCollisionFall);
       }
       else
       {
@@ -509,17 +509,17 @@ public class Cricket : MonoBehaviour
         transform.position += dir * -1 * 2;
       }
 
-      if (hit.transform.gameObject.layer == LayerMask.NameToLayer("Bad"))
+      if (Unstuck(transform.position + dir, dir, out var unstuckOffset))
       {
-        Debug.Log("Bad hit");
+        transform.position += dir + unstuckOffset;
       }
-
-      var dist = hit.distance;
-      var normDir = dir.normalized;
-      var nextDir = normDir * Mathf.Clamp(dist - 0.01f, 0.01f, dist);
-      Debug.DrawRay(transform.position, nextDir, Color.magenta, 30f);
-      Debug.DrawRay(transform.position + nextDir, Vector3.up, Color.green, 30f);
-      transform.position += nextDir;
+      else
+      {
+        var dist = hit.distance;
+        var normDir = dir.normalized;
+        var nextDir = normDir * Mathf.Clamp(dist - 0.03f, 0.03f, dist);
+        transform.position += nextDir;
+      }
 
       var dot = Vector3.Dot(hit.normal, Vector3.up);
       //Debug.Log($"{hit.transform.gameObject.name}: hd:{hit.distance}, hn:{hit.normal}, dot:{dot}, dir:{dir}");
@@ -527,7 +527,7 @@ public class Cricket : MonoBehaviour
       // We hit a wall from below
       if (previousPos.y < nextPos.y)
       {
-        Debug.Log("Wall from below");
+        //Debug.Log("Wall from below");
         lastFallCollision = hit.transform.gameObject;
         return (State.Falling, hit.transform);
       }
@@ -542,18 +542,18 @@ public class Cricket : MonoBehaviour
 
         if (hit.transform.gameObject.layer == LayerMask.NameToLayer("Shroom"))
         {
-          Debug.Log("Bounce");
+          //Debug.Log("Bounce");
           return (State.Bounce, hit.transform);
         }
 
         if (hit.transform.gameObject.layer == LayerMask.NameToLayer("BulletShroom"))
         {
-          Debug.Log("BulletTime");
+          //Debug.Log("BulletTime");
           return (State.BulletTimeWaitInput, hit.transform);
         }
 
         // collide with ground
-        Debug.Log("Idle");
+        //Debug.Log("Idle");
         return (State.WaitInput, hit.transform);
       }
       else
@@ -564,12 +564,27 @@ public class Cricket : MonoBehaviour
           return (collisionStateTransition.TransitionToFromSide, hit.transform);
         }
 
-        Debug.Log("Falling");
+        //Debug.Log("Falling");
         return (State.Falling, hit.transform);
       }
     }
 
     return (null, null);
+  }
+
+  private bool Unstuck(Vector3 pos, Vector3 inDir, out Vector3 offset)
+  {
+    var outDir = -inDir;
+    offset = Vector3.zero;
+    int it = 0;
+    while (Physics2D.BoxCast(pos + offset, boxCollider.size, 0, Vector3.zero, 0, collisionMask).collider != null)
+    {
+      offset += outDir * 0.03f;
+      it++;
+      if (it == 100) return false;
+    }
+
+    return true;
   }
 
   public void SetState(State newState)
