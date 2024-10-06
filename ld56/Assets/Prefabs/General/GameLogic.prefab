@@ -853,8 +853,8 @@ MonoBehaviour:
   startScreen: {fileID: 1307530243453712774}
   pauseScreen: {fileID: 0}
   endScreen: {fileID: 8145428253606266644}
-  gameCameraSize: 4
-  gameCameraOffset: {x: 3, y: 2}
+  gameCameraSize: 5
+  gameCameraOffset: {x: 4, y: 3}
   jumpZoomTime: 5
   jumpCameraSize: 7
   jumpCameraOffset: {x: 5, y: 3}
