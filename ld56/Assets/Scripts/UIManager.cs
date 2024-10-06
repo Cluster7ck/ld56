@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using PrimeTween;
 
@@ -75,19 +76,40 @@ public class UIManager : MonoBehaviour
     get { return endScreen; }
   }
 
+  public IEnumerator ZoomToPlayCo(GameObject virtualCamera)
+  {
+    yield return ZoomToPositionCo(virtualCamera, cameraGameParameters.cameraOffset, cameraGameParameters.orthographicSize);
+  }
+  
   public void ZoomToPlay(GameObject virtualCamera)
   {
     ZoomToPosition(virtualCamera, cameraGameParameters.cameraOffset, cameraGameParameters.orthographicSize);
   }
 
-  public void ZoomToStart(GameObject virtualCamera)
+  public IEnumerator ZoomToStart(GameObject virtualCamera)
   {
-    ZoomToPosition(virtualCamera, cameraStartParameters.cameraOffset, cameraStartParameters.orthographicSize);
+    yield return ZoomToPositionCo(virtualCamera, cameraStartParameters.cameraOffset, cameraStartParameters.orthographicSize);
+  }
+  
+  public IEnumerator ZoomToStartCo(GameObject virtualCamera)
+  {
+    yield return ZoomToPositionCo(virtualCamera, cameraStartParameters.cameraOffset, cameraStartParameters.orthographicSize);
   }
 
   public void ZoomToJump(GameObject virtualCamera)
   {
     ZoomToPosition(virtualCamera, jumpCameraOffset, jumpCameraSize, jumpZoomTime);
+  }
+
+  public void InstaZoomToStart(GameObject virtualCamera)
+  {
+    InstaZoomToPosition(virtualCamera, cameraStartParameters.cameraOffset, cameraStartParameters.orthographicSize);
+  }
+
+  private void InstaZoomToPosition(GameObject virtualCamera, Vector2 offset, float orthographicSize)
+  {
+    virtualCamera.GetComponentInChildren<CinemachineCameraOffset>().m_Offset = offset;
+    virtualCamera.GetComponent<Cinemachine.CinemachineVirtualCamera>().m_Lens.OrthographicSize = orthographicSize;
   }
 
   private void ZoomToPosition(GameObject virtualCamera, Vector2 offset, float orthographicSize, float zoomTime = cameraZoomTime)
@@ -105,5 +127,20 @@ public class UIManager : MonoBehaviour
       new TweenSettings(zoomTime),
       x => virtualCamera.GetComponent<Cinemachine.CinemachineVirtualCamera>().m_Lens.OrthographicSize = x
     );
+  }
+  
+  private IEnumerator ZoomToPositionCo(GameObject virtualCamera, Vector2 offset, float orthographicSize, float zoomTime = cameraZoomTime)
+  {
+    yield return Sequence.Create(Tween.Custom(
+      (Vector2)virtualCamera.GetComponentInChildren<CinemachineCameraOffset>().m_Offset,
+      offset,
+      new TweenSettings(zoomTime),
+      vec => virtualCamera.GetComponentInChildren<CinemachineCameraOffset>().m_Offset = vec
+    )).Group(Tween.Custom(
+      virtualCamera.GetComponent<Cinemachine.CinemachineVirtualCamera>().m_Lens.OrthographicSize,
+      orthographicSize,
+      new TweenSettings(zoomTime),
+      x => virtualCamera.GetComponent<Cinemachine.CinemachineVirtualCamera>().m_Lens.OrthographicSize = x
+    )).ToYieldInstruction();
   }
 }

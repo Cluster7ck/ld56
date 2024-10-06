@@ -568,6 +568,7 @@ MonoBehaviour:
   currentState: 0
   player: {fileID: 0}
   virtualCamera: {fileID: 0}
+  startAnimation: {fileID: 59185977935361944, guid: 0cb1e36814660674b8e08f3cea515759, type: 3}
 --- !u!1 &2839843639213538734
 GameObject:
   m_ObjectHideFlags: 0
