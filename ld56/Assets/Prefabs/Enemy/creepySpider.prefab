@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3659386204897908391}
   - component: {fileID: 3347418396221820429}
+  - component: {fileID: 1220188722927006385}
   m_Layer: 0
   m_Name: Gegner-Spinne-11_0
   m_TagString: Untagged
@@ -84,6 +85,23 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1220188722927006385
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2850770352258006863}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9293460f8e706e14da4a01dd92aa9e2c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveSpeed: 0.7
+  initMoveSpeed: 0.7
+  interval: 0.7
+  initInterval: 0.7
+  rotationRange: 40
 --- !u!1 &3161081462590379097
 GameObject:
   m_ObjectHideFlags: 0
@@ -156,7 +174,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 2
   m_Sprite: {fileID: -1443740181, guid: eb7e7064cd598e649bce8215b096179e, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -177,7 +195,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8684884091431751982}
-  - component: {fileID: 7681124318797228129}
   m_Layer: 13
   m_Name: GameObject (1)
   m_TagString: Untagged
@@ -201,23 +218,6 @@ Transform:
   - {fileID: 823485497927380062}
   m_Father: {fileID: 8721531302846221712}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 180}
---- !u!114 &7681124318797228129
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3290686882771775003}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9293460f8e706e14da4a01dd92aa9e2c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  moveSpeed: 0.7
-  initMoveSpeed: 0.7
-  interval: 0.7
-  initInterval: 0.7
-  rotationRange: 40
 --- !u!1 &3555087047357026038
 GameObject:
   m_ObjectHideFlags: 0
@@ -227,7 +227,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8533719757759081601}
-  - component: {fileID: 8468489643496724302}
   m_Layer: 13
   m_Name: GameObject (3)
   m_TagString: Untagged
@@ -251,23 +250,6 @@ Transform:
   - {fileID: 7188892605665915053}
   m_Father: {fileID: 8721531302846221712}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 180}
---- !u!114 &8468489643496724302
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3555087047357026038}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9293460f8e706e14da4a01dd92aa9e2c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  moveSpeed: 0.7
-  initMoveSpeed: 0.7
-  interval: 0.7
-  initInterval: 0.7
-  rotationRange: 40
 --- !u!1 &4892161310042358399
 GameObject:
   m_ObjectHideFlags: 0
@@ -313,6 +295,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4709577985701196479}
   - component: {fileID: 7449698563194000419}
+  - component: {fileID: 2464446488750548851}
   m_Layer: 0
   m_Name: Gegner-Spinne-11_4
   m_TagString: Untagged
@@ -387,6 +370,23 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &2464446488750548851
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5607731494206594220}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9293460f8e706e14da4a01dd92aa9e2c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveSpeed: 0.7
+  initMoveSpeed: 0.7
+  interval: 0.7
+  initInterval: 0.7
+  rotationRange: 40
 --- !u!1 &5749173862619520414
 GameObject:
   m_ObjectHideFlags: 0
@@ -762,6 +762,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7188892605665915053}
   - component: {fileID: 7554046464021024128}
+  - component: {fileID: 6397686650502319240}
   m_Layer: 0
   m_Name: Gegner-Spinne-11_2
   m_TagString: Untagged
@@ -836,6 +837,23 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &6397686650502319240
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6926595992019324090}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9293460f8e706e14da4a01dd92aa9e2c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveSpeed: 0.7
+  initMoveSpeed: 0.7
+  interval: 0.7
+  initInterval: 0.7
+  rotationRange: 40
 --- !u!1 &7020973038463908511
 GameObject:
   m_ObjectHideFlags: 0
@@ -846,6 +864,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7892132261647595109}
   - component: {fileID: 6492896432902576057}
+  - component: {fileID: 7636523243010424112}
   m_Layer: 0
   m_Name: Gegner-Spinne-11_3
   m_TagString: Untagged
@@ -920,6 +939,23 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &7636523243010424112
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7020973038463908511}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9293460f8e706e14da4a01dd92aa9e2c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveSpeed: 0.7
+  initMoveSpeed: 0.7
+  interval: 0.7
+  initInterval: 0.7
+  rotationRange: 40
 --- !u!1 &7318273195864445680
 GameObject:
   m_ObjectHideFlags: 0
@@ -929,7 +965,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1238368267156044568}
-  - component: {fileID: 2355906651696877226}
   m_Layer: 13
   m_Name: GameObject
   m_TagString: Untagged
@@ -953,23 +988,6 @@ Transform:
   - {fileID: 8963101554683510360}
   m_Father: {fileID: 8721531302846221712}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2355906651696877226
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7318273195864445680}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9293460f8e706e14da4a01dd92aa9e2c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  moveSpeed: 0.7
-  initMoveSpeed: 0.7
-  interval: 0.7
-  initInterval: 0.7
-  rotationRange: 40
 --- !u!1 &7616803136722422095
 GameObject:
   m_ObjectHideFlags: 0
@@ -980,6 +998,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5272260115395863912}
   - component: {fileID: 7372065306264033889}
+  - component: {fileID: 3727021788576071211}
   m_Layer: 0
   m_Name: Gegner-Spinne-11_2
   m_TagString: Untagged
@@ -1054,6 +1073,23 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &3727021788576071211
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7616803136722422095}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9293460f8e706e14da4a01dd92aa9e2c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveSpeed: 0.7
+  initMoveSpeed: 0.7
+  interval: 0.7
+  initInterval: 0.7
+  rotationRange: 40
 --- !u!1 &7929794548001641646
 GameObject:
   m_ObjectHideFlags: 0
@@ -1064,6 +1100,7 @@ GameObject:
   m_Component:
   - component: {fileID: 823485497927380062}
   - component: {fileID: 717386809356422388}
+  - component: {fileID: 8814670244872896613}
   m_Layer: 0
   m_Name: Gegner-Spinne-11_3
   m_TagString: Untagged
@@ -1138,6 +1175,23 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &8814670244872896613
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7929794548001641646}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9293460f8e706e14da4a01dd92aa9e2c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveSpeed: 0.7
+  initMoveSpeed: 0.7
+  interval: 0.7
+  initInterval: 0.7
+  rotationRange: 40
 --- !u!1 &8440139071046472377
 GameObject:
   m_ObjectHideFlags: 0
@@ -1147,7 +1201,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1127584980117522172}
-  - component: {fileID: 5969091365638285368}
   m_Layer: 13
   m_Name: GameObject (3)
   m_TagString: Untagged
@@ -1171,23 +1224,6 @@ Transform:
   - {fileID: 5272260115395863912}
   m_Father: {fileID: 8019390651595396908}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 180}
---- !u!114 &5969091365638285368
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8440139071046472377}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9293460f8e706e14da4a01dd92aa9e2c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  moveSpeed: 0.7
-  initMoveSpeed: 0.7
-  interval: 0.7
-  initInterval: 0.7
-  rotationRange: 40
 --- !u!1 &8460615578556936357
 GameObject:
   m_ObjectHideFlags: 0
@@ -1197,7 +1233,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8179003316213498054}
-  - component: {fileID: 3153617384014867208}
   m_Layer: 13
   m_Name: GameObject (2)
   m_TagString: Untagged
@@ -1221,23 +1256,6 @@ Transform:
   - {fileID: 3659386204897908391}
   m_Father: {fileID: 8721531302846221712}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 180}
---- !u!114 &3153617384014867208
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8460615578556936357}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9293460f8e706e14da4a01dd92aa9e2c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  moveSpeed: 0.7
-  initMoveSpeed: 0.7
-  interval: 0.7
-  initInterval: 0.7
-  rotationRange: 40
 --- !u!1 &8562990366242455649
 GameObject:
   m_ObjectHideFlags: 0
@@ -1247,7 +1265,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 859767092915088124}
-  - component: {fileID: 4037366059184357425}
   m_Layer: 13
   m_Name: GameObject
   m_TagString: Untagged
@@ -1271,23 +1288,6 @@ Transform:
   - {fileID: 4709577985701196479}
   m_Father: {fileID: 8019390651595396908}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4037366059184357425
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8562990366242455649}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9293460f8e706e14da4a01dd92aa9e2c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  moveSpeed: 0.7
-  initMoveSpeed: 0.7
-  interval: 0.7
-  initInterval: 0.7
-  rotationRange: 40
 --- !u!1 &8581178153640670865
 GameObject:
   m_ObjectHideFlags: 0
@@ -1298,6 +1298,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8963101554683510360}
   - component: {fileID: 6357766718609443341}
+  - component: {fileID: 2249342194765107417}
   m_Layer: 0
   m_Name: Gegner-Spinne-11_4
   m_TagString: Untagged
@@ -1372,6 +1373,23 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &2249342194765107417
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8581178153640670865}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9293460f8e706e14da4a01dd92aa9e2c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveSpeed: 0.7
+  initMoveSpeed: 0.7
+  interval: 0.7
+  initInterval: 0.7
+  rotationRange: 40
 --- !u!1 &8697799699943006035
 GameObject:
   m_ObjectHideFlags: 0
@@ -1382,6 +1400,7 @@ GameObject:
   m_Component:
   - component: {fileID: 267820937940533417}
   - component: {fileID: 280437614632679214}
+  - component: {fileID: 5468725830306952155}
   m_Layer: 0
   m_Name: Gegner-Spinne-11_0
   m_TagString: Untagged
@@ -1456,6 +1475,23 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &5468725830306952155
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8697799699943006035}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9293460f8e706e14da4a01dd92aa9e2c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveSpeed: 0.7
+  initMoveSpeed: 0.7
+  interval: 0.7
+  initInterval: 0.7
+  rotationRange: 40
 --- !u!1 &8798085131701825210
 GameObject:
   m_ObjectHideFlags: 0
@@ -1465,7 +1501,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6712088689358696843}
-  - component: {fileID: 7259818616113739468}
   m_Layer: 13
   m_Name: GameObject (1)
   m_TagString: Untagged
@@ -1489,23 +1524,6 @@ Transform:
   - {fileID: 7892132261647595109}
   m_Father: {fileID: 8019390651595396908}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 180}
---- !u!114 &7259818616113739468
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8798085131701825210}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9293460f8e706e14da4a01dd92aa9e2c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  moveSpeed: 0.7
-  initMoveSpeed: 0.7
-  interval: 0.7
-  initInterval: 0.7
-  rotationRange: 40
 --- !u!1 &8940063128488559434
 GameObject:
   m_ObjectHideFlags: 0
@@ -1515,7 +1533,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8026000429679085712}
-  - component: {fileID: 3990510785574362175}
   m_Layer: 13
   m_Name: GameObject (2)
   m_TagString: Untagged
@@ -1539,20 +1556,3 @@ Transform:
   - {fileID: 267820937940533417}
   m_Father: {fileID: 8019390651595396908}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 180}
---- !u!114 &3990510785574362175
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8940063128488559434}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9293460f8e706e14da4a01dd92aa9e2c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  moveSpeed: 0.7
-  initMoveSpeed: 0.7
-  interval: 0.7
-  initInterval: 0.7
-  rotationRange: 40
