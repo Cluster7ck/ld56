@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 7667923447545693009}
   - component: {fileID: 5305184534210908170}
   - component: {fileID: 7545932993684070238}
+  - component: {fileID: 1321079767892093908}
   m_Layer: 11
   m_Name: ShroomCollider
   m_TagString: Untagged
@@ -143,6 +144,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eeadc4a966eb44cda9682c80173f3c1c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  BounceStrength: 23
+--- !u!114 &1321079767892093908
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 102748968378402015}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 38809c2e40624863ac9bfaacf914823d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TransitionToFromTop: 8
+  TransitionToFromSide: 5
 --- !u!1 &4480990345417482386
 GameObject:
   m_ObjectHideFlags: 0
@@ -364,6 +380,7 @@ GameObject:
   - component: {fileID: 4585949066730407022}
   - component: {fileID: 952237466416166302}
   - component: {fileID: 8961349895620500552}
+  - component: {fileID: 2998862606140243743}
   m_Layer: 6
   m_Name: stem
   m_TagString: Untagged
@@ -564,3 +581,17 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.82, y: 2.53}
   m_EdgeRadius: 0
+--- !u!114 &2998862606140243743
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8674501024866050186}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 38809c2e40624863ac9bfaacf914823d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TransitionToFromTop: 1
+  TransitionToFromSide: 5
