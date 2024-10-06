@@ -22,6 +22,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private CameraSceneParameters cameraStartParameters = new CameraSceneParameters(2f, 1.2f, 0.5f);
 
     [SerializeField] private float cameraZoomTime = 2f;
+    [SerializeField] private float gameCameraSize= 8f;
 
     void Awake()
     {
@@ -35,6 +36,10 @@ public class UIManager : MonoBehaviour
             Destroy(gameObject);
             
         }
+    }
+
+    private void Start () {
+        cameraGameParameters.orthographicSize = gameCameraSize;
     }
 
     public GameObject StartScreen {
