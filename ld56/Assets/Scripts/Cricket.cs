@@ -109,6 +109,7 @@ public class Cricket : MonoBehaviour
         jumpParticleSystem.gameObject.SetActive(true);
         jumpParticleSystem.transform.SetLocalPositionAndRotation(Vector3.zero, Quaternion.identity);
       }
+
       go.SetActive(false);
     }
   }
@@ -174,10 +175,13 @@ public class Cricket : MonoBehaviour
       }
     }
 
-    if (rb.velocity.x > 0.05f) {
-        lookRight = true;
-    } else if (rb.velocity.x < -0.05f) {
-        lookRight = false;
+    if (rb.velocity.x > 0.05f)
+    {
+      lookRight = true;
+    }
+    else if (rb.velocity.x < -0.05f)
+    {
+      lookRight = false;
     }
 
     if (state == State.PrepareJump || state == State.BulletTimePrepareJump)
@@ -237,22 +241,26 @@ public class Cricket : MonoBehaviour
 
         state = State.WaitInput;
       }
-      
-      if (potentialVelocity.x > 0.05f) {
-         lookRight = true;
-      } else if (potentialVelocity.x < -0.05f) {
-         lookRight = false;
+
+      if (potentialVelocity.x > 0.05f)
+      {
+        lookRight = true;
+      }
+      else if (potentialVelocity.x < -0.05f)
+      {
+        lookRight = false;
       }
     }
 
-   
-    
-    if(lookRight) {
-            transform.localScale = new Vector3(Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
-        } else {
-            transform.localScale = new Vector3(-Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
-        }
-    
+
+    if (lookRight)
+    {
+      transform.localScale = new Vector3(Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
+    }
+    else
+    {
+      transform.localScale = new Vector3(-Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
+    }
   }
 
   void FixedUpdate()
@@ -275,7 +283,7 @@ public class Cricket : MonoBehaviour
         // collision
         var (nextState, _) = DoCollision(transform.position, pos);
 
-        if (jumpTime > 0.1f && nextState.HasValue)
+        if (nextState.HasValue)
         {
           if (nextState.Value == State.Falling)
           {
@@ -489,7 +497,7 @@ public class Cricket : MonoBehaviour
       if (state == State.Falling && hit.transform.gameObject == lastFallCollision)
       {
         sameCollisionFall++;
-        Debug.Log("sameCollisionFall "+sameCollisionFall); 
+        Debug.Log("sameCollisionFall " + sameCollisionFall);
       }
       else
       {
@@ -506,15 +514,16 @@ public class Cricket : MonoBehaviour
         Debug.Log("Bad hit");
       }
 
-      var unstuckOffset = Unstuck(transform.position, dir);
-
       var dist = hit.distance;
       var normDir = dir.normalized;
-      transform.position += normDir * Mathf.Clamp(dist - 0.01f, 0.01f, dist);
+      var nextDir = normDir * Mathf.Clamp(dist - 0.01f, 0.01f, dist);
+      Debug.DrawRay(transform.position, nextDir, Color.magenta, 30f);
+      Debug.DrawRay(transform.position + nextDir, Vector3.up, Color.green, 30f);
+      transform.position += nextDir;
 
       var dot = Vector3.Dot(hit.normal, Vector3.up);
       //Debug.Log($"{hit.transform.gameObject.name}: hd:{hit.distance}, hn:{hit.normal}, dot:{dot}, dir:{dir}");
-      
+
       // We hit a wall from below
       if (previousPos.y < nextPos.y)
       {
@@ -561,23 +570,6 @@ public class Cricket : MonoBehaviour
     }
 
     return (null, null);
-  }
-
-  private Vector3 Unstuck(Vector3 pos, Vector3 inDir)
-  {
-    var outDir = -inDir;
-    var offset = Vector3.zero;
-    RaycastHit2D hit;
-    int it = 0;
-    while ((hit = Physics2D.BoxCast(pos + offset, boxCollider.size, 0, Vector3.zero)).collider != null)
-    {
-      offset += outDir * 0.02f;
-      it++;
-      if (it == 100) break;
-    }
-    Debug.DrawLine(pos, pos+offset, Color.red, 30f);
-    Debug.Log("It: "+it+" Off: "+offset);
-    return offset;
   }
 
   public void SetState(State newState)
