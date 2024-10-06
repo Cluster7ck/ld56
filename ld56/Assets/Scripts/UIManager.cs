@@ -23,6 +23,7 @@ public class UIManager : MonoBehaviour
 
   [FormerlySerializedAs("startScreen")] [SerializeField] private GameObject playScreen;
   [SerializeField] private GameObject pauseScreen;
+  [SerializeField] private GameObject deathScreen;
   [SerializeField] private GameObject endScreen;
 
   [SerializeField] private CameraSceneParameters cameraGameParameters = new CameraSceneParameters(12f, 7f, 7f);
@@ -47,6 +48,7 @@ public class UIManager : MonoBehaviour
   
   public GameObject PlayScreen => playScreen;
   public GameObject PauseScreen => pauseScreen;
+  public GameObject DeathScreen => deathScreen;
   public GameObject EndScreen => endScreen;
 
 

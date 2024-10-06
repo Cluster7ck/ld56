@@ -40,6 +40,8 @@ public class Cricket : MonoBehaviour
   [SerializeField] private ParticleSystem jumpParticleSystem;
   [SerializeField] private Animator animator;
 
+  [SerializeField] private GameObject deathAnimationPrefab;
+
   public GameManager gameManager;
   private BoxCollider2D boxCollider;
   private State state = State.WaitInput;
@@ -570,6 +572,8 @@ public class Cricket : MonoBehaviour
   {
     get { return state; }
   }
+
+    public GameObject DeathAnimationPrefab => deathAnimationPrefab;
 
   private Vector3 PredictVelocityAtT(float time, Vector3 initialVel, Vector3 gravity)
   {

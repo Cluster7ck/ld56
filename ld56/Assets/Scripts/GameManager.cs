@@ -31,7 +31,10 @@ public class GameManager : MonoBehaviour
   private int maxNumCollectibles;
   private int numCollectibles = 0;
   private float elapsedTime;
-  
+
+  private bool playerDead = false;
+    private Vector3 playerStartPos;
+
   public int NumCollectibles
   {
     get => numCollectibles;
@@ -66,6 +69,8 @@ public class GameManager : MonoBehaviour
   {
     // Initialer Zustand
     ChangeState(currentState);
+    playerStartPos = player.transform.position;
+        Debug.Log("Saved Player Start Position: " + playerStartPos);
   }
 
   public void ToggleMute()
@@ -96,6 +101,7 @@ public class GameManager : MonoBehaviour
         break;
       case GameState.Died:
         Die();
+        UIManager.instance.DeathScreen.SetActive(true);
         break;
       case GameState.Win:
         var go = new GameObject();
@@ -113,6 +119,11 @@ public class GameManager : MonoBehaviour
     if (currentState != GameState.Paused)
     {
       //UIManager.instance.PauseScreen.SetActive(false);
+    }
+    
+    if (currentState != GameState.Died)
+    {
+      UIManager.instance.DeathScreen.SetActive(false);
     }
 
     if (currentState != GameState.Win)
@@ -138,6 +149,7 @@ public class GameManager : MonoBehaviour
 
       elapsedTime += Time.deltaTime;
     }
+
   }
 
   private IEnumerator StartSequence()
@@ -171,17 +183,32 @@ public class GameManager : MonoBehaviour
   }
 
   // TODO should probably be a coroutine
+  // stimmt, aber ich wusste nicht so schnell wie und hab noch komische bools hinzugefügt
   private void Die()
   {
-    // play death animation
-    // Reset all resettables
-    player.transform.position = lastCheckpoint;
-    player.SetState(State.Falling);
-    foreach (var resettable in resettables)
-    {
-      resettable.OnReset.Invoke();
-    }
+        // play death animation
+        // Reset all resettables
+        player.gameObject.SetActive(false);
+        playerDead = true;
   }
+
+    private void ResetResettables() {
+        foreach (var resettable in resettables) // Tische zurücksetzen? :P
+        {
+        resettable.OnReset.Invoke();
+        }
+    }
+
+    private void RevivePlayer() {
+        playerDead = false;
+        player.gameObject.SetActive(true);
+    }
+
+    private void SetPlayerToLastCheckpoint() {
+        player.transform.position = lastCheckpoint;
+        Debug.Log("Moving player to: " + lastCheckpoint);
+        player.SetState(State.Falling);        
+    }
 
   private Vector3 lastCheckpoint;
 
@@ -192,4 +219,23 @@ public class GameManager : MonoBehaviour
       lastCheckpoint = respawnPos;
     }
   }
+
+    public void ResetToLastCheckpoint() {
+        Debug.Log("Resetting to checkpoint");
+        RevivePlayer();
+        SetPlayerToLastCheckpoint();
+        ResetResettables();
+        ChangeState(GameState.Playing);
+    }
+
+
+    public void ResetToStart() {
+        Debug.Log("Resetting to start");
+        RevivePlayer();
+        player.transform.position = playerStartPos;
+        Debug.Log("Moving player to: " + playerStartPos);
+        player.SetState(State.Falling);
+        ResetResettables();
+        ChangeState(GameState.Start);
+    }
 }
