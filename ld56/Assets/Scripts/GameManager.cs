@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
+using UnityEngine.Serialization;
 
 public enum GameState
 {
@@ -26,6 +28,8 @@ public class GameManager : MonoBehaviour
 
   private int maxNumCollectibles;
   private int numCollectibles = 0;
+  private float elapsedTime;
+  
   public int NumCollectibles
   {
     get => numCollectibles;
@@ -35,8 +39,6 @@ public class GameManager : MonoBehaviour
       UIManager.instance.SetNumCollectibles(numCollectibles, maxNumCollectibles);
     }
   }
-
-  public float time;
 
   void Awake()
   {
@@ -84,7 +86,14 @@ public class GameManager : MonoBehaviour
         Die();
         break;
       case GameState.Win:
-        UIManager.instance.EndScreen.SetActive(true);
+        var go = new GameObject();
+        var esd = go.AddComponent<EndScreenData>();
+        esd.NumCollectibles = numCollectibles;
+        esd.ElapsedTime = elapsedTime;
+        esd.MaxNumCollectibles = maxNumCollectibles;
+        DontDestroyOnLoad(go);
+        SceneManager.LoadScene(1);
+        //UIManager.instance.EndScreen.SetActive(true);
         break;
     }
 
@@ -114,7 +123,7 @@ public class GameManager : MonoBehaviour
         UIManager.instance.ZoomToPlay(virtualCamera);
       }
 
-      time += Time.deltaTime;
+      elapsedTime += Time.deltaTime;
     }
   }
 
