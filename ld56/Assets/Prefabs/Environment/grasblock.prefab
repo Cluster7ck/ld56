@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3492617976312555211}
   - component: {fileID: 2155199477872770521}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: texturegrasblocks
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -95,7 +95,7 @@ GameObject:
   - component: {fileID: 4592537669503940721}
   - component: {fileID: 7931710506560361903}
   - component: {fileID: 346090846302800384}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: grasblock
   m_TagString: Untagged
   m_Icon: {fileID: 0}
