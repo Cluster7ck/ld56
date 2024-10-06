@@ -69,9 +69,14 @@ public class Cricket : MonoBehaviour
 
   private HitStop hitStop;
 
+
+  private Rigidbody2D rb;
+  private bool lookRight = true;
+
   private void Awake()
   {
     hitStop = GetComponent<HitStop>();
+    rb = GetComponent<Rigidbody2D>();
   }
 
   // Start is called before the first frame update
@@ -96,6 +101,12 @@ public class Cricket : MonoBehaviour
       go.name = $"arcIndicator{i}";
       go.transform.localScale = Vector3.one * (i / (arcIndicators.Length * 1.0f)).Remap(0, 1, arcIndicatorSize.x, arcIndicatorSize.y);
       arcIndicators[i] = go;
+      if (i == 0)
+      {
+        jumpParticleSystem.transform.SetParent(go.transform);
+        jumpParticleSystem.gameObject.SetActive(true);
+        jumpParticleSystem.transform.SetLocalPositionAndRotation(Vector3.zero, Quaternion.identity);
+      }
       go.SetActive(false);
     }
   }
@@ -161,6 +172,12 @@ public class Cricket : MonoBehaviour
       }
     }
 
+    if (rb.velocity.x > 0.05f) {
+        lookRight = true;
+    } else if (rb.velocity.x < -0.05f) {
+        lookRight = false;
+    }
+
     if (state == State.PrepareJump || state == State.BulletTimePrepareJump)
     {
       dragCurrentPosScreen = Mouse.current.position.value;
@@ -174,8 +191,8 @@ public class Cricket : MonoBehaviour
       var potentialJumpPos = transform.position;
 
       var fo = jumpParticleSystem.forceOverLifetime;
-      fo.xMultiplier = -potentialVelocity.x;
-      fo.yMultiplier = -potentialVelocity.y;
+      fo.xMultiplier = 0;
+      fo.yMultiplier = -potentialVelocity.magnitude * potentialVelocity.magnitude.Remap(0, maxVelocityMagnitude, 0.5f, 2);
 
       float dt = 0.03f;
       float t = dt;
@@ -218,7 +235,22 @@ public class Cricket : MonoBehaviour
 
         state = State.WaitInput;
       }
+      
+      if (potentialVelocity.x > 0.05f) {
+         lookRight = true;
+      } else if (potentialVelocity.x < -0.05f) {
+         lookRight = false;
+      }
     }
+
+   
+    
+    if(lookRight) {
+            transform.localScale = new Vector3(Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
+        } else {
+            transform.localScale = new Vector3(-Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
+        }
+    
   }
 
   void FixedUpdate()
