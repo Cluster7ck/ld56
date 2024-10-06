@@ -68,7 +68,7 @@ public class GameManager : MonoBehaviour
                 player.enabled = false;
                 break;
             case GameState.Died:
-                
+                Die();
                 break;
             case GameState.Win:
                 UIManager.instance.EndScreen.SetActive(true);
@@ -102,5 +102,23 @@ public class GameManager : MonoBehaviour
 
     public void ReachedGoal() {
         ChangeState(GameState.Win);
+    }
+
+    // TODO should probably be a coroutine
+    private void Die()
+    {
+        // play death animation
+        // Reset all resettables
+        player.transform.position = lastCheckpoint;
+        player.SetState(State.Falling);
+    }
+
+    private Vector3 lastCheckpoint;
+    public void SetLastCheckpoint(Vector3 respawnPos)
+    {
+        if (respawnPos.x > lastCheckpoint.x)
+        {
+            lastCheckpoint = respawnPos;
+        }
     }
 }

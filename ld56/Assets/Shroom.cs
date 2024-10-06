@@ -4,5 +4,12 @@ using UnityEngine;
 
 public class Shroom : MonoBehaviour
 {
-    public float BounceStrength;
+  [SerializeField] private Animator animator;
+  public float BounceStrength;
+
+  public void DoBounce()
+  {
+    Debug.Log("DoBOunce");
+    animator.SetTrigger("jumpTrigger");
+  }
 }
