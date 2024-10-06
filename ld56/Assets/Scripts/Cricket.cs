@@ -503,6 +503,10 @@ public class Cricket : MonoBehaviour
     jumpTime = 0;
   }
 
+  public State jumpState {
+    get { return state; }
+  }
+
   private Vector3 PredictVelocityAtT(float time, Vector3 initialVel, Vector3 gravity)
   {
     return gravity * time + initialVel;

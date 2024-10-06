@@ -21,6 +21,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Cricket player;
     [SerializeField] private GameObject virtualCamera;
 
+    [SerializeField] private bool playerChargingJump; // debug value, use actual player variable if possible
+
     void Awake()
     {
         if (instance == null)
@@ -87,7 +89,13 @@ public class GameManager : MonoBehaviour
     }
 
     private void Update () {
-        
+        if(currentState == GameState.Playing) {
+            if((player.jumpState == State.PrepareJump) || (player.jumpState == State.BulletTimePrepareJump))  {
+                UIManager.instance.ZoomToJump(virtualCamera);
+            } else {
+                UIManager.instance.ZoomToPlay(virtualCamera);
+            }
+        }
     }
 
     public void StartGame() {
