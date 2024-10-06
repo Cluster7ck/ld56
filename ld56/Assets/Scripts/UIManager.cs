@@ -1,6 +1,8 @@
 using System.Collections;
 using UnityEngine;
 using PrimeTween;
+using TMPro;
+using UnityEngine.Serialization;
 
 [SerializeField]
 public class CameraSceneParameters
@@ -19,7 +21,7 @@ public class UIManager : MonoBehaviour
 {
   public static UIManager instance;
 
-  [SerializeField] private GameObject startScreen;
+  [FormerlySerializedAs("startScreen")] [SerializeField] private GameObject playScreen;
   [SerializeField] private GameObject pauseScreen;
   [SerializeField] private GameObject endScreen;
 
@@ -41,6 +43,12 @@ public class UIManager : MonoBehaviour
   [SerializeField] private float jumpCameraSize = 4f;
   [SerializeField] private Vector2 jumpCameraOffset = new Vector2(3f, 2f);
 
+  [FormerlySerializedAs("text")] [Header("Ui")] [SerializeField] private TMP_Text collectiblesNumText;
+  
+  public GameObject PlayScreen => playScreen;
+  public GameObject PauseScreen => pauseScreen;
+  public GameObject EndScreen => endScreen;
+
 
   void Awake()
   {
@@ -61,19 +69,9 @@ public class UIManager : MonoBehaviour
     cameraGameParameters.cameraOffset = gameCameraOffset;
   }
 
-  public GameObject StartScreen
+  public void SetNumCollectibles(int numCollectibles, int maxNumCollectibles)
   {
-    get { return startScreen; }
-  }
-
-  public GameObject PauseScreen
-  {
-    get { return pauseScreen; }
-  }
-
-  public GameObject EndScreen
-  {
-    get { return endScreen; }
+    collectiblesNumText.text = $"{numCollectibles}/{maxNumCollectibles}";
   }
 
   public IEnumerator ZoomToPlayCo(GameObject virtualCamera)
