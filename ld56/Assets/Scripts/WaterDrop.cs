@@ -13,12 +13,12 @@ public class WaterDrop : MonoBehaviour
     private float timer = 0f;
     private int stepCount = 0;
 
-    private Rigidbody2D rigidbody;
+    private Rigidbody2D rb;
 
     // Start is called before the first frame update
     void Start()
     {
-        rigidbody = GetComponent<Rigidbody2D>();
+        rb = GetComponent<Rigidbody2D>();
         transform.localScale = new Vector3(startSize, startSize, startSize);
     }
 
@@ -27,7 +27,8 @@ public class WaterDrop : MonoBehaviour
     {
         timer += Time.deltaTime;
         if(stepCount >= stepsUntilDrop) {
-            rigidbody.bodyType = RigidbodyType2D.Dynamic;
+            rb.bodyType = RigidbodyType2D.Dynamic;
+            
         } else {
             if(timer >= stepTime) {
                 stepCount++;
