@@ -104,8 +104,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gravity: {x: 0, y: -9.81, z: 0}
-  velocityMul: 12
-  maxVelocityMagnitude: 30
+  velocityMul: 0.4
+  maxVelocityMagnitude: 35
   riseGravityMul: 8
   fallGravityMul: 8
   collisionMask:
@@ -119,6 +119,7 @@ MonoBehaviour:
   arcIndicatorSize: {x: 1, y: 0.2}
   jumpParticleSystem: {fileID: 3024855697537989932}
   animator: {fileID: 2689614097055367743}
+  gameManager: {fileID: 0}
 --- !u!50 &3986453291830224839
 Rigidbody2D:
   serializedVersion: 4
