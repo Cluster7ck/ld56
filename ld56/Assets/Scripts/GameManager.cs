@@ -24,6 +24,9 @@ public class GameManager : MonoBehaviour
 
   private Resettable[] resettables;
 
+  public int NumCollectibles { get; set; }
+  public float time;
+
   void Awake()
   {
     if (instance == null)
@@ -95,6 +98,8 @@ public class GameManager : MonoBehaviour
       {
         UIManager.instance.ZoomToPlay(virtualCamera);
       }
+
+      time += Time.deltaTime;
     }
   }
 

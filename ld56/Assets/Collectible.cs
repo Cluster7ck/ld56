@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using PrimeTween;
 using UnityEngine;
 
@@ -22,6 +21,8 @@ public class Collectible : MonoBehaviour
 
   IEnumerator CollectAnim()
   {
+    Destroy(gameObject.GetComponent<Collider2D>());
+    gameManager.NumCollectibles += 1;
     var rot = new Vector3(transform.eulerAngles.x, 1440, transform.eulerAngles.z);
     var curRot = transform.eulerAngles;
     var startY = transform.position.y;
