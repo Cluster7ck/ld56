@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: foilage2
+  m_Name: foilage light green
   m_Shader: {fileID: 4800000, guid: 167ddab9db7874d4bb847079f875def2, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
