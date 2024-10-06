@@ -88,7 +88,7 @@ public class GameManager : MonoBehaviour
 
     private void Update () {
         if(currentState == GameState.Playing) {
-            if((player.jumpState == State.PrepareJump) || (player.jumpState == State.BulletTimePrepareJump))  {
+            if(player.jumpState == State.PrepareJump || player.jumpState == State.BulletTimePrepareJump || player.jumpState == State.JumpingDown || player.jumpState == State.JumpingUp || player.jumpState == State.Falling || player.jumpState == State.DoubleJumping || player.jumpState == State.BulletTimeWaitInput || player.jumpState == State.Bounce)  {
                 UIManager.instance.ZoomToJump(virtualCamera);
             } else {
                 UIManager.instance.ZoomToPlay(virtualCamera);

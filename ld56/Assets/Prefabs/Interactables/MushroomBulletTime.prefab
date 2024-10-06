@@ -20,6 +20,10 @@ PrefabInstance:
       propertyPath: TransitionToFromTop
       value: 6
       objectReference: {fileID: 0}
+    - target: {fileID: 1321079767892093908, guid: edc16a19d1152fb468c2892bced29797, type: 3}
+      propertyPath: transitionToFromTop
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 4262501425507599044, guid: edc16a19d1152fb468c2892bced29797, type: 3}
       propertyPath: m_SpriteTilingProperty.oldSize.x
       value: 2.77
@@ -30,7 +34,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4480990345417482386, guid: edc16a19d1152fb468c2892bced29797, type: 3}
       propertyPath: m_Name
-      value: Mushroom3
+      value: MushroomBulletTime
       objectReference: {fileID: 0}
     - target: {fileID: 4585949066730407022, guid: edc16a19d1152fb468c2892bced29797, type: 3}
       propertyPath: m_Sprite
@@ -56,13 +60,17 @@ PrefabInstance:
       propertyPath: m_SortingOrder
       value: -2
       objectReference: {fileID: 0}
+    - target: {fileID: 7545932993684070238, guid: edc16a19d1152fb468c2892bced29797, type: 3}
+      propertyPath: BounceStrength
+      value: 35
+      objectReference: {fileID: 0}
     - target: {fileID: 7838301416712795619, guid: edc16a19d1152fb468c2892bced29797, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: 12.2
       objectReference: {fileID: 0}
     - target: {fileID: 7838301416712795619, guid: edc16a19d1152fb468c2892bced29797, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 1.2
       objectReference: {fileID: 0}
     - target: {fileID: 7838301416712795619, guid: edc16a19d1152fb468c2892bced29797, type: 3}
       propertyPath: m_LocalPosition.z
@@ -74,15 +82,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7838301416712795619, guid: edc16a19d1152fb468c2892bced29797, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 7838301416712795619, guid: edc16a19d1152fb468c2892bced29797, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 7838301416712795619, guid: edc16a19d1152fb468c2892bced29797, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 7838301416712795619, guid: edc16a19d1152fb468c2892bced29797, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -107,6 +115,14 @@ PrefabInstance:
     - target: {fileID: 7925339792280184406, guid: edc16a19d1152fb468c2892bced29797, type: 3}
       propertyPath: m_LocalPosition.y
       value: 1.356
+      objectReference: {fileID: 0}
+    - target: {fileID: 8961349895620500552, guid: edc16a19d1152fb468c2892bced29797, type: 3}
+      propertyPath: m_Size.y
+      value: 1.7877331
+      objectReference: {fileID: 0}
+    - target: {fileID: 8961349895620500552, guid: edc16a19d1152fb468c2892bced29797, type: 3}
+      propertyPath: m_Offset.y
+      value: 0.06886649
       objectReference: {fileID: 0}
     - target: {fileID: 8961349895620500552, guid: edc16a19d1152fb468c2892bced29797, type: 3}
       propertyPath: m_SpriteTilingProperty.oldSize.x
@@ -210,7 +226,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.049196966, y: 0.42574286}
+  m_Offset: {x: -0.04919696, y: 0.32770765}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -221,5 +237,5 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.5474805, y: 1.3985143}
+  m_Size: {x: 0.5474805, y: 1.2024438}
   m_EdgeRadius: 0

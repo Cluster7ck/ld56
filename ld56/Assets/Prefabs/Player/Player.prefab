@@ -114,7 +114,7 @@ MonoBehaviour:
   bounceStrength: 23
   bounceMinForwardVelocity: 5
   hitStopLength: 0
-  bulletTimeLength: 1
+  bulletTimeLength: 2
   arcIndicatorPrefab: {fileID: 8941374493487935712, guid: a3a5de743d0d54840b7e7c0eb4aa53d8, type: 3}
   arcIndicatorSize: {x: 1, y: 0.2}
   jumpParticleSystem: {fileID: 3024855697537989932}
