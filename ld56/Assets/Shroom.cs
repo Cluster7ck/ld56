@@ -9,7 +9,6 @@ public class Shroom : MonoBehaviour
 
   public void DoBounce()
   {
-    Debug.Log("DoBOunce");
     animator.SetTrigger("jumpTrigger");
   }
 }

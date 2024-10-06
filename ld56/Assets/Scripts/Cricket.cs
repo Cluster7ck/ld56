@@ -41,14 +41,11 @@ public class Cricket : MonoBehaviour
   [SerializeField] private Animator animator;
 
   public GameManager gameManager;
-  private Camera camera;
   private BoxCollider2D boxCollider;
   private State state = State.WaitInput;
 
   private bool dragging;
   private Vector3 dragStartPosScreen;
-  private Vector3 dragStartPosWorld;
-  private Vector3 dragCurrentPosScreen;
 
   private Vector3 initialVelocity;
   private Vector3 initialJumpPos;
@@ -59,10 +56,6 @@ public class Cricket : MonoBehaviour
   private int sameCollisionFall;
 
   private float jumpTime;
-
-  private float timeSinceBulletTime = 0;
-
-  private Vector3 startPos;
 
   private GameObject[] debugSpheres = new GameObject[12];
 
@@ -84,10 +77,7 @@ public class Cricket : MonoBehaviour
   // Start is called before the first frame update
   void Start()
   {
-    camera = Camera.main;
     boxCollider = GetComponent<BoxCollider2D>();
-    startPos = transform.position;
-
     for (int i = 0; i < debugSpheres.Length; i++)
     {
       var go = GameObject.CreatePrimitive(PrimitiveType.Sphere);
@@ -116,21 +106,6 @@ public class Cricket : MonoBehaviour
 
   void Update()
   {
-    if (Input.GetKeyDown(KeyCode.Space))
-    {
-      state = State.BulletTimeWaitInput;
-      transform.position = startPos;
-    }
-
-    if (Input.GetKeyDown(KeyCode.A))
-    {
-      state = State.WaitInput;
-      foreach (var sp in debugSpheres)
-      {
-        sp.GetComponent<MeshRenderer>().material.color = Color.gray;
-      }
-    }
-
     if (state == State.NoInput)
     {
       jumpTime += Time.deltaTime;
@@ -152,7 +127,6 @@ public class Cricket : MonoBehaviour
         animator.SetBool("isAiming", true);
         state = State.PrepareJump;
         dragStartPosScreen = Mouse.current.position.value;
-        dragStartPosWorld = camera.ScreenToWorldPoint(dragStartPosScreen);
 
         for (int i = 0; i < arcIndicators.Length; i++)
         {
@@ -167,7 +141,6 @@ public class Cricket : MonoBehaviour
       {
         state = State.BulletTimePrepareJump;
         dragStartPosScreen = Mouse.current.position.value;
-        dragStartPosWorld = camera.ScreenToWorldPoint(dragStartPosScreen);
         for (int i = 0; i < arcIndicators.Length; i++)
         {
           arcIndicators[i].gameObject.SetActive(true);
@@ -183,14 +156,18 @@ public class Cricket : MonoBehaviour
     {
       lookRight = false;
     }
+    
+    if (state == State.BulletTimeWaitInput || state == State.BulletTimePrepareJump)
+    {
+      JumpingUpBulletTime();
+    }
 
     if (state == State.PrepareJump || state == State.BulletTimePrepareJump)
     {
-      dragCurrentPosScreen = Mouse.current.position.value;
-      var dragCurrentPosWorld = camera.ScreenToWorldPoint(dragCurrentPosScreen);
-      var dragDelta = (dragStartPosWorld - dragCurrentPosWorld);
+      Vector3 dragCurrentPosScreen = Mouse.current.position.value;
+      var dragScreenDelta = (dragStartPosScreen - dragCurrentPosScreen);
 
-      var potentialVelocity = dragDelta * velocityMul;
+      var potentialVelocity = dragScreenDelta * velocityMul;
       var potentialVelocityNorm = potentialVelocity.normalized;
       var mag = Mathf.Min(potentialVelocity.magnitude, maxVelocityMagnitude);
       potentialVelocity = potentialVelocityNorm * mag;
@@ -229,6 +206,8 @@ public class Cricket : MonoBehaviour
 
         initialVelocity = potentialVelocity;
         initialJumpPos = potentialJumpPos;
+        jumpTime = 0;
+        hitStop.ForceReset();
         state = State.JumpingUp;
       }
 
@@ -253,13 +232,14 @@ public class Cricket : MonoBehaviour
     }
 
 
+    var localScale = transform.localScale;
     if (lookRight)
     {
-      transform.localScale = new Vector3(Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
+      transform.localScale = new Vector3(Mathf.Abs(transform.localScale.x), localScale.y, localScale.z);
     }
     else
     {
-      transform.localScale = new Vector3(-Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
+      transform.localScale = new Vector3(-Mathf.Abs(transform.localScale.x), localScale.y, localScale.z);
     }
   }
 
@@ -362,20 +342,21 @@ public class Cricket : MonoBehaviour
         transform.position = pos;
       }
     }
-    else if (state == State.BulletTimeWaitInput || state == State.BulletTimePrepareJump)
-    {
-      JumpingUp();
-    }
   }
 
-  private void JumpingUp()
+  private void JumpingUpBulletTime()
   {
     // Predicted position
-    jumpTime += Time.fixedDeltaTime * Time.timeScale;
+    jumpTime += Time.deltaTime;
 
     var pos = PredictProjectilePosAtT(jumpTime, initialVelocity, initialJumpPos, gravity * riseGravityMul);
     if (transform.position.y > pos.y)
     {
+      foreach (var arcIndicator in arcIndicators)
+      {
+        arcIndicator.SetActive(false);
+      }
+      hitStop.ForceReset();
       TransitionToJumpingDown();
     }
     else
@@ -383,10 +364,11 @@ public class Cricket : MonoBehaviour
       // collision
       var (nextState, _) = DoCollision(transform.position, pos);
 
-      if (jumpTime > 0.1f && nextState.HasValue)
+      if (nextState.HasValue)
       {
         if (nextState.Value == State.Falling)
         {
+          hitStop.ForceReset();
           TransitionToFalling();
         }
         else if (nextState.Value == State.WaitInput)
@@ -459,7 +441,6 @@ public class Cricket : MonoBehaviour
     this.initialVelocity = new Vector3(clampedX, bounceStrength, 0);
     initialJumpPos = transform.position;
     state = State.BulletTimeWaitInput;
-    timeSinceBulletTime = 0;
 
     hitStop.BulletTime(bulletTimeLength);
   }
@@ -468,14 +449,6 @@ public class Cricket : MonoBehaviour
   {
     var position = transform.position;
     var dir = nextPos - previousPos;
-
-    //if (nextPos.x < previousPos.x && (nextPos.x - extents.x) < cameraLeft.x)
-    //{
-    //  var leftDir = Vector3.left * Mathf.Abs((cameraLeft.x + extents.x) - previousPos.x);
-    //  var newLeftDir = Vector3.Project(leftDir, dir);
-    //  transform.position += newLeftDir;
-    //  return State.Falling;
-    //}
 
     var hit = Physics2D.BoxCast(position, boxCollider.size, 0, dir, dir.magnitude, collisionMask);
 
