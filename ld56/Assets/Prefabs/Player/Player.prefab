@@ -110,7 +110,7 @@ MonoBehaviour:
   fallGravityMul: 8
   collisionMask:
     serializedVersion: 2
-    m_Bits: 6720
+    m_Bits: 14912
   bounceStrength: 23
   bounceMinForwardVelocity: 5
   hitStopLength: 0
