@@ -390,6 +390,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: JumpParticleSystem
       objectReference: {fileID: 0}
+    - target: {fileID: 7705541185895973845, guid: 7ddf4a6f02c7a43c19290a06f3da2fe0, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8827081495775741236, guid: 7ddf4a6f02c7a43c19290a06f3da2fe0, type: 3}
       propertyPath: ShapeModule.type
       value: 2
