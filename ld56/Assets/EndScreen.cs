@@ -1,8 +1,8 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
+using PrimeTween;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class EndScreen : MonoBehaviour
 {
@@ -17,5 +17,11 @@ public class EndScreen : MonoBehaviour
             collectiblesText.text = $"{esd.NumCollectibles}/{esd.MaxNumCollectibles}";
             time.text = $"{TimeSpan.FromSeconds(Mathf.RoundToInt(esd.ElapsedTime)):c}";
         }
+    }
+
+    public void Restart()
+    {
+        Tween.StopAll();
+        SceneManager.LoadScene(0);
     }
 }
