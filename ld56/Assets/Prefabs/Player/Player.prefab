@@ -389,6 +389,42 @@ PrefabInstance:
       propertyPath: m_Name
       value: JumpParticleSystem
       objectReference: {fileID: 0}
+    - target: {fileID: 8827081495775741236, guid: 7ddf4a6f02c7a43c19290a06f3da2fe0, type: 3}
+      propertyPath: ShapeModule.type
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8827081495775741236, guid: 7ddf4a6f02c7a43c19290a06f3da2fe0, type: 3}
+      propertyPath: ShapeModule.enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8827081495775741236, guid: 7ddf4a6f02c7a43c19290a06f3da2fe0, type: 3}
+      propertyPath: ShapeModule.arc.mode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8827081495775741236, guid: 7ddf4a6f02c7a43c19290a06f3da2fe0, type: 3}
+      propertyPath: ShapeModule.arc.value
+      value: 339.92
+      objectReference: {fileID: 0}
+    - target: {fileID: 8827081495775741236, guid: 7ddf4a6f02c7a43c19290a06f3da2fe0, type: 3}
+      propertyPath: ShapeModule.m_Scale.x
+      value: 1.15
+      objectReference: {fileID: 0}
+    - target: {fileID: 8827081495775741236, guid: 7ddf4a6f02c7a43c19290a06f3da2fe0, type: 3}
+      propertyPath: ShapeModule.m_Scale.y
+      value: -0.18
+      objectReference: {fileID: 0}
+    - target: {fileID: 8827081495775741236, guid: 7ddf4a6f02c7a43c19290a06f3da2fe0, type: 3}
+      propertyPath: ShapeModule.arc.spread
+      value: 0.57
+      objectReference: {fileID: 0}
+    - target: {fileID: 8827081495775741236, guid: 7ddf4a6f02c7a43c19290a06f3da2fe0, type: 3}
+      propertyPath: ShapeModule.radiusThickness
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8827081495775741236, guid: 7ddf4a6f02c7a43c19290a06f3da2fe0, type: 3}
+      propertyPath: ShapeModule.arc.speed.scalar
+      value: -0.75
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
