@@ -15,7 +15,7 @@ public class EndScreen : MonoBehaviour
         if (esd)
         {
             collectiblesText.text = $"{esd.NumCollectibles}/{esd.MaxNumCollectibles}";
-            time.text = $"{TimeSpan.FromSeconds(esd.ElapsedTime):mm:ss} min";
+            time.text = $"{TimeSpan.FromSeconds(Mathf.RoundToInt(esd.ElapsedTime)):c}";
         }
     }
 }

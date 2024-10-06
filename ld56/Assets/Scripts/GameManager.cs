@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using PrimeTween;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
@@ -92,6 +93,7 @@ public class GameManager : MonoBehaviour
         esd.ElapsedTime = elapsedTime;
         esd.MaxNumCollectibles = maxNumCollectibles;
         DontDestroyOnLoad(go);
+        Tween.StopAll();
         SceneManager.LoadScene(1);
         //UIManager.instance.EndScreen.SetActive(true);
         break;
