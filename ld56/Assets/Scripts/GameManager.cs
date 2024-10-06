@@ -24,7 +24,18 @@ public class GameManager : MonoBehaviour
 
   private Resettable[] resettables;
 
-  public int NumCollectibles { get; set; }
+  private int maxNumCollectibles;
+  private int numCollectibles = 0;
+  public int NumCollectibles
+  {
+    get => numCollectibles;
+    set
+    {
+      numCollectibles = value;
+      UIManager.instance.SetNumCollectibles(numCollectibles, maxNumCollectibles);
+    }
+  }
+
   public float time;
 
   void Awake()
@@ -40,12 +51,12 @@ public class GameManager : MonoBehaviour
     }
 
     resettables = FindObjectsByType<Resettable>(FindObjectsInactive.Include, FindObjectsSortMode.None);
+     maxNumCollectibles = FindObjectsByType<Collectible>(FindObjectsInactive.Include, FindObjectsSortMode.None).Length;
   }
 
   void Start()
   {
     // Initialer Zustand
-    UIManager.instance.StartScreen.SetActive(false);
     ChangeState(currentState);
   }
 
@@ -59,6 +70,10 @@ public class GameManager : MonoBehaviour
         StartCoroutine(StartSequence());
         break;
       case GameState.Playing:
+        Time.timeScale = 1f;
+        UIManager.instance.SetNumCollectibles(numCollectibles, maxNumCollectibles);
+        UIManager.instance.PlayScreen.SetActive(true);
+        player.enabled = true;
         break;
       case GameState.Paused:
         Time.timeScale = 0f;
@@ -112,7 +127,6 @@ public class GameManager : MonoBehaviour
     yield return UIManager.instance.ZoomToPlayCo(virtualCamera);
     
     ChangeState(GameState.Playing);
-    player.enabled = true;
     
     // wait for first click
     while (!Mouse.current.leftButton.wasReleasedThisFrame)
@@ -122,7 +136,6 @@ public class GameManager : MonoBehaviour
 
     yield return new WaitForSeconds(3.0f);
     Destroy(startAnim);
-    Time.timeScale = 1f;
   }
 
   public void StartGame()
