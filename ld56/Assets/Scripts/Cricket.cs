@@ -40,6 +40,7 @@ public class Cricket : MonoBehaviour
   [SerializeField] private ParticleSystem jumpParticleSystem;
   [SerializeField] private Animator animator;
 
+  public GameManager gameManager;
   private Camera camera;
   private BoxCollider2D boxCollider;
   private State state = State.WaitInput;
@@ -75,6 +76,7 @@ public class Cricket : MonoBehaviour
 
   private void Awake()
   {
+    gameManager = FindObjectOfType<GameManager>();
     hitStop = GetComponent<HitStop>();
     rb = GetComponent<Rigidbody2D>();
   }
