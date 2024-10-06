@@ -157,8 +157,8 @@ Transform:
   m_GameObject: {fileID: 497519599189431907}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 85.86, y: -1.09, z: 0}
-  m_LocalScale: {x: -5.964412, y: 12.670173, z: 0.8}
+  m_LocalPosition: {x: 90.6045, y: -1.09, z: 0}
+  m_LocalScale: {x: -15.453196, y: 12.670173, z: 0.8}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2806822586931286701}
@@ -287,7 +287,7 @@ Transform:
   m_GameObject: {fileID: 1100523482303335560}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 24.4815, y: 4.42, z: 0}
+  m_LocalPosition: {x: 19.0272, y: 4.42, z: 0}
   m_LocalScale: {x: -5.636036, y: 9.735054, z: 0.8}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -807,8 +807,8 @@ Transform:
   m_GameObject: {fileID: 2669797850357752995}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 91.58, y: 4.07, z: 0}
-  m_LocalScale: {x: -5.964412, y: 12.670173, z: 0.8}
+  m_LocalPosition: {x: 104.9961, y: 4.07, z: 0}
+  m_LocalScale: {x: -14.705544, y: 12.670173, z: 0.8}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2806822586931286701}
@@ -1151,8 +1151,8 @@ Transform:
   m_GameObject: {fileID: 3970539041098200247}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 29.8543, y: 5.8877, z: 0}
-  m_LocalScale: {x: -5.964412, y: 12.670173, z: 0.8}
+  m_LocalPosition: {x: 25.383, y: 5.8877, z: 0}
+  m_LocalScale: {x: -7.930282, y: 12.670173, z: 0.8}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2806822586931286701}
@@ -1411,8 +1411,8 @@ Transform:
   m_GameObject: {fileID: 4196578650680607100}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 97.5, y: 7.7721, z: 0}
-  m_LocalScale: {x: -5.964412, y: 16.325518, z: 0.8}
+  m_LocalPosition: {x: 118.2, y: 7.7, z: 0}
+  m_LocalScale: {x: -12.039166, y: 16.325518, z: 0.8}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2806822586931286701}
@@ -1801,8 +1801,8 @@ Transform:
   m_GameObject: {fileID: 4991545951603316590}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 38.0905, y: 7.63, z: 0}
-  m_LocalScale: {x: -10.89389, y: 15.931476, z: 0.8}
+  m_LocalPosition: {x: 36.2882, y: 7.63, z: 0}
+  m_LocalScale: {x: -14.498678, y: 15.931476, z: 0.8}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2806822586931286701}
@@ -2052,17 +2052,21 @@ PrefabInstance:
       propertyPath: m_Name
       value: Mushroom1 (6)
       objectReference: {fileID: 0}
+    - target: {fileID: 4585949066730407022, guid: edc16a19d1152fb468c2892bced29797, type: 3}
+      propertyPath: m_SortingOrder
+      value: -3
+      objectReference: {fileID: 0}
     - target: {fileID: 7545932993684070238, guid: edc16a19d1152fb468c2892bced29797, type: 3}
       propertyPath: BounceStrength
       value: 35
       objectReference: {fileID: 0}
     - target: {fileID: 7838301416712795619, guid: edc16a19d1152fb468c2892bced29797, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 86.12999
+      value: 91.69
       objectReference: {fileID: 0}
     - target: {fileID: 7838301416712795619, guid: edc16a19d1152fb468c2892bced29797, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 4.5299997
+      value: 4.39
       objectReference: {fileID: 0}
     - target: {fileID: 7838301416712795619, guid: edc16a19d1152fb468c2892bced29797, type: 3}
       propertyPath: m_LocalPosition.z
@@ -2124,7 +2128,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7838301416712795619, guid: edc16a19d1152fb468c2892bced29797, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 92.62999
+      value: 105.5
       objectReference: {fileID: 0}
     - target: {fileID: 7838301416712795619, guid: edc16a19d1152fb468c2892bced29797, type: 3}
       propertyPath: m_LocalPosition.y
@@ -2190,7 +2194,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7838301416712795619, guid: edc16a19d1152fb468c2892bced29797, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 80.43
+      value: 77.13
       objectReference: {fileID: 0}
     - target: {fileID: 7838301416712795619, guid: edc16a19d1152fb468c2892bced29797, type: 3}
       propertyPath: m_LocalPosition.y
@@ -2250,17 +2254,21 @@ PrefabInstance:
       propertyPath: m_Name
       value: Mushroom1 (4)
       objectReference: {fileID: 0}
+    - target: {fileID: 4585949066730407022, guid: edc16a19d1152fb468c2892bced29797, type: 3}
+      propertyPath: m_SortingOrder
+      value: -3
+      objectReference: {fileID: 0}
     - target: {fileID: 7545932993684070238, guid: edc16a19d1152fb468c2892bced29797, type: 3}
       propertyPath: BounceStrength
       value: 35
       objectReference: {fileID: 0}
     - target: {fileID: 7838301416712795619, guid: edc16a19d1152fb468c2892bced29797, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 38.2
+      value: 34.8
       objectReference: {fileID: 0}
     - target: {fileID: 7838301416712795619, guid: edc16a19d1152fb468c2892bced29797, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 15.3
+      value: 14.8
       objectReference: {fileID: 0}
     - target: {fileID: 7838301416712795619, guid: edc16a19d1152fb468c2892bced29797, type: 3}
       propertyPath: m_LocalPosition.z
@@ -2322,11 +2330,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7838301416712795619, guid: edc16a19d1152fb468c2892bced29797, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 17.9
+      value: 7.7
       objectReference: {fileID: 0}
     - target: {fileID: 7838301416712795619, guid: edc16a19d1152fb468c2892bced29797, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.2
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 7838301416712795619, guid: edc16a19d1152fb468c2892bced29797, type: 3}
       propertyPath: m_LocalPosition.z
