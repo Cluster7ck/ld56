@@ -101,6 +101,12 @@ public class Cricket : MonoBehaviour
       go.name = $"arcIndicator{i}";
       go.transform.localScale = Vector3.one * (i / (arcIndicators.Length * 1.0f)).Remap(0, 1, arcIndicatorSize.x, arcIndicatorSize.y);
       arcIndicators[i] = go;
+      if (i == 0)
+      {
+        jumpParticleSystem.transform.SetParent(go.transform);
+        jumpParticleSystem.gameObject.SetActive(true);
+        jumpParticleSystem.transform.SetLocalPositionAndRotation(Vector3.zero, Quaternion.identity);
+      }
       go.SetActive(false);
     }
   }
@@ -185,8 +191,8 @@ public class Cricket : MonoBehaviour
       var potentialJumpPos = transform.position;
 
       var fo = jumpParticleSystem.forceOverLifetime;
-      fo.xMultiplier = -potentialVelocity.x;
-      fo.yMultiplier = -potentialVelocity.y;
+      fo.xMultiplier = 0;
+      fo.yMultiplier = -potentialVelocity.magnitude * potentialVelocity.magnitude.Remap(0, maxVelocityMagnitude, 0.5f, 2);
 
       float dt = 0.03f;
       float t = dt;
