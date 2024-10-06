@@ -24,6 +24,7 @@ public class GameManager : MonoBehaviour
   [SerializeField] private GameObject virtualCamera;
 
   [SerializeField] private GameObject startAnimation;
+  [SerializeField] private AudioSource audioSource;
 
   private Resettable[] resettables;
 
@@ -54,13 +55,23 @@ public class GameManager : MonoBehaviour
     }
 
     resettables = FindObjectsByType<Resettable>(FindObjectsInactive.Include, FindObjectsSortMode.None);
-     maxNumCollectibles = FindObjectsByType<Collectible>(FindObjectsInactive.Include, FindObjectsSortMode.None).Length;
+    maxNumCollectibles = FindObjectsByType<Collectible>(FindObjectsInactive.Include, FindObjectsSortMode.None).Length;
+    if (!audioSource)
+    {
+      audioSource = Camera.main.GetComponentInChildren<AudioSource>();
+    }
   }
 
   void Start()
   {
     // Initialer Zustand
     ChangeState(currentState);
+  }
+
+  public void ToggleMute()
+  {
+    // TODO toggle button icon
+    audioSource.mute = !audioSource.mute;
   }
 
   public void ChangeState(GameState newState)
