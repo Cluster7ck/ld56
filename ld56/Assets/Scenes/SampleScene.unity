@@ -459,7 +459,7 @@ Camera:
   far clip plane: 1000
   field of view: 34
   orthographic: 1
-  orthographic size: 4.9198
+  orthographic size: 5.232338
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -484,7 +484,7 @@ Transform:
   m_GameObject: {fileID: 519420028}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 143.73514, y: -0.4468341, z: -10}
+  m_LocalPosition: {x: -2.883832, y: -0.3800001, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -896,7 +896,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 44d70cc20219cd84593f67d248eafe36, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Offset: {x: 3.925146, y: 2.933166, z: 0}
+  m_Offset: {x: 4.116168, y: 3, z: 0}
   m_ApplyAfter: 1
   m_PreserveComposition: 0
 --- !u!114 &1198821295
@@ -921,7 +921,7 @@ MonoBehaviour:
   m_Follow: {fileID: 990688468}
   m_Lens:
     FieldOfView: 34
-    OrthographicSize: 4.9198
+    OrthographicSize: 5.232338
     NearClipPlane: 0.3
     FarClipPlane: 1000
     Dutch: 0
@@ -947,7 +947,7 @@ Transform:
   m_GameObject: {fileID: 1198821292}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 139.81, y: -3.38, z: -10}
+  m_LocalPosition: {x: -7, y: -3.38, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1315,7 +1315,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3463626292017673245, guid: 786130dfb3c1a45c580858130886ff3a, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 139.81
+      value: -7
       objectReference: {fileID: 0}
     - target: {fileID: 3463626292017673245, guid: 786130dfb3c1a45c580858130886ff3a, type: 3}
       propertyPath: m_LocalPosition.y
@@ -1492,15 +1492,15 @@ PrefabInstance:
       objectReference: {fileID: 519420035}
     - target: {fileID: 3005533641178799603, guid: a1b932b982355b248923926bc9e453c5, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 84.77571
+      value: 84.833015
       objectReference: {fileID: 0}
     - target: {fileID: 3885165416970840896, guid: a1b932b982355b248923926bc9e453c5, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -32.172546
+      value: -32.19165
       objectReference: {fileID: 0}
     - target: {fileID: 4678926513875302282, guid: a1b932b982355b248923926bc9e453c5, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 10.148315
+      value: 10.167418
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
