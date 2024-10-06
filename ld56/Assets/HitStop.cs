@@ -29,6 +29,13 @@ public class HitStop : MonoBehaviour
     StartCoroutine(DoBulletTime(duration));
   }
 
+  public void ForceReset()
+  {
+    StopAllCoroutines();
+    Time.timeScale = 1;
+    waiting = false;
+  }
+
   IEnumerator DoHitStop(float duration)
   {
     Time.timeScale = 0;
