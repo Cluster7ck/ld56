@@ -1,5 +1,7 @@
 using UnityEngine;
 using DG.Tweening;
+
+[SerializeField]
 public class CameraSceneParameters
 {
     public CameraSceneParameters(float pOrthographicSize, float pXcameraOffset, float pYcameraOffset) {
