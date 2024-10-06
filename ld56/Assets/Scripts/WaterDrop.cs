@@ -14,9 +14,12 @@ public class WaterDrop : MonoBehaviour
 
   [SerializeField] private float shakeStrength = 2.0f;
 
+  [SerializeField] private ParticleSystem particleSystem;
+
   private Rigidbody2D rb;
 
   private int groundLayer;
+  private bool dead = false;
 
   // Start is called before the first frame update
   void Start()
@@ -41,10 +44,21 @@ public class WaterDrop : MonoBehaviour
     rb.bodyType = RigidbodyType2D.Dynamic;
   }
 
+
+  IEnumerator Die()
+  {
+      rb.bodyType = RigidbodyType2D.Static;
+      particleSystem.gameObject.SetActive(true);
+      yield return Tween.Scale(transform, Vector3.zero, particleSystem.main.duration/2f);
+      yield return new WaitForSeconds(particleSystem.main.duration / 2f);
+      Destroy(this);
+  }
+
   private void OnTriggerEnter2D(Collider2D other)
   {
     if (other.gameObject.layer == groundLayer)
     {
+      StartCoroutine(Die());
     }
   }
 }

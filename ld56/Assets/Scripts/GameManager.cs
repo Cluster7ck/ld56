@@ -21,6 +21,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Cricket player;
     [SerializeField] private GameObject virtualCamera;
 
+    private Resettable[] resettables;
+
     void Awake()
     {
         if (instance == null)
@@ -32,6 +34,8 @@ public class GameManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+
+        resettables = FindObjectsByType<Resettable>(FindObjectsInactive.Include, FindObjectsSortMode.None);
     }
 
     void Start()
@@ -111,6 +115,10 @@ public class GameManager : MonoBehaviour
         // Reset all resettables
         player.transform.position = lastCheckpoint;
         player.SetState(State.Falling);
+        foreach (var resettable in resettables)
+        {
+            resettable.OnReset.Invoke();
+        }
     }
 
     private Vector3 lastCheckpoint;
