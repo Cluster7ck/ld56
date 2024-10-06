@@ -12,13 +12,10 @@ public class EndScreen : MonoBehaviour
     void Start()
     {
         var esd = FindObjectOfType<EndScreenData>();
-        collectiblesText.text = $"{esd.NumCollectibles}/{esd.MaxNumCollectibles}";
-        time.text = $"{TimeSpan.FromSeconds(esd.ElapsedTime):mm:ss}";
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        if (esd)
+        {
+            collectiblesText.text = $"{esd.NumCollectibles}/{esd.MaxNumCollectibles}";
+            time.text = $"{TimeSpan.FromSeconds(esd.ElapsedTime):mm:ss} min";
+        }
     }
 }
