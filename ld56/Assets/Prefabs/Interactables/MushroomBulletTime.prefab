@@ -16,6 +16,10 @@ PrefabInstance:
       propertyPath: m_SpriteTilingProperty.oldSize.y
       value: 2.25
       objectReference: {fileID: 0}
+    - target: {fileID: 1321079767892093908, guid: edc16a19d1152fb468c2892bced29797, type: 3}
+      propertyPath: TransitionToFromTop
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 4262501425507599044, guid: edc16a19d1152fb468c2892bced29797, type: 3}
       propertyPath: m_SpriteTilingProperty.oldSize.x
       value: 2.77
