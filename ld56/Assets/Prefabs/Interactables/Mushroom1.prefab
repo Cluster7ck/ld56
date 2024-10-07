@@ -145,6 +145,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 7492522551447242175}
+  bounceClip: {fileID: 8300000, guid: 5288b811c04a10740a9e7d79558f5a5d, type: 3}
   BounceStrength: 23
 --- !u!114 &1321079767892093908
 MonoBehaviour:

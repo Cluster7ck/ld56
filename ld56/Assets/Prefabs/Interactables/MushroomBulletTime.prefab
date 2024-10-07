@@ -145,6 +145,10 @@ PrefabInstance:
       value: -2
       objectReference: {fileID: 0}
     - target: {fileID: 7545932993684070238, guid: edc16a19d1152fb468c2892bced29797, type: 3}
+      propertyPath: bounceClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 2ef93bb1e76dd724987b15db021e994c, type: 3}
+    - target: {fileID: 7545932993684070238, guid: edc16a19d1152fb468c2892bced29797, type: 3}
       propertyPath: BounceStrength
       value: 35
       objectReference: {fileID: 0}
