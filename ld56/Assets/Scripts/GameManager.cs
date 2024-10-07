@@ -15,8 +15,7 @@ public enum GameState
   Win
 }
 
-public class GameManager : MonoBehaviour
-{
+public class GameManager : MonoBehaviour {
   public static GameManager instance;
   public GameState currentState;
 
@@ -34,6 +33,8 @@ public class GameManager : MonoBehaviour
 
   private bool playerDead = false;
     private Vector3 playerStartPos;
+
+    private bool _muteState = false;
 
   public int NumCollectibles
   {
@@ -77,7 +78,10 @@ public class GameManager : MonoBehaviour
   {
     // TODO toggle button icon
     audioSource.mute = !audioSource.mute;
+        _muteState = audioSource.mute;
   }
+
+    public bool muteState => _muteState;
 
   public void ChangeState(GameState newState)
   {

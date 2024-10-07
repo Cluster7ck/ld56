@@ -8,6 +8,8 @@ public class Collectible : MonoBehaviour
   [SerializeField] private float rotDuration;
   [SerializeField] private float bounceDuration;
   [SerializeField] private float scaleDuration;
+
+  [SerializeField] private AudioClip collectClip;
   
   public void Awake()
   {
@@ -17,6 +19,7 @@ public class Collectible : MonoBehaviour
   public void Collect()
   {
     StartCoroutine(CollectAnim());
+    AudioManager.Instance.PlaySound(collectClip);
   }
 
   IEnumerator CollectAnim()
