@@ -771,7 +771,7 @@ Transform:
   m_GameObject: {fileID: 519420028}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -19.529324, y: -8.116462, z: -6.663244}
+  m_LocalPosition: {x: -19.531797, y: -8.116462, z: -6.663244}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1161,6 +1161,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1307530243453712774, guid: 4d2c5bcef97c01d4ea00aa56ebac1134, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1319103372593649343, guid: 4d2c5bcef97c01d4ea00aa56ebac1134, type: 3}
       propertyPath: m_LocalPosition.x
       value: 183.49641
@@ -1249,6 +1253,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3962690153960057988, guid: 4d2c5bcef97c01d4ea00aa56ebac1134, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4585722354020522155, guid: 4d2c5bcef97c01d4ea00aa56ebac1134, type: 3}
       propertyPath: deathScreen
       value: 
@@ -1270,7 +1278,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 2285054924510846328, guid: 4d2c5bcef97c01d4ea00aa56ebac1134, type: 3}
+    - {fileID: 2700919979885602365, guid: 4d2c5bcef97c01d4ea00aa56ebac1134, type: 3}
+    - {fileID: 4429050554323854943, guid: 4d2c5bcef97c01d4ea00aa56ebac1134, type: 3}
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 1319103372593649343, guid: 4d2c5bcef97c01d4ea00aa56ebac1134, type: 3}
       insertIndex: 3
@@ -1652,7 +1663,7 @@ Transform:
   m_GameObject: {fileID: 1198821292}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -19.529312, y: -10.582162, z: -6.663244}
+  m_LocalPosition: {x: -19.53179, y: -10.582162, z: -6.663244}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1757,6 +1768,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   parallaxFactor: 0
+--- !u!224 &1437759153 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 4025667621771976098, guid: 4d2c5bcef97c01d4ea00aa56ebac1134, type: 3}
+  m_PrefabInstance: {fileID: 754789751}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1506706402
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2397,6 +2413,14 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 8298798951059343753, guid: 786130dfb3c1a45c580858130886ff3a, type: 3}
+      propertyPath: relativeTarget
+      value: 
+      objectReference: {fileID: 1437759153}
+    - target: {fileID: 8298798951059343753, guid: 786130dfb3c1a45c580858130886ff3a, type: 3}
+      propertyPath: firstBulletTimeHelp
+      value: 
+      objectReference: {fileID: 59185977935361944, guid: eb0c9d01579df4fdba645119942901b5, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2589,7 +2613,7 @@ PrefabInstance:
       objectReference: {fileID: 519420035}
     - target: {fileID: 3005533641178799603, guid: a1b932b982355b248923926bc9e453c5, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 40.48982
+      value: 40.489075
       objectReference: {fileID: 0}
     - target: {fileID: 3017722299566680531, guid: a1b932b982355b248923926bc9e453c5, type: 3}
       propertyPath: m_Name
@@ -2597,11 +2621,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3885165416970840896, guid: a1b932b982355b248923926bc9e453c5, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -17.410616
+      value: -17.410368
       objectReference: {fileID: 0}
     - target: {fileID: 4678926513875302282, guid: a1b932b982355b248923926bc9e453c5, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -4.613629
+      value: -4.6138763
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

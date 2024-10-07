@@ -157,7 +157,7 @@ public class GameManager : MonoBehaviour
     }
 
     if ((currentState == GameState.Paused || currentState == GameState.Playing) &&
-        Input.GetKeyDown(KeyCode.Escape))
+        (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.Q) || Input.GetKeyDown(KeyCode.P)))
     {
       if (currentState != GameState.Paused)
       {

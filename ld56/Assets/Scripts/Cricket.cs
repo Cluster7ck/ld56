@@ -41,6 +41,9 @@ public class Cricket : MonoBehaviour
   [SerializeField] private Animator animator;
 
   [SerializeField] private GameObject deathAnimationPrefab;
+  [SerializeField] private GameObject firstBulletTimeHelp;
+
+  [SerializeField] private RectTransform relativeTarget;
 
   public GameManager gameManager;
   private BoxCollider2D boxCollider;
@@ -58,6 +61,7 @@ public class Cricket : MonoBehaviour
   private int sameCollisionFall;
 
   private float jumpTime;
+  private bool hadFirstBulletTimeJump;
 
   private GameObject[] debugSpheres = new GameObject[12];
 
@@ -132,6 +136,8 @@ public class Cricket : MonoBehaviour
         animator.SetBool("isAiming", true);
         state = State.PrepareJump;
         dragStartPosScreen = Mouse.current.position.value;
+        relativeTarget.gameObject.SetActive(true);
+        relativeTarget.position = dragStartPosScreen;
 
         for (int i = 0; i < arcIndicators.Length; i++)
         {
@@ -144,8 +150,11 @@ public class Cricket : MonoBehaviour
     {
       if (Mouse.current.leftButton.wasPressedThisFrame)
       {
+        hadFirstBulletTimeJump = true;
         state = State.BulletTimePrepareJump;
         dragStartPosScreen = Mouse.current.position.value;
+        relativeTarget.gameObject.SetActive(true);
+        relativeTarget.position = dragStartPosScreen;
         for (int i = 0; i < arcIndicators.Length; i++)
         {
           arcIndicators[i].gameObject.SetActive(true);
@@ -197,6 +206,8 @@ public class Cricket : MonoBehaviour
         {
           arcIndicators[i].gameObject.SetActive(false);
         }
+        
+        relativeTarget.gameObject.SetActive(false);
 
         animator.SetBool("isAiming", false);
         animator.SetBool("isFlying", true);
@@ -214,6 +225,7 @@ public class Cricket : MonoBehaviour
         {
           arcIndicators[i].gameObject.SetActive(false);
         }
+        relativeTarget.gameObject.SetActive(false);
 
         state = State.WaitInput;
       }
@@ -307,8 +319,6 @@ public class Cricket : MonoBehaviour
       var (nextState, collision) = DoCollision(transform.position, pos);
       if (nextState.HasValue)
       {
-        state = nextState.Value;
-        jumpTime = 0;
         if (nextState.Value == State.Bounce)
         {
           TransitionToBounce(initialFallVelocity, collision);
@@ -317,6 +327,8 @@ public class Cricket : MonoBehaviour
         {
           TransitionToBulletTime(initialFallVelocity, collision);
         }
+        state = nextState.Value;
+        jumpTime = 0;
       }
       else
       {
@@ -462,6 +474,11 @@ public class Cricket : MonoBehaviour
 
   private void TransitionToBulletTime(Vector3 initialVelocity, Transform bounceable)
   {
+    if (!hadFirstBulletTimeJump)
+    {
+      var go = Instantiate(firstBulletTimeHelp);
+      go.transform.position = transform.position;
+    }
     var shroom = bounceable.GetComponent<Shroom>();
     shroom.DoBounce();
 
