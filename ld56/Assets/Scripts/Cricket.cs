@@ -45,6 +45,8 @@ public class Cricket : MonoBehaviour
 
   [SerializeField] private RectTransform relativeTarget;
 
+    [SerializeField] private AudioClip jumpClip;
+
   private GameObject lastFrameCollision;
 
   public GameManager gameManager;
@@ -219,6 +221,7 @@ public class Cricket : MonoBehaviour
         jumpTime = 0;
         hitStop.ForceReset();
         state = State.JumpingUp;
+        AudioManager.Instance.PlaySound(jumpClip);
       }
 
       if (Mouse.current.rightButton.wasPressedThisFrame)

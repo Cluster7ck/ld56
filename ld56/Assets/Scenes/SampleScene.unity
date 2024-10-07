@@ -1887,6 +1887,10 @@ PrefabInstance:
       value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 8298798951059343753, guid: 786130dfb3c1a45c580858130886ff3a, type: 3}
+      propertyPath: jumpClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 984d419583e3dc948a6caf9929cc0303, type: 3}
+    - target: {fileID: 8298798951059343753, guid: 786130dfb3c1a45c580858130886ff3a, type: 3}
       propertyPath: relativeTarget
       value: 
       objectReference: {fileID: 1437759153}
