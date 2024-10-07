@@ -620,6 +620,12 @@ public class Cricket : MonoBehaviour
     return true;
   }
 
+  public void SetVelocityMultiplier(float sensitivity)
+  {
+    velocityMul = sensitivity.Remap01(0.01f, 0.4f);
+    Debug.Log(velocityMul+"  , "+sensitivity);
+  }
+
   private Vector3 PredictVelocityAtT(float time, Vector3 initialVel, Vector3 gravity)
   {
     return gravity * time + initialVel;

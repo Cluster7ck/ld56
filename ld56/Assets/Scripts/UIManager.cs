@@ -3,6 +3,7 @@ using UnityEngine;
 using PrimeTween;
 using TMPro;
 using UnityEngine.Serialization;
+using UnityEngine.UI;
 
 [SerializeField]
 public class CameraSceneParameters
@@ -46,6 +47,7 @@ public class UIManager : MonoBehaviour
 
   [FormerlySerializedAs("text")] [Header("Ui")] [SerializeField] private TMP_Text collectiblesNumText;
   [SerializeField] private TMP_Text muteText;
+  [SerializeField] public Slider slider;
   
   public GameObject PlayScreen => playScreen;
   public GameObject PauseScreen => pauseScreen;
