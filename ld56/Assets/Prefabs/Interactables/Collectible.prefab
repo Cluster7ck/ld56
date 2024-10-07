@@ -212,9 +212,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: acfd640363e294e0d88c5e507efd4ca2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rotDuration: 0
-  bounceDuration: 0
-  scaleDuration: 0
+  rotDuration: 0.5
+  bounceDuration: 0.5
+  scaleDuration: 0.5
   collectClip: {fileID: 8300000, guid: d2671dc85ed73144c92ea893efc527b0, type: 3}
 --- !u!114 &9033663842345595088
 MonoBehaviour:

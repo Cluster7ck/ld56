@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using PrimeTween;
 using UnityEngine;
@@ -10,12 +11,20 @@ public class Collectible : MonoBehaviour
   [SerializeField] private float scaleDuration;
 
   [SerializeField] private AudioClip collectClip;
+
+  private float startY;
   
   public void Awake()
   {
     gameManager = FindObjectOfType<GameManager>();
+    startY = transform.position.y;
   }
-  
+
+  private void Update()
+  {
+    transform.position = new Vector3(transform.position.x, Mathf.Sin(Time.realtimeSinceStartup).Remap01(0.1f, 0.2f) + startY, 0);
+  }
+
   public void Collect()
   {
     StartCoroutine(CollectAnim());
@@ -26,7 +35,7 @@ public class Collectible : MonoBehaviour
   {
     Destroy(gameObject.GetComponent<Collider2D>());
     gameManager.NumCollectibles += 1;
-    var rot = new Vector3(transform.eulerAngles.x, 1440, transform.eulerAngles.z);
+    var rot = new Vector3(transform.eulerAngles.x, transform.eulerAngles.y, 720);
     var curRot = transform.eulerAngles;
     var startY = transform.position.y;
     var targetY = transform.position.y + 0.7f;
