@@ -53,7 +53,7 @@ public class WaterDrop : MonoBehaviour
       particleSystem.gameObject.SetActive(true);
       yield return Tween.Scale(transform, Vector3.zero, particleSystem.main.duration/2f);
       yield return new WaitForSeconds(particleSystem.main.duration / 2f);
-      Destroy(this);
+      Destroy(gameObject);
   }
 
   private void OnTriggerEnter2D(Collider2D other)
