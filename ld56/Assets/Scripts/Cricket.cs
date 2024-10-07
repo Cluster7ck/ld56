@@ -472,7 +472,8 @@ public class Cricket : MonoBehaviour
 
     this.initialVelocity = new Vector3(clampedX, bounceStrength, 0);
     initialJumpPos = transform.position;
-    state = State.JumpingUp;
+    //state = State.JumpingUp;
+    state = State.BulletTimeWaitInput;
 
     hitStop.Stop(hitStopLength);
   }
