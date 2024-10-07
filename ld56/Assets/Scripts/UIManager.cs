@@ -45,6 +45,7 @@ public class UIManager : MonoBehaviour
   [SerializeField] private Vector2 jumpCameraOffset = new Vector2(3f, 2f);
 
   [FormerlySerializedAs("text")] [Header("Ui")] [SerializeField] private TMP_Text collectiblesNumText;
+  [SerializeField] private TMP_Text muteText;
   
   public GameObject PlayScreen => playScreen;
   public GameObject PauseScreen => pauseScreen;
@@ -69,6 +70,11 @@ public class UIManager : MonoBehaviour
   {
     cameraGameParameters.orthographicSize = gameCameraSize;
     cameraGameParameters.cameraOffset = gameCameraOffset;
+  }
+
+  public void SetMuteButtonText(bool muted)
+  {
+    muteText.text = muted ? "Unmute" : "Mute";
   }
 
   public void SetNumCollectibles(int numCollectibles, int maxNumCollectibles)
