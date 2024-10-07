@@ -475,7 +475,7 @@ Transform:
   m_GameObject: {fileID: 6604690227055745291}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 93.68, y: 9.32, z: 0}
+  m_LocalPosition: {x: 116.29, y: 8.05, z: 0}
   m_LocalScale: {x: 1.24, y: 1.24, z: 1.24}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -786,7 +786,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1122165525357440515, guid: f508a3298b413488ca3c6226e7361ae4, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -32.83127
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1122165525357440515, guid: f508a3298b413488ca3c6226e7361ae4, type: 3}
       propertyPath: m_LocalRotation.w
@@ -1058,7 +1058,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1122165525357440515, guid: f508a3298b413488ca3c6226e7361ae4, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -32.83127
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1122165525357440515, guid: f508a3298b413488ca3c6226e7361ae4, type: 3}
       propertyPath: m_LocalRotation.w
@@ -1244,7 +1244,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1122165525357440515, guid: f508a3298b413488ca3c6226e7361ae4, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -32.83127
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1122165525357440515, guid: f508a3298b413488ca3c6226e7361ae4, type: 3}
       propertyPath: m_LocalRotation.w
@@ -1974,7 +1974,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1122165525357440515, guid: f508a3298b413488ca3c6226e7361ae4, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -32.83127
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1122165525357440515, guid: f508a3298b413488ca3c6226e7361ae4, type: 3}
       propertyPath: m_LocalRotation.w
@@ -2388,7 +2388,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1122165525357440515, guid: f508a3298b413488ca3c6226e7361ae4, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -32.83127
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1122165525357440515, guid: f508a3298b413488ca3c6226e7361ae4, type: 3}
       propertyPath: m_LocalRotation.w
@@ -3566,15 +3566,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1971481982652324003, guid: f0bb95c9299cb5b40b5ea871bf4a7d8e, type: 3}
       propertyPath: m_Color.b
-      value: 0.3409279
+      value: 0.21560162
       objectReference: {fileID: 0}
     - target: {fileID: 1971481982652324003, guid: f0bb95c9299cb5b40b5ea871bf4a7d8e, type: 3}
       propertyPath: m_Color.g
-      value: 0.4575715
+      value: 0.44402438
       objectReference: {fileID: 0}
     - target: {fileID: 1971481982652324003, guid: f0bb95c9299cb5b40b5ea871bf4a7d8e, type: 3}
       propertyPath: m_Color.r
-      value: 0.6415094
+      value: 0.8018868
       objectReference: {fileID: 0}
     - target: {fileID: 4372584048888863855, guid: f0bb95c9299cb5b40b5ea871bf4a7d8e, type: 3}
       propertyPath: m_Name
@@ -3774,15 +3774,15 @@ PrefabInstance:
       objectReference: {fileID: 21300000, guid: aa992ed2915dc478691147e8852da07e, type: 3}
     - target: {fileID: 1971481982652324003, guid: f0bb95c9299cb5b40b5ea871bf4a7d8e, type: 3}
       propertyPath: m_Color.b
-      value: 0.25934488
+      value: 0.20990565
       objectReference: {fileID: 0}
     - target: {fileID: 1971481982652324003, guid: f0bb95c9299cb5b40b5ea871bf4a7d8e, type: 3}
       propertyPath: m_Color.g
-      value: 0.3856819
+      value: 0.45268804
       objectReference: {fileID: 0}
     - target: {fileID: 1971481982652324003, guid: f0bb95c9299cb5b40b5ea871bf4a7d8e, type: 3}
       propertyPath: m_Color.r
-      value: 0.5849056
+      value: 0.8396226
       objectReference: {fileID: 0}
     - target: {fileID: 1971481982652324003, guid: f0bb95c9299cb5b40b5ea871bf4a7d8e, type: 3}
       propertyPath: m_SpriteSortPoint
