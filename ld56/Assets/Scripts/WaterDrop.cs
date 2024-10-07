@@ -18,6 +18,7 @@ public class WaterDrop : MonoBehaviour
 
   private Rigidbody2D rb;
 
+  private int playerLayer;
   private int groundLayer;
   private bool dead = false;
 
@@ -25,6 +26,7 @@ public class WaterDrop : MonoBehaviour
   void Start()
   {
     groundLayer = LayerMask.NameToLayer("Ground");
+    playerLayer = LayerMask.NameToLayer("Character");
     rb = GetComponent<Rigidbody2D>();
     transform.localScale = new Vector3(startSize, startSize, startSize);
     StartCoroutine(StartDropping());
@@ -59,6 +61,11 @@ public class WaterDrop : MonoBehaviour
     if (other.gameObject.layer == groundLayer)
     {
       StartCoroutine(Die());
+    }
+
+    if (other.gameObject.layer == playerLayer)
+    {
+      other.gameObject.GetComponent<Cricket>().gameManager.ChangeState(GameState.Died);
     }
   }
 }
