@@ -15,7 +15,8 @@ public enum GameState
   Win
 }
 
-public class GameManager : MonoBehaviour {
+public class GameManager : MonoBehaviour
+{
   public static GameManager instance;
   public GameState currentState;
 
@@ -33,7 +34,7 @@ public class GameManager : MonoBehaviour {
 
   private Vector3 playerStartPos;
 
-    private bool _muteState = false;
+  private bool _muteState = false;
 
   public int NumCollectibles
   {
@@ -77,10 +78,11 @@ public class GameManager : MonoBehaviour {
   {
     // TODO toggle button icon
     audioSource.mute = !audioSource.mute;
-        _muteState = audioSource.mute;
+    _muteState = audioSource.mute;
+    UIManager.instance.SetMuteButtonText(audioSource.mute);
   }
 
-    public bool muteState => _muteState;
+  public bool muteState => _muteState;
 
   public void ChangeState(GameState newState)
   {
@@ -94,6 +96,7 @@ public class GameManager : MonoBehaviour {
       case GameState.Playing:
         Time.timeScale = 1f;
         UIManager.instance.SetNumCollectibles(numCollectibles, maxNumCollectibles);
+        UIManager.instance.PauseScreen.SetActive(false);
         UIManager.instance.PlayScreen.SetActive(true);
         player.enabled = true;
         break;
@@ -151,6 +154,19 @@ public class GameManager : MonoBehaviour {
       }
 
       elapsedTime += Time.deltaTime;
+    }
+
+    if ((currentState == GameState.Paused || currentState == GameState.Playing) &&
+        Input.GetKeyDown(KeyCode.Escape))
+    {
+      if (currentState != GameState.Paused)
+      {
+        ChangeState(GameState.Paused);
+      }
+      else
+      {
+        ChangeState(GameState.Playing);
+      }
     }
   }
 
@@ -227,12 +243,13 @@ public class GameManager : MonoBehaviour {
 
   public void ResetToStart()
   {
-    Debug.Log("Resetting to start");
-    player.gameObject.SetActive(true);
-    player.transform.position = playerStartPos;
-    Debug.Log("Moving player to: " + playerStartPos);
-    player.TransitionToFalling();
-    ResetResettables();
-    ChangeState(GameState.Start);
+    SceneManager.LoadScene(0);
+    //Debug.Log("Resetting to start");
+    //player.gameObject.SetActive(true);
+    //player.transform.position = playerStartPos;
+    //Debug.Log("Moving player to: " + playerStartPos);
+    //player.TransitionToFalling();
+    //ResetResettables();
+    //ChangeState(GameState.Start);
   }
 }

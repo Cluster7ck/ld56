@@ -5,14 +5,13 @@ using UnityEngine;
 public class Shroom : MonoBehaviour
 {
   [SerializeField] private Animator animator;
-    [SerializeField] private AudioClip bounceClip;
+  [SerializeField] private AudioClip bounceClip;
   public float BounceStrength;
 
 
   public void DoBounce()
   {
     animator.SetTrigger("jumpTrigger");
-        Debug.Log("Do Bounce");
-        AudioManager.Instance.PlaySound(bounceClip, BounceStrength*0.01f-0.2f);
+    AudioManager.Instance.PlaySound(bounceClip, BounceStrength * 0.01f - 0.2f);
   }
 }
