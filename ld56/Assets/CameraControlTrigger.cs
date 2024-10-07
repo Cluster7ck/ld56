@@ -18,10 +18,10 @@ public class CameraControlTrigger : MonoBehaviour
     private void OnTriggerEnter2D ( Collider2D collision ) {
         if(collision.CompareTag("Player")) {
             if(customInspectorObjects.panCameraOnContact) {
-                CameraManager.instance.PanCameraOnContact(customInspectorObjects.panValue, customInspectorObjects.panTime, false);
+                if(CameraManager.instance) CameraManager.instance.PanCameraOnContact(customInspectorObjects.panValue, customInspectorObjects.panTime, false);
             }
             if(customInspectorObjects.zoomCameraOnContact) {
-                CameraManager.instance.ZoomCameraOnContact(customInspectorObjects.orthographicSize, customInspectorObjects.zoomTime, false);
+                if(CameraManager.instance) CameraManager.instance.ZoomCameraOnContact(customInspectorObjects.orthographicSize, customInspectorObjects.zoomTime, false);
             }
         }
     }
@@ -29,10 +29,10 @@ public class CameraControlTrigger : MonoBehaviour
     private void OnTriggerExit2D ( Collider2D collision ) {
         if(collision.CompareTag("Player")) {
             if(customInspectorObjects.panCameraOnContact) {
-                CameraManager.instance.PanCameraOnContact(customInspectorObjects.panValue, customInspectorObjects.panTime, true);
+                if(CameraManager.instance) CameraManager.instance.PanCameraOnContact(customInspectorObjects.panValue, customInspectorObjects.panTime, true);
             }
             if(customInspectorObjects.zoomCameraOnContact) {
-                CameraManager.instance.ZoomCameraOnContact(customInspectorObjects.orthographicSize, customInspectorObjects.zoomTime, true);
+                if(CameraManager.instance) CameraManager.instance.ZoomCameraOnContact(customInspectorObjects.orthographicSize, customInspectorObjects.zoomTime, true);
             }
         }
     }
@@ -54,6 +54,7 @@ public class CustomInspectorObjects
     [HideInInspector] public float zoomTime = 2f;
 }
 
+#if UNITY_EDITOR
 [CustomEditor(typeof(CameraControlTrigger))]
 public class MyScriptEditor : Editor {
     CameraControlTrigger cameraControlTrigger;
@@ -88,3 +89,4 @@ public class MyScriptEditor : Editor {
         }
     }
 }
+#endif
