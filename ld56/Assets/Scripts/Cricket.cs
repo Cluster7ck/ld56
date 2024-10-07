@@ -43,6 +43,8 @@ public class Cricket : MonoBehaviour
   [SerializeField] private GameObject deathAnimationPrefab;
   [SerializeField] private GameObject firstBulletTimeHelp;
 
+  [SerializeField] private RectTransform relativeTarget;
+
   public GameManager gameManager;
   private BoxCollider2D boxCollider;
   private State state = State.WaitInput;
@@ -134,6 +136,8 @@ public class Cricket : MonoBehaviour
         animator.SetBool("isAiming", true);
         state = State.PrepareJump;
         dragStartPosScreen = Mouse.current.position.value;
+        relativeTarget.gameObject.SetActive(true);
+        relativeTarget.position = dragStartPosScreen;
 
         for (int i = 0; i < arcIndicators.Length; i++)
         {
@@ -200,6 +204,8 @@ public class Cricket : MonoBehaviour
         {
           arcIndicators[i].gameObject.SetActive(false);
         }
+        
+        relativeTarget.gameObject.SetActive(false);
 
         animator.SetBool("isAiming", false);
         animator.SetBool("isFlying", true);
@@ -217,6 +223,7 @@ public class Cricket : MonoBehaviour
         {
           arcIndicators[i].gameObject.SetActive(false);
         }
+        relativeTarget.gameObject.SetActive(false);
 
         state = State.WaitInput;
       }
