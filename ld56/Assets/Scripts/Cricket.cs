@@ -41,6 +41,7 @@ public class Cricket : MonoBehaviour
   [SerializeField] private Animator animator;
 
   [SerializeField] private GameObject deathAnimationPrefab;
+  [SerializeField] private GameObject firstBulletTimeHelp;
 
   public GameManager gameManager;
   private BoxCollider2D boxCollider;
@@ -58,6 +59,7 @@ public class Cricket : MonoBehaviour
   private int sameCollisionFall;
 
   private float jumpTime;
+  private bool hadFirstBulletTimeJump;
 
   private GameObject[] debugSpheres = new GameObject[12];
 
@@ -144,6 +146,7 @@ public class Cricket : MonoBehaviour
     {
       if (Mouse.current.leftButton.wasPressedThisFrame)
       {
+        hadFirstBulletTimeJump = true;
         state = State.BulletTimePrepareJump;
         dragStartPosScreen = Mouse.current.position.value;
         for (int i = 0; i < arcIndicators.Length; i++)
@@ -462,6 +465,11 @@ public class Cricket : MonoBehaviour
 
   private void TransitionToBulletTime(Vector3 initialVelocity, Transform bounceable)
   {
+    if (!hadFirstBulletTimeJump)
+    {
+      var go = Instantiate(firstBulletTimeHelp);
+      go.transform.position = transform.position;
+    }
     var shroom = bounceable.GetComponent<Shroom>();
     shroom.DoBounce();
 

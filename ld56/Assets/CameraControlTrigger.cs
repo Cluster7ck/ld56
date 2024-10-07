@@ -54,6 +54,7 @@ public class CustomInspectorObjects
     [HideInInspector] public float zoomTime = 2f;
 }
 
+#if UNITY_EDITOR
 [CustomEditor(typeof(CameraControlTrigger))]
 public class MyScriptEditor : Editor {
     CameraControlTrigger cameraControlTrigger;
@@ -88,3 +89,4 @@ public class MyScriptEditor : Editor {
         }
     }
 }
+#endif
