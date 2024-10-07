@@ -65,8 +65,10 @@ public class Cricket : MonoBehaviour
 
   private HitStop hitStop;
 
+    private float _fallSpeedYDampingChangeThreshold;
 
   private Rigidbody2D rb;
+    private Vector2 _prevPos;
   private bool lookRight = true;
 
   private void Awake()
@@ -87,6 +89,7 @@ public class Cricket : MonoBehaviour
       go.transform.localScale = Vector3.one * 0.1f;
       debugSpheres[i] = go;
       debugSpheres[i].SetActive(false);
+      _fallSpeedYDampingChangeThreshold = CameraManager.instance.fallSpeedYDampingChangeThreshold;
     }
 
     for (int i = 0; i < arcIndicators.Length; i++)
@@ -150,14 +153,6 @@ public class Cricket : MonoBehaviour
       }
     }
 
-    if (rb.velocity.x > 0.05f)
-    {
-      lookRight = true;
-    }
-    else if (rb.velocity.x < -0.05f)
-    {
-      lookRight = false;
-    }
     
     if (state == State.BulletTimeWaitInput || state == State.BulletTimePrepareJump)
     {
@@ -231,6 +226,8 @@ public class Cricket : MonoBehaviour
       {
         lookRight = false;
       }
+
+
     }
 
 
@@ -243,6 +240,22 @@ public class Cricket : MonoBehaviour
     {
       transform.localScale = new Vector3(-Mathf.Abs(transform.localScale.x), localScale.y, localScale.z);
     }
+
+        Vector2 currentPos = transform.position;
+        Vector2 velocity = currentPos - _prevPos;
+
+      //For Camera
+      // if we are falling past a certain threshold 
+      if(velocity.y < _fallSpeedYDampingChangeThreshold && !CameraManager.instance.IsLerpingYDamping && !CameraManager.instance.LerpedFromPlayerFalling) {
+        CameraManager.instance.LerpYDamping(true);
+      }
+      
+      // if we are standing still or moving up
+      if(velocity.y >= 0f && !CameraManager.instance.IsLerpingYDamping && CameraManager.instance.LerpedFromPlayerFalling) {
+        CameraManager.instance.LerpedFromPlayerFalling = false;
+        CameraManager.instance.LerpYDamping(false);
+      }
+        _prevPos = transform.position;
   }
 
   void FixedUpdate()
