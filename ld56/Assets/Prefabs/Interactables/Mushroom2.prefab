@@ -70,7 +70,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4624574071122925590, guid: edc16a19d1152fb468c2892bced29797, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.91
+      value: 2.048872
+      objectReference: {fileID: 0}
+    - target: {fileID: 4624574071122925590, guid: edc16a19d1152fb468c2892bced29797, type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5305184534210908170, guid: edc16a19d1152fb468c2892bced29797, type: 3}
+      propertyPath: m_Size.y
+      value: 1.1044106
+      objectReference: {fileID: 0}
+    - target: {fileID: 5305184534210908170, guid: edc16a19d1152fb468c2892bced29797, type: 3}
+      propertyPath: m_Offset.y
+      value: 5.3769016
       objectReference: {fileID: 0}
     - target: {fileID: 6528496427628056257, guid: edc16a19d1152fb468c2892bced29797, type: 3}
       propertyPath: m_Sprite
@@ -78,6 +90,30 @@ PrefabInstance:
       objectReference: {fileID: 21300000, guid: c76d588ba2220f74985c03ce88d7d3b5, type: 3}
     - target: {fileID: 6528496427628056257, guid: edc16a19d1152fb468c2892bced29797, type: 3}
       propertyPath: m_SortingOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7545932993684070238, guid: edc16a19d1152fb468c2892bced29797, type: 3}
+      propertyPath: BounceStrength
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 7776600652419635693, guid: edc16a19d1152fb468c2892bced29797, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.6700001
+      objectReference: {fileID: 0}
+    - target: {fileID: 7776600652419635693, guid: edc16a19d1152fb468c2892bced29797, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.6700001
+      objectReference: {fileID: 0}
+    - target: {fileID: 7776600652419635693, guid: edc16a19d1152fb468c2892bced29797, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.6700001
+      objectReference: {fileID: 0}
+    - target: {fileID: 7776600652419635693, guid: edc16a19d1152fb468c2892bced29797, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.089
+      objectReference: {fileID: 0}
+    - target: {fileID: 7776600652419635693, guid: edc16a19d1152fb468c2892bced29797, type: 3}
+      propertyPath: m_ConstrainProportionsScale
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7838301416712795619, guid: edc16a19d1152fb468c2892bced29797, type: 3}
@@ -120,6 +156,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7838301416712795619, guid: edc16a19d1152fb468c2892bced29797, type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7925339792280184406, guid: edc16a19d1152fb468c2892bced29797, type: 3}
       propertyPath: m_LocalScale.x
       value: 1.516913
@@ -135,6 +175,22 @@ PrefabInstance:
     - target: {fileID: 7925339792280184406, guid: edc16a19d1152fb468c2892bced29797, type: 3}
       propertyPath: m_LocalPosition.y
       value: 0.852
+      objectReference: {fileID: 0}
+    - target: {fileID: 8961349895620500552, guid: edc16a19d1152fb468c2892bced29797, type: 3}
+      propertyPath: m_Size.y
+      value: 0.7809899
+      objectReference: {fileID: 0}
+    - target: {fileID: 8961349895620500552, guid: edc16a19d1152fb468c2892bced29797, type: 3}
+      propertyPath: m_Offset.y
+      value: -0.4345051
+      objectReference: {fileID: 0}
+    - target: {fileID: 8961349895620500552, guid: edc16a19d1152fb468c2892bced29797, type: 3}
+      propertyPath: m_SpriteTilingProperty.oldSize.x
+      value: 0.78
+      objectReference: {fileID: 0}
+    - target: {fileID: 8961349895620500552, guid: edc16a19d1152fb468c2892bced29797, type: 3}
+      propertyPath: m_SpriteTilingProperty.oldSize.y
+      value: 1.79
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 4262501425507599044, guid: edc16a19d1152fb468c2892bced29797, type: 3}
