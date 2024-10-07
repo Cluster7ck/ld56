@@ -20,6 +20,10 @@ public class CameraControlTrigger : MonoBehaviour
             if(customInspectorObjects.panCameraOnContact) {
                 CameraManager.instance.PanCameraOnContact(customInspectorObjects.panDistance, customInspectorObjects.panTime, customInspectorObjects.panDirection, false);
             }
+            if(customInspectorObjects.zoomCameraOnContact) {
+                Debug.Log("Shoulr zoom camera");
+                CameraManager.instance.ZoomCameraOnContact(customInspectorObjects.orthographicSize, customInspectorObjects.zoomTime, false);
+            }
         }
     }
 
@@ -27,6 +31,9 @@ public class CameraControlTrigger : MonoBehaviour
         if(collision.CompareTag("Player")) {
             if(customInspectorObjects.panCameraOnContact) {
                 CameraManager.instance.PanCameraOnContact(customInspectorObjects.panDistance, customInspectorObjects.panTime, customInspectorObjects.panDirection, true);
+            }
+            if(customInspectorObjects.zoomCameraOnContact) {
+                CameraManager.instance.ZoomCameraOnContact(customInspectorObjects.orthographicSize, customInspectorObjects.zoomTime, true);
             }
         }
     }
@@ -36,14 +43,17 @@ public class CameraControlTrigger : MonoBehaviour
 public class CustomInspectorObjects
 {
     public bool swapCameras = false;
-    public bool panCameraOnContact = false;
-
     [HideInInspector] public CinemachineVirtualCamera cameraOnLeft;
     [HideInInspector] public CinemachineVirtualCamera cameraOnRight;
-
+    
+    public bool panCameraOnContact = false;
     [HideInInspector] public PanDirection panDirection;
     [HideInInspector] public float panDistance = 3f;
     [HideInInspector] public float panTime = 0.35f;
+    
+    public bool zoomCameraOnContact = false;
+    [HideInInspector] public float orthographicSize = 5f;
+    [HideInInspector] public float zoomTime = 2f;
 }
 
 public enum PanDirection
@@ -78,6 +88,10 @@ public class MyScriptEditor : Editor {
 
             cameraControlTrigger.customInspectorObjects.panDistance = EditorGUILayout.FloatField("Pan Distance", cameraControlTrigger.customInspectorObjects.panDistance);
             cameraControlTrigger.customInspectorObjects.panTime = EditorGUILayout.FloatField("Pan Time", cameraControlTrigger.customInspectorObjects.panTime);
+        }
+
+        if(cameraControlTrigger.customInspectorObjects.zoomCameraOnContact) {
+            cameraControlTrigger.customInspectorObjects.orthographicSize = EditorGUILayout.FloatField("Camera Orthographic Size", cameraControlTrigger.customInspectorObjects.orthographicSize);
         }
 
         if(GUI.changed) {

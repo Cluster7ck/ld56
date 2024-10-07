@@ -114,6 +114,7 @@ public class UIManager : MonoBehaviour
 
   private void ZoomToPosition(GameObject virtualCamera, Vector2 offset, float orthographicSize, float zoomTime = cameraZoomTime)
   {
+        /*
     PrimeTween.Tween.Custom(
       (Vector2)virtualCamera.GetComponentInChildren<CinemachineCameraOffset>().m_Offset,
       offset,
@@ -127,10 +128,12 @@ public class UIManager : MonoBehaviour
       new TweenSettings(zoomTime),
       x => virtualCamera.GetComponent<Cinemachine.CinemachineVirtualCamera>().m_Lens.OrthographicSize = x
     );
+        */
   }
   
   private IEnumerator ZoomToPositionCo(GameObject virtualCamera, Vector2 offset, float orthographicSize, float zoomTime = cameraZoomTime)
   {
+        /*
     yield return Sequence.Create(Tween.Custom(
       (Vector2)virtualCamera.GetComponentInChildren<CinemachineCameraOffset>().m_Offset,
       offset,
@@ -142,5 +145,7 @@ public class UIManager : MonoBehaviour
       new TweenSettings(zoomTime),
       x => virtualCamera.GetComponent<Cinemachine.CinemachineVirtualCamera>().m_Lens.OrthographicSize = x
     )).ToYieldInstruction();
+        */
+        yield return null;
   }
 }
