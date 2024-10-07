@@ -14,11 +14,6 @@ public class AudioManager : MonoBehaviour
 
     public bool mute = false;
 
-    // AudioClips for SoundEffects
-    [SerializeField] private AudioClip mushroomBounceClip;
-    [SerializeField] private AudioClip grabCollectableClip;
-    [SerializeField] private AudioClip bullettimeMushroomBounceClip;
-    [SerializeField] private AudioClip jumpClip;
     
 
     private void Awake()
