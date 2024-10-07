@@ -28,8 +28,16 @@ public class CameraManager : MonoBehaviour
   private float _normYPanAmount = 0f;
 
   private Vector2 _startingTrackedObjectOffset;
-
   private float _startingCameraOrthographicSize;
+
+    private bool leftStartSequence = false;
+  
+  [SerializeField] private Vector2 _startSequenceTrackedObjectOffset;
+  [SerializeField] private float _startSequenceCameraOrthographicSize;
+  
+  [SerializeField] private Vector2 _defaultTrackedObjectOffset;
+  [SerializeField] private float _defaultCameraOrthographicSize;
+  
 
   private void Awake()
   {
@@ -178,10 +186,22 @@ public class CameraManager : MonoBehaviour
   // Start is called before the first frame update
   void Start()
   {
+        leftStartSequence = false;
   }
 
   // Update is called once per frame
   void Update()
   {
+        if(GameManager.instance.currentState == GameState.Start) {
+            _currentCamera.m_Lens.OrthographicSize = _startSequenceCameraOrthographicSize;
+            _framingTransposer.m_TrackedObjectOffset = _startSequenceTrackedObjectOffset;
+        } else {
+            if(!leftStartSequence) {
+                ZoomCameraOnContact(_defaultCameraOrthographicSize, 1f, true);
+                PanCameraOnContact(_defaultTrackedObjectOffset, 1f, true);
+                leftStartSequence = true;
+            }
+        } 
+        
   }
 }
