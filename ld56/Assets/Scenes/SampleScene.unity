@@ -1481,34 +1481,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1709895570975498592, guid: cfb1c047b9f7be24d8c75b36d707b233, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1709895570975498592, guid: cfb1c047b9f7be24d8c75b36d707b233, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1709895570975498592, guid: cfb1c047b9f7be24d8c75b36d707b233, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0.9599836
-      objectReference: {fileID: 0}
-    - target: {fileID: 1709895570975498592, guid: cfb1c047b9f7be24d8c75b36d707b233, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1709895570975498592, guid: cfb1c047b9f7be24d8c75b36d707b233, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1709895570975498592, guid: cfb1c047b9f7be24d8c75b36d707b233, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0.28005636
-      objectReference: {fileID: 0}
-    - target: {fileID: 1709895570975498592, guid: cfb1c047b9f7be24d8c75b36d707b233, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 32.527
-      objectReference: {fileID: 0}
     - target: {fileID: 2806822586931286701, guid: cfb1c047b9f7be24d8c75b36d707b233, type: 3}
       propertyPath: m_LocalPosition.x
       value: 141.5
@@ -1548,14 +1520,6 @@ PrefabInstance:
     - target: {fileID: 2806822586931286701, guid: cfb1c047b9f7be24d8c75b36d707b233, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3551019122831720314, guid: cfb1c047b9f7be24d8c75b36d707b233, type: 3}
-      propertyPath: m_Size.x
-      value: 2.9650812
-      objectReference: {fileID: 0}
-    - target: {fileID: 3551019122831720314, guid: cfb1c047b9f7be24d8c75b36d707b233, type: 3}
-      propertyPath: m_Offset.x
-      value: 0.117459595
       objectReference: {fileID: 0}
     - target: {fileID: 7030195165993942373, guid: cfb1c047b9f7be24d8c75b36d707b233, type: 3}
       propertyPath: m_Name
