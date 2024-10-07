@@ -25,7 +25,8 @@ public class GameManager : MonoBehaviour
 
   [SerializeField] private GameObject startAnimation;
   [SerializeField] private AudioSource audioSource;
-
+    
+  [SerializeField] private Animator animator;
   private Resettable[] resettables;
 
   private int maxNumCollectibles;
@@ -113,6 +114,8 @@ public class GameManager : MonoBehaviour
       case GameState.Died:
         Die();
         UIManager.instance.DeathScreen.SetActive(true);
+        player.Animator.SetBool("isDead", true);
+                
         break;
       case GameState.Win:
         var go = new GameObject();
@@ -135,6 +138,7 @@ public class GameManager : MonoBehaviour
     if (currentState != GameState.Died)
     {
       UIManager.instance.DeathScreen.SetActive(false);
+      player.Animator.SetBool("isDead", false);
     }
 
     if (currentState != GameState.Win)
@@ -249,12 +253,5 @@ public class GameManager : MonoBehaviour
   public void ResetToStart()
   {
     SceneManager.LoadScene(0);
-    //Debug.Log("Resetting to start");
-    //player.gameObject.SetActive(true);
-    //player.transform.position = playerStartPos;
-    //Debug.Log("Moving player to: " + playerStartPos);
-    //player.TransitionToFalling();
-    //ResetResettables();
-    //ChangeState(GameState.Start);
   }
 }
