@@ -65,17 +65,17 @@ public class Cricket : MonoBehaviour
 
   private HitStop hitStop;
 
-    private float _fallSpeedYDampingChangeThreshold;
+  private float _fallSpeedYDampingChangeThreshold;
+  public State jumpState => state;
+  public GameObject DeathAnimationPrefab => deathAnimationPrefab;
 
-  private Rigidbody2D rb;
-    private Vector2 _prevPos;
+  private Vector2 prevPos;
   private bool lookRight = true;
 
   private void Awake()
   {
     gameManager = FindObjectOfType<GameManager>();
     hitStop = GetComponent<HitStop>();
-    rb = GetComponent<Rigidbody2D>();
   }
 
   // Start is called before the first frame update
@@ -153,7 +153,7 @@ public class Cricket : MonoBehaviour
       }
     }
 
-    
+
     if (state == State.BulletTimeWaitInput || state == State.BulletTimePrepareJump)
     {
       JumpingUpBulletTime();
@@ -226,8 +226,6 @@ public class Cricket : MonoBehaviour
       {
         lookRight = false;
       }
-
-
     }
 
 
@@ -241,21 +239,25 @@ public class Cricket : MonoBehaviour
       transform.localScale = new Vector3(-Mathf.Abs(transform.localScale.x), localScale.y, localScale.z);
     }
 
-        Vector2 currentPos = transform.position;
-        Vector2 velocity = currentPos - _prevPos;
+    Vector2 currentPos = transform.position;
+    Vector2 velocity = currentPos - prevPos;
 
-      //For Camera
-      // if we are falling past a certain threshold 
-      if(velocity.y < _fallSpeedYDampingChangeThreshold && !CameraManager.instance.IsLerpingYDamping && !CameraManager.instance.LerpedFromPlayerFalling) {
-        CameraManager.instance.LerpYDamping(true);
-      }
-      
-      // if we are standing still or moving up
-      if(velocity.y >= 0f && !CameraManager.instance.IsLerpingYDamping && CameraManager.instance.LerpedFromPlayerFalling) {
-        CameraManager.instance.LerpedFromPlayerFalling = false;
-        CameraManager.instance.LerpYDamping(false);
-      }
-        _prevPos = transform.position;
+    //For Camera
+    // if we are falling past a certain threshold 
+    if (velocity.y < _fallSpeedYDampingChangeThreshold && !CameraManager.instance.IsLerpingYDamping &&
+        !CameraManager.instance.LerpedFromPlayerFalling)
+    {
+      CameraManager.instance.LerpYDamping(true);
+    }
+
+    // if we are standing still or moving up
+    if (velocity.y >= 0f && !CameraManager.instance.IsLerpingYDamping && CameraManager.instance.LerpedFromPlayerFalling)
+    {
+      CameraManager.instance.LerpedFromPlayerFalling = false;
+      CameraManager.instance.LerpYDamping(false);
+    }
+
+    prevPos = transform.position;
   }
 
   void FixedUpdate()
@@ -371,6 +373,7 @@ public class Cricket : MonoBehaviour
       {
         arcIndicator.SetActive(false);
       }
+
       hitStop.ForceReset();
       TransitionToJumpingDown();
     }
@@ -399,6 +402,16 @@ public class Cricket : MonoBehaviour
     }
   }
 
+  public void Die(Vector3 respawnPos)
+  {
+    initialVelocity = Vector3.zero;
+    initialJumpPos = respawnPos;
+    initialFallPos = respawnPos;
+    initialFallVelocity = Vector3.down * 0.05f;
+    Instantiate(DeathAnimationPrefab, transform.position, Quaternion.identity);
+    gameObject.SetActive(false);
+  }
+
   private void TransitionToJumpingDown()
   {
     initialVelocity = PredictVelocityAtT(jumpTime, initialVelocity, gravity * riseGravityMul);
@@ -407,8 +420,12 @@ public class Cricket : MonoBehaviour
     jumpTime = 0;
   }
 
-  private void TransitionToFalling()
+  public void TransitionToFalling()
   {
+    foreach (var arcIndicator in arcIndicators)
+    {
+      arcIndicator.SetActive(false);
+    }
     lastFallCollision = null;
     initialFallPos = transform.position;
     initialFallVelocity = Vector3.down * 0.05f;
@@ -574,19 +591,6 @@ public class Cricket : MonoBehaviour
 
     return true;
   }
-
-  public void SetState(State newState)
-  {
-    state = newState;
-    jumpTime = 0;
-  }
-
-  public State jumpState
-  {
-    get { return state; }
-  }
-
-    public GameObject DeathAnimationPrefab => deathAnimationPrefab;
 
   private Vector3 PredictVelocityAtT(float time, Vector3 initialVel, Vector3 gravity)
   {
