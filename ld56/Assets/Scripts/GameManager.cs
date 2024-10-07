@@ -25,7 +25,8 @@ public class GameManager : MonoBehaviour
 
   [SerializeField] private GameObject startAnimation;
   [SerializeField] private AudioSource audioSource;
-
+    
+  [SerializeField] private Animator animator;
   private Resettable[] resettables;
 
   private int maxNumCollectibles;
@@ -71,7 +72,7 @@ public class GameManager : MonoBehaviour
     // Initialer Zustand
     ChangeState(currentState);
     playerStartPos = player.transform.position;
-    Debug.Log("Saved Player Start Position: " + playerStartPos);
+    UIManager.instance.slider.onValueChanged.AddListener((x) => player.SetVelocityMultiplier(x));
   }
 
   public void ToggleMute()
@@ -80,6 +81,11 @@ public class GameManager : MonoBehaviour
     audioSource.mute = !audioSource.mute;
     _muteState = audioSource.mute;
     UIManager.instance.SetMuteButtonText(audioSource.mute);
+  }
+
+  public void SetDragVelocity(float value)
+  {
+    player.SetVelocityMultiplier(value);
   }
 
   public bool muteState => _muteState;
@@ -108,6 +114,8 @@ public class GameManager : MonoBehaviour
       case GameState.Died:
         Die();
         UIManager.instance.DeathScreen.SetActive(true);
+        player.Animator.SetBool("isDead", true);
+                
         break;
       case GameState.Win:
         var go = new GameObject();
@@ -130,6 +138,7 @@ public class GameManager : MonoBehaviour
     if (currentState != GameState.Died)
     {
       UIManager.instance.DeathScreen.SetActive(false);
+      player.Animator.SetBool("isDead", false);
     }
 
     if (currentState != GameState.Win)
@@ -244,12 +253,5 @@ public class GameManager : MonoBehaviour
   public void ResetToStart()
   {
     SceneManager.LoadScene(0);
-    //Debug.Log("Resetting to start");
-    //player.gameObject.SetActive(true);
-    //player.transform.position = playerStartPos;
-    //Debug.Log("Moving player to: " + playerStartPos);
-    //player.TransitionToFalling();
-    //ResetResettables();
-    //ChangeState(GameState.Start);
   }
 }

@@ -104,7 +104,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gravity: {x: 0, y: -9.81, z: 0}
-  velocityMul: 0.4
+  velocityMul: 0.2
   maxVelocityMagnitude: 35
   riseGravityMul: 8
   fallGravityMul: 8
@@ -114,12 +114,14 @@ MonoBehaviour:
   bounceStrength: 23
   bounceMinForwardVelocity: 5
   hitStopLength: 0
-  bulletTimeLength: 2
+  bulletTimeLength: 4
   arcIndicatorPrefab: {fileID: 8941374493487935712, guid: a3a5de743d0d54840b7e7c0eb4aa53d8, type: 3}
   arcIndicatorSize: {x: 1, y: 0.2}
   jumpParticleSystem: {fileID: 3024855697537989932}
   animator: {fileID: 2689614097055367743}
   deathAnimationPrefab: {fileID: 2262397347676779988, guid: a3f85029677411246a51afb8dab84351, type: 3}
+  firstBulletTimeHelp: {fileID: 59185977935361944, guid: eb0c9d01579df4fdba645119942901b5, type: 3}
+  relativeTarget: {fileID: 0}
   gameManager: {fileID: 0}
 --- !u!50 &3986453291830224839
 Rigidbody2D:

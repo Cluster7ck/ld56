@@ -19,11 +19,11 @@ public class BadTrigger : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        Debug.Log($"trigger {other.gameObject.name}");
+        //Debug.Log($"trigger {other.gameObject.name}");
     }
 
     private void OnCollisionEnter2D(Collision2D other)
     {
-        Debug.Log($"collision {other.gameObject.name}");
+        //Debug.Log($"collision {other.gameObject.name}");
     }
 }
