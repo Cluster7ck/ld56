@@ -221,7 +221,7 @@ public class Cricket : MonoBehaviour
         jumpTime = 0;
         hitStop.ForceReset();
         state = State.JumpingUp;
-        AudioManager.Instance.PlaySound(jumpClip);
+        AudioManager.Instance.PlaySound(jumpClip, 0f, -0.9f);
       }
 
       if (Mouse.current.rightButton.wasPressedThisFrame)
