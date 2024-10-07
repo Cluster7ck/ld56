@@ -153,6 +153,8 @@ public class Cricket : MonoBehaviour
         hadFirstBulletTimeJump = true;
         state = State.BulletTimePrepareJump;
         dragStartPosScreen = Mouse.current.position.value;
+        relativeTarget.gameObject.SetActive(true);
+        relativeTarget.position = dragStartPosScreen;
         for (int i = 0; i < arcIndicators.Length; i++)
         {
           arcIndicators[i].gameObject.SetActive(true);
@@ -317,8 +319,6 @@ public class Cricket : MonoBehaviour
       var (nextState, collision) = DoCollision(transform.position, pos);
       if (nextState.HasValue)
       {
-        state = nextState.Value;
-        jumpTime = 0;
         if (nextState.Value == State.Bounce)
         {
           TransitionToBounce(initialFallVelocity, collision);
@@ -327,6 +327,8 @@ public class Cricket : MonoBehaviour
         {
           TransitionToBulletTime(initialFallVelocity, collision);
         }
+        state = nextState.Value;
+        jumpTime = 0;
       }
       else
       {
