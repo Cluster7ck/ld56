@@ -19,6 +19,7 @@ public class CameraManager : MonoBehaviour
 
     private Coroutine _lerpYPanCoroutine;
     private Coroutine _panCameraCoroutine;
+    private Coroutine _zoomCameraCoroutine;
 
     private CinemachineVirtualCamera _currentCamera;
 
@@ -27,6 +28,8 @@ public class CameraManager : MonoBehaviour
     private float _normYPanAmount = 0f;
 
     private Vector2 _startingTrackedObjectOffset;
+
+    private float _startingCameraOrthographicSize;
 
     private void Awake () {
         if(instance == null) {
@@ -46,6 +49,7 @@ public class CameraManager : MonoBehaviour
         _normYPanAmount = _framingTransposer.m_YDamping;
 
         _startingTrackedObjectOffset = _framingTransposer.m_TrackedObjectOffset;
+        _startingCameraOrthographicSize = _currentCamera.m_Lens.OrthographicSize;
     }
 
     #region Y-Lerping
@@ -132,6 +136,41 @@ public class CameraManager : MonoBehaviour
             yield return null;
         }
     }
+    #endregion
+
+    #region Zooming
+    public void ZoomCameraOnContact(float orthographicSize, float zoomTime, bool zoomToStart) {
+        if(_zoomCameraCoroutine != null) {
+            StopCoroutine(_zoomCameraCoroutine);
+        }
+        _zoomCameraCoroutine = StartCoroutine(ZoomCamera(orthographicSize, zoomTime, zoomToStart));
+    }
+
+    private IEnumerator ZoomCamera ( float orthographicSize, float zoomTime, bool zoomToStart ) {
+
+        float startSize;
+        float endSize;
+
+        if(!zoomToStart) {
+            startSize = _startingCameraOrthographicSize;
+            endSize = orthographicSize;
+        } else {
+            startSize = _currentCamera.m_Lens.OrthographicSize;
+            endSize = _startingCameraOrthographicSize;
+        }
+        
+        float elapsedTime = 0f;
+        while(elapsedTime < zoomTime) {
+            elapsedTime += Time.deltaTime * Time.timeScale;
+
+            float zoomLerp = Mathf.Lerp(startSize, endSize, (elapsedTime / zoomTime));
+            _currentCamera.m_Lens.OrthographicSize = zoomLerp;
+
+            yield return null;
+        }
+    }
+
+
     #endregion
     // Start is called before the first frame update
     void Start ()
