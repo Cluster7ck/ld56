@@ -148,6 +148,14 @@ PrefabInstance:
       propertyPath: BounceStrength
       value: 35
       objectReference: {fileID: 0}
+    - target: {fileID: 7776600652419635693, guid: edc16a19d1152fb468c2892bced29797, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.08
+      objectReference: {fileID: 0}
+    - target: {fileID: 7776600652419635693, guid: edc16a19d1152fb468c2892bced29797, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.45
+      objectReference: {fileID: 0}
     - target: {fileID: 7838301416712795619, guid: edc16a19d1152fb468c2892bced29797, type: 3}
       propertyPath: m_LocalPosition.x
       value: 12.2
