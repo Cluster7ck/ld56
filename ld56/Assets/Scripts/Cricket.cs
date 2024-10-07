@@ -45,6 +45,8 @@ public class Cricket : MonoBehaviour
 
   [SerializeField] private RectTransform relativeTarget;
 
+  private GameObject lastFrameCollision;
+
   public GameManager gameManager;
   private BoxCollider2D boxCollider;
   private State state = State.WaitInput;
@@ -65,7 +67,7 @@ public class Cricket : MonoBehaviour
 
   private GameObject[] debugSpheres = new GameObject[12];
 
-  private GameObject[] arcIndicators = new GameObject[7];
+  private GameObject[] arcIndicators = new GameObject[14];
 
   private HitStop hitStop;
 
@@ -636,5 +638,10 @@ public static class Extensions
   public static float Remap(this float s, float a2, float b2)
   {
     return s.Remap(0, a2, 0, b2);
+  }
+  
+  public static float Remap01(this float s, float b1, float b2)
+  {
+    return s.Remap(0, 1.0f, b1, b2);
   }
 }
