@@ -12,6 +12,7 @@ public class Shroom : MonoBehaviour
   public void DoBounce()
   {
     animator.SetTrigger("jumpTrigger");
+        Debug.Log("Do Bounce");
         AudioManager.Instance.PlaySound(bounceClip, BounceStrength*0.01f-0.2f);
   }
 }
