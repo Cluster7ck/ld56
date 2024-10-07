@@ -32,8 +32,7 @@ public class GameManager : MonoBehaviour
   private int numCollectibles = 0;
   private float elapsedTime;
 
-  private bool playerDead = false;
-    private Vector3 playerStartPos;
+  private Vector3 playerStartPos;
 
   public int NumCollectibles
   {
@@ -70,7 +69,7 @@ public class GameManager : MonoBehaviour
     // Initialer Zustand
     ChangeState(currentState);
     playerStartPos = player.transform.position;
-        Debug.Log("Saved Player Start Position: " + playerStartPos);
+    Debug.Log("Saved Player Start Position: " + playerStartPos);
   }
 
   public void ToggleMute()
@@ -120,7 +119,7 @@ public class GameManager : MonoBehaviour
     {
       //UIManager.instance.PauseScreen.SetActive(false);
     }
-    
+
     if (currentState != GameState.Died)
     {
       UIManager.instance.DeathScreen.SetActive(false);
@@ -149,7 +148,6 @@ public class GameManager : MonoBehaviour
 
       elapsedTime += Time.deltaTime;
     }
-
   }
 
   private IEnumerator StartSequence()
@@ -159,9 +157,9 @@ public class GameManager : MonoBehaviour
     var startAnim = Instantiate(startAnimation);
     yield return new WaitForSeconds(1f);
     yield return UIManager.instance.ZoomToPlayCo(virtualCamera);
-    
+
     ChangeState(GameState.Playing);
-    
+
     // wait for first click
     while (!Mouse.current.leftButton.wasReleasedThisFrame)
     {
@@ -183,32 +181,25 @@ public class GameManager : MonoBehaviour
   }
 
   // TODO should probably be a coroutine
-  // stimmt, aber ich wusste nicht so schnell wie und hab noch komische bools hinzugefügt
+  // stimmt, aber ich wusste nicht so schnell wie und hab noch komische bools hinzugefï¿½gt
   private void Die()
   {
-        // play death animation
-        // Reset all resettables
-        player.gameObject.SetActive(false);
-        playerDead = true;
+    player.Die(lastCheckpoint);
   }
 
-    private void ResetResettables() {
-        foreach (var resettable in resettables) // Tische zurücksetzen? :P
-        {
-        resettable.OnReset.Invoke();
-        }
+  private void ResetResettables()
+  {
+    foreach (var resettable in resettables) // Tische zurï¿½cksetzen? :P
+    {
+      resettable.OnReset.Invoke();
     }
+  }
 
-    private void RevivePlayer() {
-        playerDead = false;
-        player.gameObject.SetActive(true);
-    }
-
-    private void SetPlayerToLastCheckpoint() {
-        player.transform.position = lastCheckpoint;
-        Debug.Log("Moving player to: " + lastCheckpoint);
-        player.SetState(State.Falling);        
-    }
+  private void SetPlayerToLastCheckpoint()
+  {
+    player.transform.position = lastCheckpoint;
+    player.TransitionToFalling();
+  }
 
   private Vector3 lastCheckpoint;
 
@@ -220,22 +211,24 @@ public class GameManager : MonoBehaviour
     }
   }
 
-    public void ResetToLastCheckpoint() {
-        Debug.Log("Resetting to checkpoint");
-        RevivePlayer();
-        SetPlayerToLastCheckpoint();
-        ResetResettables();
-        ChangeState(GameState.Playing);
-    }
+  public void ResetToLastCheckpoint()
+  {
+    Debug.Log("Resetting to checkpoint");
+    player.gameObject.SetActive(true);
+    SetPlayerToLastCheckpoint();
+    ResetResettables();
+    ChangeState(GameState.Playing);
+  }
 
 
-    public void ResetToStart() {
-        Debug.Log("Resetting to start");
-        RevivePlayer();
-        player.transform.position = playerStartPos;
-        Debug.Log("Moving player to: " + playerStartPos);
-        player.SetState(State.Falling);
-        ResetResettables();
-        ChangeState(GameState.Start);
-    }
+  public void ResetToStart()
+  {
+    Debug.Log("Resetting to start");
+    player.gameObject.SetActive(true);
+    player.transform.position = playerStartPos;
+    Debug.Log("Moving player to: " + playerStartPos);
+    player.TransitionToFalling();
+    ResetResettables();
+    ChangeState(GameState.Start);
+  }
 }
