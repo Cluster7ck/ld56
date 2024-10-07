@@ -315,7 +315,7 @@ public class Cricket : MonoBehaviour
         }
         else if (nextState.Value == State.BulletTimeWaitInput)
         {
-          TransitionToBulletTime(initialFallVelocity);
+          TransitionToBulletTime(initialFallVelocity, collision);
         }
       }
       else
@@ -349,7 +349,7 @@ public class Cricket : MonoBehaviour
         }
         else if (nextState.Value == State.BulletTimeWaitInput)
         {
-          TransitionToBulletTime(initialVelocity);
+          TransitionToBulletTime(initialVelocity, collision);
         }
 
         jumpTime = 0;
@@ -457,8 +457,11 @@ public class Cricket : MonoBehaviour
     hitStop.Stop(hitStopLength);
   }
 
-  private void TransitionToBulletTime(Vector3 initialVelocity)
+  private void TransitionToBulletTime(Vector3 initialVelocity, Transform bounceable)
   {
+    var shroom = bounceable.GetComponent<Shroom>();
+    shroom.DoBounce();
+
     jumpTime = 0;
     float clampedX = 0;
     if (initialVelocity.x < 0)
