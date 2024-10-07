@@ -624,6 +624,8 @@ public class Cricket : MonoBehaviour
   {
     return gravity * (0.5f * time * time) + initialVel * time + initialPos;
   }
+
+    public Animator Animator => animator;
 }
 
 public static class Extensions
