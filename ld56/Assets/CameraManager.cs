@@ -85,42 +85,18 @@ public class CameraManager : MonoBehaviour
     #endregion lerping
 
     #region Panning
-    public void PanCameraOnContact(float panDistance, float panTime, PanDirection panDirection, bool panToStartingPos) {
-        _panCameraCoroutine = StartCoroutine(PanCamera(panDistance, panTime, panDirection, panToStartingPos));
+    public void PanCameraOnContact(Vector2 panValue, float panTime, bool panToStartingPos) {
+        _panCameraCoroutine = StartCoroutine(PanCamera(panValue, panTime, panToStartingPos));
     }
 
-    private IEnumerator PanCamera(float panDistance, float panTime, PanDirection panDirection, bool panToStartingPos) {
+    private IEnumerator PanCamera(Vector2 panValue, float panTime, bool panToStartingPos) {
         
         Vector2 startingPos = Vector2.zero;
         Vector2 endPos = Vector2.zero;
 
         if(!panToStartingPos) {
-            switch (panDirection) {
-                case PanDirection.Up:
-                    endPos = Vector2.up;
-                    break;
-                case PanDirection.Down:
-                    
-                    endPos = Vector2.down;
-                    break;
-                case PanDirection.Left:
-                    
-                    endPos = Vector2.left;
-                    break;
-                case PanDirection.Right:
-                    
-                    endPos = Vector2.right;
-                    break;
-                default:
-                    endPos = Vector2.zero;
-                    break;
-            }
-
-            endPos *= panDistance;
-
             startingPos = _startingTrackedObjectOffset;
-
-            endPos += startingPos;
+            endPos = startingPos + panValue;
         } else {
             startingPos = _framingTransposer.m_TrackedObjectOffset;
             endPos = _startingTrackedObjectOffset;

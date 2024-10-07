@@ -18,10 +18,9 @@ public class CameraControlTrigger : MonoBehaviour
     private void OnTriggerEnter2D ( Collider2D collision ) {
         if(collision.CompareTag("Player")) {
             if(customInspectorObjects.panCameraOnContact) {
-                CameraManager.instance.PanCameraOnContact(customInspectorObjects.panDistance, customInspectorObjects.panTime, customInspectorObjects.panDirection, false);
+                CameraManager.instance.PanCameraOnContact(customInspectorObjects.panValue, customInspectorObjects.panTime, false);
             }
             if(customInspectorObjects.zoomCameraOnContact) {
-                Debug.Log("Shoulr zoom camera");
                 CameraManager.instance.ZoomCameraOnContact(customInspectorObjects.orthographicSize, customInspectorObjects.zoomTime, false);
             }
         }
@@ -30,7 +29,7 @@ public class CameraControlTrigger : MonoBehaviour
     private void OnTriggerExit2D ( Collider2D collision ) {
         if(collision.CompareTag("Player")) {
             if(customInspectorObjects.panCameraOnContact) {
-                CameraManager.instance.PanCameraOnContact(customInspectorObjects.panDistance, customInspectorObjects.panTime, customInspectorObjects.panDirection, true);
+                CameraManager.instance.PanCameraOnContact(customInspectorObjects.panValue, customInspectorObjects.panTime, true);
             }
             if(customInspectorObjects.zoomCameraOnContact) {
                 CameraManager.instance.ZoomCameraOnContact(customInspectorObjects.orthographicSize, customInspectorObjects.zoomTime, true);
@@ -47,22 +46,13 @@ public class CustomInspectorObjects
     [HideInInspector] public CinemachineVirtualCamera cameraOnRight;
     
     public bool panCameraOnContact = false;
-    [HideInInspector] public PanDirection panDirection;
-    [HideInInspector] public float panDistance = 3f;
+    [HideInInspector] public Vector2 panValue;
     [HideInInspector] public float panTime = 0.35f;
     
     public bool zoomCameraOnContact = false;
     [HideInInspector] public float orthographicSize = 5f;
     [HideInInspector] public float zoomTime = 2f;
 }
-
-public enum PanDirection
-{
-    Up,
-    Down,
-    Left,
-    Right
-} 
 
 [CustomEditor(typeof(CameraControlTrigger))]
 public class MyScriptEditor : Editor {
@@ -84,14 +74,13 @@ public class MyScriptEditor : Editor {
         }
 
         if(cameraControlTrigger.customInspectorObjects.panCameraOnContact) {
-            cameraControlTrigger.customInspectorObjects.panDirection = (PanDirection)EditorGUILayout.EnumPopup("Camera Pan Direction", cameraControlTrigger.customInspectorObjects.panDirection);
-
-            cameraControlTrigger.customInspectorObjects.panDistance = EditorGUILayout.FloatField("Pan Distance", cameraControlTrigger.customInspectorObjects.panDistance);
+            cameraControlTrigger.customInspectorObjects.panValue = EditorGUILayout.Vector2Field("Pan Value", cameraControlTrigger.customInspectorObjects.panValue);
             cameraControlTrigger.customInspectorObjects.panTime = EditorGUILayout.FloatField("Pan Time", cameraControlTrigger.customInspectorObjects.panTime);
         }
 
         if(cameraControlTrigger.customInspectorObjects.zoomCameraOnContact) {
             cameraControlTrigger.customInspectorObjects.orthographicSize = EditorGUILayout.FloatField("Camera Orthographic Size", cameraControlTrigger.customInspectorObjects.orthographicSize);
+            cameraControlTrigger.customInspectorObjects.zoomTime = EditorGUILayout.FloatField("Zoom Time", cameraControlTrigger.customInspectorObjects.zoomTime);
         }
 
         if(GUI.changed) {
