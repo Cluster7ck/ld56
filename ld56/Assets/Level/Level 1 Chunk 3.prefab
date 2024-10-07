@@ -1646,7 +1646,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1974674468900309983, guid: c0ae2b115c0136342889ddac28afd86c, type: 3}
       propertyPath: customInspectorObjects.panValue.x
-      value: 15
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 1974674468900309983, guid: c0ae2b115c0136342889ddac28afd86c, type: 3}
       propertyPath: customInspectorObjects.orthographicSize
@@ -2688,7 +2688,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1974674468900309983, guid: c0ae2b115c0136342889ddac28afd86c, type: 3}
       propertyPath: customInspectorObjects.panValue.x
-      value: 20
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 1974674468900309983, guid: c0ae2b115c0136342889ddac28afd86c, type: 3}
       propertyPath: customInspectorObjects.orthographicSize
@@ -2840,7 +2840,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1974674468900309983, guid: c0ae2b115c0136342889ddac28afd86c, type: 3}
       propertyPath: customInspectorObjects.panValue.x
-      value: 10
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 1974674468900309983, guid: c0ae2b115c0136342889ddac28afd86c, type: 3}
       propertyPath: customInspectorObjects.orthographicSize
@@ -2938,7 +2938,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1974674468900309983, guid: c0ae2b115c0136342889ddac28afd86c, type: 3}
       propertyPath: customInspectorObjects.panValue.x
-      value: 5
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 1974674468900309983, guid: c0ae2b115c0136342889ddac28afd86c, type: 3}
       propertyPath: customInspectorObjects.orthographicSize
