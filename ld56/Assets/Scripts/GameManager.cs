@@ -25,7 +25,7 @@ public class GameManager : MonoBehaviour
 
   [SerializeField] private GameObject startAnimation;
   [SerializeField] private AudioSource audioSource;
-  
+
   private Resettable[] resettables;
 
   private int maxNumCollectibles;
@@ -156,7 +156,8 @@ public class GameManager : MonoBehaviour
       elapsedTime += Time.deltaTime;
     }
 
-    if (Input.GetKeyDown(KeyCode.Escape))
+    if ((currentState == GameState.Paused || currentState == GameState.Playing) &&
+        Input.GetKeyDown(KeyCode.Escape))
     {
       if (currentState != GameState.Paused)
       {
@@ -242,12 +243,13 @@ public class GameManager : MonoBehaviour
 
   public void ResetToStart()
   {
-    Debug.Log("Resetting to start");
-    player.gameObject.SetActive(true);
-    player.transform.position = playerStartPos;
-    Debug.Log("Moving player to: " + playerStartPos);
-    player.TransitionToFalling();
-    ResetResettables();
-    ChangeState(GameState.Start);
+    SceneManager.LoadScene(0);
+    //Debug.Log("Resetting to start");
+    //player.gameObject.SetActive(true);
+    //player.transform.position = playerStartPos;
+    //Debug.Log("Moving player to: " + playerStartPos);
+    //player.TransitionToFalling();
+    //ResetResettables();
+    //ChangeState(GameState.Start);
   }
 }

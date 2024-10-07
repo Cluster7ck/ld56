@@ -424,7 +424,10 @@ public class Cricket : MonoBehaviour
   {
     foreach (var arcIndicator in arcIndicators)
     {
-      arcIndicator.SetActive(false);
+      if (arcIndicator)
+      {
+        arcIndicator.SetActive(false);
+      }
     }
     lastFallCollision = null;
     initialFallPos = transform.position;
