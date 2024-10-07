@@ -50,6 +50,8 @@ public class CameraManager : MonoBehaviour
 
         _startingTrackedObjectOffset = _framingTransposer.m_TrackedObjectOffset;
         _startingCameraOrthographicSize = _currentCamera.m_Lens.OrthographicSize;
+        
+        DontDestroyOnLoad(this.gameObject);
     }
 
     #region Y-Lerping
