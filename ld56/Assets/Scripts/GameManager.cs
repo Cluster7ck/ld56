@@ -71,7 +71,7 @@ public class GameManager : MonoBehaviour
     // Initialer Zustand
     ChangeState(currentState);
     playerStartPos = player.transform.position;
-    Debug.Log("Saved Player Start Position: " + playerStartPos);
+    UIManager.instance.slider.onValueChanged.AddListener((x) => player.SetVelocityMultiplier(x));
   }
 
   public void ToggleMute()
@@ -80,6 +80,11 @@ public class GameManager : MonoBehaviour
     audioSource.mute = !audioSource.mute;
     _muteState = audioSource.mute;
     UIManager.instance.SetMuteButtonText(audioSource.mute);
+  }
+
+  public void SetDragVelocity(float value)
+  {
+    player.SetVelocityMultiplier(value);
   }
 
   public bool muteState => _muteState;
