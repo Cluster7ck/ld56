@@ -18,7 +18,7 @@ public enum GameState
 public class GameManager : MonoBehaviour
 {
   public static GameManager instance;
-  public GameState currentState;
+    public GameState currentState = GameState.Start;
 
   [SerializeField] private Cricket player;
   [SerializeField] private GameObject virtualCamera;
@@ -49,10 +49,11 @@ public class GameManager : MonoBehaviour
 
   void Awake()
   {
+        Debug.Log("Awake");
     if (instance == null)
     {
       instance = this;
-      DontDestroyOnLoad(gameObject);
+      //DontDestroyOnLoad(gameObject);
     }
     else
     {
@@ -97,6 +98,7 @@ public class GameManager : MonoBehaviour
     switch (currentState)
     {
       case GameState.Start:
+        Time.timeScale = 1f;
         StartCoroutine(StartSequence());
         break;
       case GameState.Playing:
@@ -242,7 +244,6 @@ public class GameManager : MonoBehaviour
 
   public void ResetToLastCheckpoint()
   {
-    Debug.Log("Resetting to checkpoint");
     player.gameObject.SetActive(true);
     SetPlayerToLastCheckpoint();
     ResetResettables();
