@@ -567,8 +567,12 @@ public class Cricket : MonoBehaviour
       if (previousPos.y < nextPos.y)
       {
         //Debug.Log("Wall from below");
-        lastFallCollision = hit.transform.gameObject;
-        return (State.Falling, hit.transform);
+        if (hit.transform.gameObject.layer == LayerMask.NameToLayer("Shroom") || hit.transform.gameObject.layer == LayerMask.NameToLayer("BulletShroom")) {
+            return (null, null);
+        } else {
+            lastFallCollision = hit.transform.gameObject;
+            return (State.Falling, hit.transform);
+        }
       }
 
       if (dot != 0)
@@ -652,7 +656,6 @@ public class Cricket : MonoBehaviour
 #endif
         return _inputPressedThisFrame;
     }
-
     private bool inputThisFrame() {
         bool _inputThisFrame = false;
         if(Mouse.current != null) _inputThisFrame = Mouse.current.leftButton.isPressed;
@@ -661,7 +664,6 @@ public class Cricket : MonoBehaviour
 #endif
         return _inputThisFrame;
     }
-
     private bool inputEndedThisFrame() {
         bool _inputReleasedThisFrame = false;
         if(Mouse.current != null) _inputReleasedThisFrame = Mouse.current.leftButton.wasReleasedThisFrame;
@@ -670,7 +672,6 @@ public class Cricket : MonoBehaviour
 #endif
         return _inputReleasedThisFrame;
     }
-
     private Vector2 touchMousePosition() {
         Vector2 pos = Vector2.zero;
 
