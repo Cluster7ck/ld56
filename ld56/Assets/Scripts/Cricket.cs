@@ -84,6 +84,7 @@ public class Cricket : MonoBehaviour
   {
     gameManager = FindObjectOfType<GameManager>();
     hitStop = GetComponent<HitStop>();
+        
   }
 
   // Start is called before the first frame update
@@ -135,28 +136,31 @@ public class Cricket : MonoBehaviour
     {
       animator.SetBool("isFlying", false);
       animator.SetBool("isAiming", false);
-      if (Mouse.current.leftButton.wasPressedThisFrame)
-      {
-        animator.SetBool("isAiming", true);
-        state = State.PrepareJump;
-        dragStartPosScreen = Mouse.current.position.value;
-        relativeTarget.gameObject.SetActive(true);
-        relativeTarget.position = dragStartPosScreen;
 
-        for (int i = 0; i < arcIndicators.Length; i++)
-        {
-          arcIndicators[i].gameObject.SetActive(true);
+
+        if (inputThisFrame())
+          {
+            animator.SetBool("isAiming", true);
+            state = State.PrepareJump;
+            dragStartPosScreen = touchMousePosition();
+            relativeTarget.gameObject.SetActive(true);
+            relativeTarget.position = dragStartPosScreen;
+
+            for (int i = 0; i < arcIndicators.Length; i++)
+            {
+              arcIndicators[i].gameObject.SetActive(true);
+            }
         }
-      }
     }
 
     if (state == State.BulletTimeWaitInput)
     {
-      if (Mouse.current.leftButton.wasPressedThisFrame)
+      if (inputStartedThisFrame())
       {
+        
         hadFirstBulletTimeJump = true;
         state = State.BulletTimePrepareJump;
-        dragStartPosScreen = Mouse.current.position.value;
+        dragStartPosScreen = touchMousePosition();
         relativeTarget.gameObject.SetActive(true);
         relativeTarget.position = dragStartPosScreen;
         for (int i = 0; i < arcIndicators.Length; i++)
@@ -174,7 +178,8 @@ public class Cricket : MonoBehaviour
 
     if (state == State.PrepareJump || state == State.BulletTimePrepareJump)
     {
-      Vector3 dragCurrentPosScreen = Mouse.current.position.value;
+        
+      Vector3 dragCurrentPosScreen = touchMousePosition();
       var dragScreenDelta = (dragStartPosScreen - dragCurrentPosScreen);
 
       var potentialVelocity = dragScreenDelta * velocityMul;
@@ -204,7 +209,7 @@ public class Cricket : MonoBehaviour
 
       arcIndicators[^1].transform.up = lastTarget - arcIndicators[^1].transform.position;
 
-      if (Mouse.current.leftButton.wasReleasedThisFrame)
+      if (inputEndedThisFrame())
       {
         for (int i = 0; i < arcIndicators.Length; i++)
         {
@@ -224,7 +229,7 @@ public class Cricket : MonoBehaviour
         AudioManager.Instance.PlaySound(jumpClip, 0f, -0.9f);
       }
 
-      if (Mouse.current.rightButton.wasPressedThisFrame)
+      if (inputStartedThisFrame())
       {
         for (int i = 0; i < arcIndicators.Length; i++)
         {
@@ -638,6 +643,46 @@ public class Cricket : MonoBehaviour
   }
 
     public Animator Animator => animator;
+
+    private bool inputStartedThisFrame() {
+        bool _inputPressedThisFrame = false;
+        if(Mouse.current != null) _inputPressedThisFrame = Mouse.current.leftButton.wasPressedThisFrame;
+#if PLATFORM_ANDROID
+        if (Touchscreen.current != null) _inputPressedThisFrame = Touchscreen.current.touches[0].press.wasPressedThisFrame;
+#endif
+        return _inputPressedThisFrame;
+    }
+
+    private bool inputThisFrame() {
+        bool _inputThisFrame = false;
+        if(Mouse.current != null) _inputThisFrame = Mouse.current.leftButton.isPressed;
+#if PLATFORM_ANDROID
+        if (Touchscreen.current != null) _inputThisFrame = Touchscreen.current.touches[0].press.isPressed;
+#endif
+        return _inputThisFrame;
+    }
+
+    private bool inputEndedThisFrame() {
+        bool _inputReleasedThisFrame = false;
+        if(Mouse.current != null) _inputReleasedThisFrame = Mouse.current.leftButton.wasReleasedThisFrame;
+#if PLATFORM_ANDROID
+        if (Touchscreen.current != null) _inputReleasedThisFrame = Touchscreen.current.touches[0].press.wasReleasedThisFrame;
+#endif
+        return _inputReleasedThisFrame;
+    }
+
+    private Vector2 touchMousePosition() {
+        Vector2 pos = Vector2.zero;
+
+        if(Mouse.current != null) pos = Mouse.current.position.value;
+        
+#if PLATFORM_ANDROID
+        if (Touchscreen.current != null) pos = Touchscreen.current.touches[0].position.value;
+
+#endif
+        
+        return pos;
+    }
 }
 
 public static class Extensions

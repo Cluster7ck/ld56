@@ -49,11 +49,9 @@ public class GameManager : MonoBehaviour
 
   void Awake()
   {
-        Debug.Log("Awake");
     if (instance == null)
     {
       instance = this;
-      //DontDestroyOnLoad(gameObject);
     }
     else
     {
@@ -167,19 +165,22 @@ public class GameManager : MonoBehaviour
       elapsedTime += Time.deltaTime;
     }
 
-    if ((currentState == GameState.Paused || currentState == GameState.Playing) &&
-        (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.Q) || Input.GetKeyDown(KeyCode.P)))
-    {
-      if (currentState != GameState.Paused)
-      {
-        ChangeState(GameState.Paused);
-      }
-      else
-      {
-        ChangeState(GameState.Playing);
-      }
+    if (currentState == GameState.Paused || currentState == GameState.Playing) {
+        if(Keyboard.current != null) {
+            if(Keyboard.current.escapeKey.wasPressedThisFrame || Keyboard.current.qKey.wasPressedThisFrame || Keyboard.current.pKey.wasPressedThisFrame ) {
+                if (currentState != GameState.Paused) {
+                    PauseGame();
+                } else {
+                    ChangeState(GameState.Playing);
+                }
+            }
+        }  
     }
   }
+
+    public void PauseGame() {
+        ChangeState(GameState.Paused);
+    }
 
   private IEnumerator StartSequence()
   {
